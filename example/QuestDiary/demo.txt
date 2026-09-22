@@ -1,0 +1,30 @@
+; 996M2 传世脚本示例 - 用于验证插件功能
+; 演示: 标签 / 段结构 / 变量 / UI组件 / 检测命令
+
+[@main]
+#IF
+CHECK [8] 0
+; EQUAL D0 1
+CHECKITEM 回城石 1
+#ACT
+SET [8] 1
+MOV S0 欢迎来到996传世
+MOVR D5 100
+INC D5 2
+SENDMSG 5 欢迎回来,<$USERNAME>!
+#SAY
+你好,<$USERNAME>!
+你的等级是 <$LEVEL>,金币 <$GOLDCOUNT>
+\<返回/@main\>
+
+
+[@变量测试]
+#IF
+LARGE D5 50
+#ACT
+MOV A0 $STR(D5)
+VAR String Human MyLover
+CALCVAR Human MyLover = 小红
+BREAK
+#ELSEACT
+CLEARVAR S1 5

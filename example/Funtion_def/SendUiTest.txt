@@ -1,0 +1,20 @@
+[@main]
+#IF
+True
+#ACT
+Mov s$Ui <Button|x=303.6|y=-4.9|nimg=public/button/btn_close_01.png|_localZOrder=0|pimg=public/button/btn_close_01.png|link=@CloseSendUI>
+Inc s$Ui <RText|x=2.6|y=6.5|color=255|size=18|text=元宝:<$Money(2)>金币:<$Money(1)>>
+Inc s$Ui <Img|x=10|y=10|img=public/00000361.png|scale=1>
+SendUi 101 $Str(s$Ui)
+SENDMSG 7 加我大家
+SENDMSG 达瓦 挖掘哦
+GOTO @CloseSendUI
+Break
+
+[@CloseSendUI]
+#IF
+True
+#ACT
+MOV N$测试 1
+SENDMSG 7 <$STR(N$测试)>
+Break

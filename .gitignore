@@ -1,0 +1,7 @@
+node_modules/
+out/
+*.vsix
+docs_raw/
+*.log
+.vscode/
+.history/

@@ -1,0 +1,3355 @@
+[
+ {
+  "name": "AC1",
+  "signature": "AC1",
+  "desc": "防御下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "AC2",
+  "signature": "AC2",
+  "desc": "防御上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "ADDACCOUNTLIST",
+  "signature": "ADDACCOUNTLIST A",
+  "desc": "A=文件路径 | 如： ADDACCOUNTLIST ..\\QuestDiary\\帐号信息.txt | 把当前玩家的帐号添加到指定的文件中",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDBATCH",
+  "signature": "ADDBATCH A",
+  "desc": "需要组合BATCHMOVE使用 | 设置传送地图",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AddBuff",
+  "signature": "AddBuff",
+  "desc": "是否可省略 | 数值类型 | 说明",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1945"
+ },
+ {
+  "name": "AddBuffIcon",
+  "signature": "AddBuffIcon",
+  "desc": "是否可省略 | 数值类型 | 说明",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1028"
+ },
+ {
+  "name": "ADDCASTLEWARGUILD",
+  "signature": "ADDCASTLEWARGUILD A B C",
+  "desc": "A=行会名称 () B= 城堡名称 C= 时间(为几天) | 行会名称 SELF 为自己的行会，ALL 为所有行会; | 添加行会到攻城列表中",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDGUILDLIST",
+  "signature": "ADDGUILDLIST A",
+  "desc": "A=文件路径 | 如： ADDGUILDLIST ..\\QuestDiary\\行会信息.txt | 把当前玩家的行会名字添加到指定的文件中",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDGUILDMEMBER",
+  "signature": "ADDGUILDMEMBER A B",
+  "desc": "A=行会名字 B= 成员名字 | 备注：如果要添加的人不在线、或已经有行会，则添加失败 | 添加指定成员到指定的行会",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDIPLIST",
+  "signature": "ADDIPLIST A",
+  "desc": "A=文件路径 | 如： ADDIPLIST ..\\QuestDiary\\IP信息.txt | 把当前玩家的IP添加到指定的文件中",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDITEMEXP",
+  "signature": "ADDITEMEXP A B",
+  "desc": "A=操作符 + - = B=经验数 | 调整传承珠经验",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AddLog",
+  "signature": "AddLog",
+  "desc": "详情查看说明书 | 用于添加GM自定义日志可在网站后台 - GM日志查询",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AddMapTips",
+  "signature": "AddMapTips A#B C D E F G H",
+  "desc": "A=地图号 B=唯一ID C=坐标X D=坐标Y E=图标 F=tips标识 G=对像类型 H=对像类型补充 | 参数G: 0=自己 1=组队 2=行会 3=当前地图玩家 4=范围内所有玩家(设置参数H：范围) | 在小地图界面添加图标",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AddMapTipsEx",
+  "signature": "AddMapTipsEx A B C D E F",
+  "desc": "A=地图号 B=坐标X C=坐标Y D=NPC组件 E=唯一ID F=对像类型 | 参数F: 0=自己 1=组队 2=行会 3=当前地图玩家 4=范围内所有玩家(设置参数G：范围) | 在小地图界面添加NPC组件",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDNAMELIST",
+  "signature": "ADDNAMELIST A B",
+  "desc": "A=文件路径 B=1，表示可以写入重复内容 | 如： ADDNAMELIST ..\\QuestDiary\\人物名字.txt | 把当前玩家的名字添加到指定的文件中",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDPNEUMAITEM",
+  "signature": "ADDPNEUMAITEM A",
+  "desc": "A=物品ID | 把物品从 本体包裹 放到 元神包裹",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDPRENTICE",
+  "signature": "ADDPRENTICE A",
+  "desc": "A=徒弟名字 | 将指定玩家收为徒弟",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDSKILL",
+  "signature": "ADDSKILL A B",
+  "desc": "A=技能名称 B=技能等级 | 技能等级根据技能不同等级也不同 范围: 0...15 | 给当前玩家添加技能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AddStorageItem",
+  "signature": "AddStorageItem 参数一",
+  "desc": "把背包物品放入仓库",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1030"
+ },
+ {
+  "name": "ADDTASK",
+  "signature": "ADDTASK A",
+  "desc": "使用方法及介绍查阅说明书 | 添加任务",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDUSERDATE",
+  "signature": "ADDUSERDATE A",
+  "desc": "A=文件列表 | 使用方法及介绍查阅说明书 | 加入会员时间",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDVARLIST",
+  "signature": "ADDVARLIST A B C",
+  "desc": "使用方法及介绍查阅说明书 | 将指定字符加入到文本中",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ADDVITALITY",
+  "signature": "ADDVITALITY A",
+  "desc": "A=正数加元气 A=负数减元气 | 增加元气",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AllAutoLogin",
+  "signature": "AllAutoLogin",
+  "desc": "加载自动挂机人物",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "Amount",
+  "signature": "Amount",
+  "desc": "PK点数",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/713"
+ },
+ {
+  "name": "ANICOUNT",
+  "signature": "ANICOUNT",
+  "desc": "数据库字段",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "ATTACHEPOINT",
+  "signature": "ATTACHEPOINT A B",
+  "desc": "A=操作符 + - = B=数值 | 请到说明书中搜索 | 设置武馆积分",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AUTOADDGAMEGOLD",
+  "signature": "AUTOADDGAMEGOLD A",
+  "desc": "A=控制符(START,STOP) | PARAM1 设置每次数量 PARAM2 设置间隔时间 | 自动增加元宝",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AutoAddGuild",
+  "signature": "AutoAddGuild A B",
+  "desc": "A=行会名 B=会长名称 | B 省略时,只会建立空行会 | 强制创建行会",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AUTODOSHOP",
+  "signature": "AUTODOSHOP A B",
+  "desc": "请到说明书中搜索 | 自动摆摊脚本命令",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AUTOLOGIN",
+  "signature": "AUTOLOGIN A B C D",
+  "desc": "请到说明书中搜索 | 脚本支持自动上线离线挂机",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AutoRideHorse",
+  "signature": "AutoRideHorse A B",
+  "desc": "A=马的类型 B=默认0,可省略 | 请到说明书中搜索 | 无马牌一键骑马",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "AutoRidePet",
+  "signature": "AutoRidePet A B C D E F",
+  "desc": "A=怪物名 B=状态值 C=坐骑外观 D=骑战速度 E=坐骑等级 F=坐骑转生 | 参数B: 0 = 收 1 = 骑乘 2 = 骑战 参数C:默认166 参数D:0或1, 默认0 | 一键骑灵兽命令 骑乘或骑战状态下执行AutoRidePet, 自动在骑乘和骑战之间切换",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "backcolor",
+  "signature": "backcolor = \"A\"",
+  "desc": "字体背景颜色 | backcolor = \"0xFFFFCF63\" | 0xFF + 颜色值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "BackStep",
+  "signature": "BackStep",
+  "desc": "参数一：怪物ID 参数二：方向（0-7） 参数三：格数 | 怪物ID可以通过@ATTACK 中 <$996(ATTACK).ID>获取 8代表自动计算后退的方向 | 击退目标",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "BAGSIZE",
+  "signature": "BAGSIZE A",
+  "desc": "使用方法查阅说明书 | 设置玩家的包裹大小",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "BalingItem",
+  "signature": "BalingItem A",
+  "desc": "A=物品唯一ID | 不填参数一时，代表堆叠背包所有可叠加物品 | 将指定物品自动叠加到相同类型的物品上",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "BaoBaoHP",
+  "signature": "BaoBaoHP A B C D",
+  "desc": "A=操作符 B=数值 C=类型 D=宝宝ID | 参数A:+,-,= 参数C: 0:按数值计算 1:按最大血量百分 2:按剩余血量百分比 | 调整宝宝血量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "BATCHDELAY",
+  "signature": "BATCHDELAY A",
+  "desc": "需要组合BATCHMOVE使用 | 设置传送地图间隔(无效)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "BATCHMOVE",
+  "signature": "BATCHMOVE",
+  "desc": "需要组合上面2个命令使用 | 传送到设置地图",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "bestitemlevel",
+  "signature": "bestitemlevel A",
+  "desc": "A=展示等级 | 修改拾取列表展示等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "BINDGAMEGOLD",
+  "signature": "BINDGAMEGOLD A B",
+  "desc": "A=操作符 + - = B=数值 | 设置人物的绑定元宝数量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "BINDGOLD",
+  "signature": "BINDGOLD A B",
+  "desc": "A=操作符+ - = B=数值 | 设置人物的绑定金币数量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "BREAK",
+  "signature": "BREAK",
+  "desc": "中断或继续下去",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "BREAKTIMERECALL",
+  "signature": "BREAKTIMERECALL",
+  "desc": "取消TIMERECALL时间限制",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CALCVAR",
+  "signature": "CALCVAR A B C",
+  "desc": "使用方法查阅说明书 | 操作自定义变量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CANCELSAUSSUREA",
+  "signature": "CANCELSAUSSUREA A",
+  "desc": "A=数值 | 取值范围 1 取消天山血莲的效果 2 取消深海灵礁的效果 | 用于取消天山血莲和深海灵礁的特殊效果",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CANCELSHOP",
+  "signature": "CANCELSHOP",
+  "desc": "无参数 | 取消当前人物摆摊",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CASTLERPAIRDOOR",
+  "signature": "CASTLERPAIRDOOR",
+  "desc": "修复沙城城墙（可以机器人执行）",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGEAPPR",
+  "signature": "CHANGEAPPR A B",
+  "desc": "CHANGEAPPR A B 作用： 变身 A=RaceImg字段内容,B=Monster.db中的Appr字段内容， 如果A，B不为0，则这个人物的外观变为对应怪物的外观，否则为恢复正常外观 | 修改人物外观",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGECUSTOMVALUE",
+  "signature": "CHANGECUSTOMVALUE A B C",
+  "desc": "A=变量序号(0~10) B=操作符号(+、-、=) C=具体操作值(最大支持21亿) | 请到说明书中搜索 | 调整指定变量的数值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ChangeDamageValue",
+  "signature": "ChangeDamageValue A B C",
+  "desc": "A=类型 B=操作符(+,-,=) C=值 | 参数A: 0=直接修改 1=伤害百分比 2 = 被攻击对像剩余血量百分比 3 = 被攻击对像全部血量百分比 4 = 当前玩家剩余血量百分比 5 = 当前玩家全部血量百分比 | 修改伤害值 只能放到文本:QFunction-0.txt @StruckDamage @AttackDamage 标签中 百分比修改时，最终伤害= (基础伤害 + 百分比增加)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGEEXP",
+  "signature": "CHANGEEXP A B",
+  "desc": "A=操作符 + - = B=数值 | 调整当前玩家的经验值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGEGENDER",
+  "signature": "CHANGEGENDER A",
+  "desc": "A=0或者1 | 0是男 1是女 | 改变性别",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ChangeGuildMember",
+  "signature": "ChangeGuildMember A B C",
+  "desc": "A=行会名 B=玩家名 C=成员职业(1=会长 5=成员 默认=5) | 支持直接添加无行会会员到行会 支持直接添加成行会会长 支持多会长添加 此命令无需玩家输入 @加入门派 | 添加行会成员",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ChangeGuildName",
+  "signature": "ChangeGuildName A B",
+  "desc": "A=旧行会名字 B=新行会名字 | 如果新行会名字已存在 会返回变量信息 $996(NpcErroMsg).MSG 提示行会名字已存在不能修改 | 修改行会名字",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGEHITMONHP",
+  "signature": "CHANGEHITMONHP A B C D E",
+  "desc": "A: + - = B: 数值 C: =1百分比 D:攻击对像 0=人物怪物 1=怪物 2= 人物 | 调整当前攻击的目标血量 [@attack]中使用",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ChangeHumBuff",
+  "signature": "ChangeHumBuff A B C D E F G H",
+  "desc": "请到说明书中搜索 | 设定保护状态，自动扣减数值池的数据回血回蓝",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGEJOB",
+  "signature": "CHANGEJOB A",
+  "desc": "A=职业类型 | 参数取值: Warrior:战士 Wizard:法师 Taoist:道士 | 调整当前玩家的职业类型",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGELEVEL",
+  "signature": "CHANGELEVEL A B",
+  "desc": "A=操作符 + - = B=数值 | 调整玩家当前的等级（不走升级触发）",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGEMAPDESC",
+  "signature": "CHANGEMAPDESC A",
+  "desc": "A=新地图名字 | 参数为空时表示恢复原始名称 | 修改当前玩家地图的显示名称，即时生效",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGEMODE",
+  "signature": "CHANGEMODE A B",
+  "desc": "A=模式类型 B=关闭/开启(0,1) | 设置玩家的模式或开启特殊功能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGENAMECOLOR",
+  "signature": "CHANGENAMECOLOR A",
+  "desc": "A=颜色值 | 取值范围: 0....255 | 更改玩家名字颜色",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGEPERMISSION",
+  "signature": "CHANGEPERMISSION A",
+  "desc": "A=权限等级 | 取值0.....10 0 是普通玩家权限 10 是GM权限 | 设置玩家的权限等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGEPKPOINT",
+  "signature": "CHANGEPKPOINT A B",
+  "desc": "A=操作符 + - = B=数值 | 调整当前玩家的PK值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHANGESKILLEXP",
+  "signature": "CHANGESKILLEXP A B C",
+  "desc": "A=技能名字 B=操作符 + - = C=数值 | 请到说明书中搜索 | 调整指定技能经验",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHATCOLOR",
+  "signature": "CHATCOLOR A",
+  "desc": "A=数值 | 取值范围不详 | 设置当前玩家聊天字体颜色",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHATFONT",
+  "signature": "CHATFONT A",
+  "desc": "A=数值 | 取值范围不详 | 设置当前玩家聊天字体类型",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CHOOSEPOS",
+  "signature": "CHOOSEPOS A B C D",
+  "desc": "CHOOSEPOS 地图号 X Y @记录完毕跳转 | 记录回城石",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLEARARROW",
+  "signature": "CLEARARROW A",
+  "desc": "A=物品名 | 清除指定物品的检测记录，x是物品名字，如果不指定，则为清除所有检测记录",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLEARCASTLEOWNER",
+  "signature": "CLEARCASTLEOWNER A",
+  "desc": "A=沙城 | 清空时 默认显示行会名为 暂无行会 系统强制禁止创建 暂无行会 这个名称的行会 会自动清除沙城行会 修复城墙 清除占沙时间 | 清除占领沙城行会",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ClearEff",
+  "signature": "ClearEff A B",
+  "desc": "A=编号 B=目标唯一id | 参数A: 唯一标识，删除特效时使用 | 清除角色的StartEff特效",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ClearGlobalCustVar",
+  "signature": "ClearGlobalCustVar A",
+  "desc": "A=变量名 | 参数A:清理的变量名，可多个，\"丨\"分割 \\*号代表全部变量， | 清理自定义变量 Global类型",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "clearguildcustvar",
+  "signature": "clearguildcustvar A B",
+  "desc": "A=行会名 B=变量名 | 参数A:支持多个一起清理，\"丨\"分割，\\*表示清理全部 参数B:支持多个一起清理，\"丨\"分割，\\*表示清理全部 | 清理自定义变量 GUILD类型",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ClearHumCustVar",
+  "signature": "ClearHumCustVar A B C",
+  "desc": "A=变量名 B=清理对象 C=USERID | 参数A:清理的变量名，可多个，\"丨\"分割 参数B: 0 或者为空 = 清理全服 1= 清理自己 2 = 清理参数C指定USERID的玩家 3 =同组成员自定义变量清理 4=同行会成员自定义变量清理(需在线) | 清理自定义变量 Human类型",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLEARITEMEVIL",
+  "signature": "CLEARITEMEVIL",
+  "desc": "脚本命令整理汇总",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLEARMAPBODY",
+  "signature": "CLEARMAPBODY A",
+  "desc": "A=地图编号 | 请到说明书中搜索 | 清理指定地图的怪物尸体",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLEARMAPITEM",
+  "signature": "CLEARMAPITEM A",
+  "desc": "A=地图编号 | 请到说明书中搜索 | 清理指定地图的物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLEARMAPMON",
+  "signature": "CLEARMAPMON A B",
+  "desc": "A=地图编号 B=怪物名字(可忽略) | 参数B 为怪物名字时，表示清理该地图所有此名字的怪物,忽略则清除所有的怪物 | 清理地图怪物",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLEARMISSION",
+  "signature": "CLEARMISSION",
+  "desc": "清除怪物集中点",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLEARNAMELIST",
+  "signature": "CLEARNAMELIST A",
+  "desc": "A=文件路径 | 如： CLEARNAMELIST ..\\QuestDiary\\人物名字.txt | 清空玩家名列表",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLEARSKILL",
+  "signature": "CLEARSKILL",
+  "desc": "无参数 | 删除玩家的全部技能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "clearTar",
+  "signature": "clearTar A",
+  "desc": "A=角色id，空时为自己 | 清理角色攻击目标，用于在神之召唤时，让boss与自身位置重叠",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLEARVAR",
+  "signature": "CLEARVAR",
+  "desc": "使用方法及介绍查阅说明书 | 清理初始化变量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ClientSetting",
+  "signature": "ClientSetting A B C",
+  "desc": "A=界面ID B=是否勾选 C=滑动条值 | 调整自定义设置界面配置",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CLOSE",
+  "signature": "CLOSE",
+  "desc": "无参数 | 关闭对话框",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "col",
+  "signature": "col font = \"A\"",
+  "desc": "字体类型 | col font = \"FONT_SONGTI\" | FONT_SONGTI , FONT_YAHEI | 触发脚本：tips=\"参数1\"",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "COLLECTPOINT",
+  "signature": "COLLECTPOINT A B",
+  "desc": "A=操作符+ - = B=数值 | 请到说明书中搜索 | 调整盛大积分",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "color",
+  "signature": "color = \"A\"",
+  "desc": "字体颜色 | color = \"0xFFFF0000\" | OxFF + 颜色值 | 触发脚本： tip name = \"参数1\"",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "COLORNAME",
+  "signature": "COLORNAME A",
+  "desc": "A=0/1 | 0表示不变色. 1表示变色.变色时间间隔由转生七彩变色时间控制 | 名字七彩变色",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "content",
+  "signature": "content = \" A \"",
+  "desc": "文字描述内容 | content = \" 您看见的是文字内容 \"",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "COPYTEXT",
+  "signature": "COPYTEXT A B C D",
+  "desc": "请到说明书中搜索 | 用于截取某一段文本中指定长度的字符串",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CREATEGROUPLIGHT",
+  "signature": "CREATEGROUPLIGHT A B C D E",
+  "desc": "说明： A=类型 (1、暗影雷电、2、冰锥) B=M(X,Y,R)、地图(坐标X,坐标Y,范围) C= 时间 D= 威力 E =是否对所有怪物有效 | 请到说明书中搜索",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "CreatePneuma",
+  "signature": "CreatePneuma",
+  "desc": "是否可省略 | 值范围 | 说明",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1204"
+ },
+ {
+  "name": "CREDITPOINT",
+  "signature": "CREDITPOINT A B",
+  "desc": "A=操作符 + - = B=数值 | 调整玩家当前的声望值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DARK",
+  "signature": "DARK",
+  "desc": "地图是黑暗的。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "DC1",
+  "signature": "DC1",
+  "desc": "攻击下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "DC2",
+  "signature": "DC2",
+  "desc": "攻击上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "debuglog",
+  "signature": "debuglog A",
+  "desc": "A=打印的消息 | 将消息输出到控制台",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DEC",
+  "signature": "DEC A B",
+  "desc": "A=变量 B=字符或数值 | 减",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DECGAMEGOLD",
+  "signature": "DECGAMEGOLD",
+  "desc": "进入本地图后自动减元宝 格式：DECGAMEGOLD(1/10) 说明 1/10 1代表减的间隔(秒)，10代表一次减多少元宝；",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "DECGAMEPOINT",
+  "signature": "DECGAMEPOINT",
+  "desc": "进入本地图后自动减游戏点 格式：DECGAMEPOINT(1/10) 说明 1/10 1代表减的间隔(秒)，10代表一次减多少点；",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "DECHP",
+  "signature": "DECHP",
+  "desc": "进入本地图后自动减HP 格式：DECHP(1/10) 说明 1/10 1代表减的间隔(秒)，10代表一次减多少点；",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "DEFENCERATE",
+  "signature": "DEFENCERATE A B",
+  "desc": "A=数字 B=有效时间 | A参数: 倍数除以100为真正的倍率(如:200为2倍 ,150为1.5倍) | 设置防御魔防翻倍",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELACCOUNTLIST",
+  "signature": "DELACCOUNTLIST A",
+  "desc": "A=文件路径 | 如： DELACCOUNTLIST ..\\QuestDiary\\帐号信息.txt | 把当前玩家的帐号从指定的文件中删除",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELALLY",
+  "signature": "DELALLY A",
+  "desc": "A=行会名字,*代表解散全部联盟 | 解散联盟",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELAYCALL",
+  "signature": "DELAYCALL A B",
+  "desc": "A=时间 B=标签 | 使用方法及介绍查阅说明书 | 延时执行同一个NPC脚本中指定的标签",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELAYGIFT",
+  "signature": "DELAYGIFT A B C",
+  "desc": "A=倒计时时间 B=脚本标签 C=倒计时显示的文字 | 参数说明: A参数: 单位：秒 B参数: 倒计时结束后触发QManage.txt中此 标签 C参数: 提示文字必须包含%s | 倒计时礼物功能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELAYGOTO",
+  "signature": "DELAYGOTO A B",
+  "desc": "A=时间 B=脚本标签 | 时间单位是:毫秒 | 延时执行同一个NPC脚本中指定的标签内容，可覆盖",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DelBuff",
+  "signature": "DelBuff",
+  "desc": "是否可省略 | 数值类型 | 说明",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1945"
+ },
+ {
+  "name": "DelBuffIcon",
+  "signature": "DelBuffIcon",
+  "desc": "是否可省略 | 数值类型 | 说明",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1028"
+ },
+ {
+  "name": "DELGUILDLIST",
+  "signature": "DELGUILDLIST A",
+  "desc": "A=文件路径 | 如： DELGUILDLIST ..\\QuestDiary\\行会信息.txt | 把当前玩家的行会名字从指定的文件中删除",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELGUILDMEMBER",
+  "signature": "DELGUILDMEMBER A B",
+  "desc": "A=行会名字 B= 成员名字 | 备注：如果该成员在线，则“指定行会”参数无效，直接使用该成员的行会名字 如果删除的成员是行会老大，则会删除整个行会。 | 作用：把指定成员从指定行会中删除",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELIPLIST",
+  "signature": "DELIPLIST A",
+  "desc": "A=文件路径 | 如： DELIPLIST ..\\QuestDiary\\IP信息.txt | 把当前玩家的IP从指定的文件中删除",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELLASTDROPITEM",
+  "signature": "DELLASTDROPITEM",
+  "desc": "无参数 | 删除最后丢弃到地上的物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DelMapTips",
+  "signature": "DelMapTips A#B C D",
+  "desc": "A=地图号 B=唯一ID C=对像类型 | 参数C: 0=自己 1=组队 2=行会 3=当前地图玩家 4=范围内所有玩家(设置参数D：范围) | 在小地图界面删除图标",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DelMapTipsEx",
+  "signature": "DelMapTipsEx A B C",
+  "desc": "A=地图号 B=唯一ID C=对像类型 | 参数C: 0=自己 1=组队 2=行会 3=当前地图玩家 4=范围内所有玩家(设置参数D：范围) | 在小地图界面删除NPC组件",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELMARRY",
+  "signature": "DELMARRY",
+  "desc": "无参数 | 删除结婚",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELMASTER",
+  "signature": "DELMASTER",
+  "desc": "无参数 | 删除师傅",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELNAMELIST",
+  "signature": "DELNAMELIST A",
+  "desc": "A=文件路径 B= 1 ，表示删除列表中所有与执行条件相同的文本 | 如： DELNAMELIST ..\\QuestDiary\\人物名字.txt | 把当前玩家的名字从指定的文件中删除",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELNOJOBSKILL",
+  "signature": "DELNOJOBSKILL",
+  "desc": "无参数 | 删除非当前玩家职业的所有技能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELNPC",
+  "signature": "DELNPC A B C",
+  "desc": "A=地图编号 B=坐标x C=坐标y | 请到说明书中搜索 | 删除指定的NPC",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELPNEUMAITEM",
+  "signature": "DELPNEUMAITEM A",
+  "desc": "A=物品ID | 把物品从 元神包裹 放到 本体包裹",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELSKILL",
+  "signature": "DELSKILL A",
+  "desc": "A=技能名称 | 删除当前玩家指定的技能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DelStorageItem",
+  "signature": "DelStorageItem 参数一",
+  "desc": "把仓库物品放回背包",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1030"
+ },
+ {
+  "name": "DelTask",
+  "signature": "DelTask A",
+  "desc": "A= TaskID | 取消一个任务 取消任务后触发QFunction-0.txt中的[@CancelTask]",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1008"
+ },
+ {
+  "name": "DELUSERDATE",
+  "signature": "DELUSERDATE A",
+  "desc": "A=文件列表 | 使用方法及介绍查阅说明书 | 删除会员时间",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DELVARLIST",
+  "signature": "DELVARLIST A B C",
+  "desc": "使用方法及介绍查阅说明书 | 将指定字符从文本中删除",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DIV",
+  "signature": "DIV A B",
+  "desc": "请到说明书中搜索 | 乘",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "dragon",
+  "signature": "dragon A B",
+  "desc": "A=神龙之魂外观编号 B=神龙之魂外观特效编号 | 给角色设置神龙之魂外观",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DROPITEMDOWN",
+  "signature": "DROPITEMDOWN A B C D E F G",
+  "desc": "A=物品名称 B=物品数量 C=M(x,y,N) 地图编号(X坐标,Y坐标,范围) D=冻结时间 E=可拾取者 F=是否触发`@_物品掉落触发` G=掉落者 | 参数E： 0=任何人捡取 1=脚本执行人捡取 2=任何人不可以捡取 角色唯一id=只有这个角色可以捡 参数G：怪物唯一id | 制造物品丢到地上",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DropItemW",
+  "signature": "DropItemW A",
+  "desc": "A=装备位置 ( A = -1 代表关闭当前功能) | 执行的玩家死亡时必爆出A装备",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "DURA",
+  "signature": "DURA",
+  "desc": "当前持久",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "DURAMAX",
+  "signature": "DURAMAX",
+  "desc": "最大持久",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "ELEMENTFORCE",
+  "signature": "ELEMENTFORCE A B",
+  "desc": "A=操作符 + - = B=数值 | 调整人物当前元力值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ELEMENTFORCEMAX",
+  "signature": "ELEMENTFORCEMAX A B",
+  "desc": "A=操作符 + - = B=数值 | 调整人物最大元力值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ElementForceRate",
+  "signature": "ElementForceRate A B C",
+  "desc": "A=操作符 + - = B=数值 C=是否刷新客户端 | B:最大值 100 C:默认=0 自动刷新 1=不刷新 | 元力值免伤百分比",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ENDTASK",
+  "signature": "ENDTASK A",
+  "desc": "使用方法及介绍查阅说明书 | 完成任务",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "EVILAC",
+  "signature": "EVILAC",
+  "desc": "心魔附加防御下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILAC2",
+  "signature": "EVILAC2",
+  "desc": "心魔附加防御上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILAMBIT",
+  "signature": "EVILAMBIT",
+  "desc": "心魔境界",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILDC",
+  "signature": "EVILDC",
+  "desc": "心魔附加攻击下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILDC2",
+  "signature": "EVILDC2",
+  "desc": "心魔附加攻击上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILJOB",
+  "signature": "EVILJOB",
+  "desc": "心魔职业",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILMAC",
+  "signature": "EVILMAC",
+  "desc": "心魔附加魔防下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILMAC2",
+  "signature": "EVILMAC2",
+  "desc": "心魔附加魔防上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILMC",
+  "signature": "EVILMC",
+  "desc": "心魔附加魔法下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILMC2",
+  "signature": "EVILMC2",
+  "desc": "心魔附加魔法上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILNAME",
+  "signature": "EVILNAME",
+  "desc": "心魔名称",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILSC",
+  "signature": "EVILSC",
+  "desc": "心魔附加道术下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EVILSC2",
+  "signature": "EVILSC2",
+  "desc": "心魔附加道术上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "EXCHANGEMAP",
+  "signature": "EXCHANGEMAP A",
+  "desc": "A | A=地图 | 当前角色和指定地图互换地图成员",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "Exclude",
+  "signature": "Exclude",
+  "desc": "不占用技能召唤的宝宝数量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/728"
+ },
+ {
+  "name": "Exp",
+  "signature": "Exp",
+  "desc": "循环时间内获得的经验点数",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/730"
+ },
+ {
+  "name": "EXPRATE",
+  "signature": "EXPRATE",
+  "desc": "进入本地图后杀怪经验倍数 格式：EXPRATE(200) 说明：200代表经验倍数，除以100后为实际倍数。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "FASTUSEITEM",
+  "signature": "FASTUSEITEM",
+  "desc": "设置了救公主的地图，使用灵符(捆)快速救公主",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "FENGHAO",
+  "signature": "FENGHAO A B",
+  "desc": "使用方法查阅说明书",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "FIGHT",
+  "signature": "FIGHT",
+  "desc": "战斗区域，杀怪或死亡都不会掉落装备，杀人者也不增加PK值。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "FIGHT2",
+  "signature": "FIGHT2",
+  "desc": "杀人不加PK值，人物和怪物死亡都会掉落物品。 带组队变色，自己的队伍颜色为180，其他队伍颜色为69。 可以用于组队PK竞技，用于区分队友。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "FIGHT3",
+  "signature": "FIGHT3",
+  "desc": "继承FIGHT的属性，同时人物死亡可在地图内复活2次，用于行会争霸。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "FIGHT4",
+  "signature": "FIGHT4",
+  "desc": "FIGHT4和FIGHT一样,但玩家或怪物死亡均会爆物品，不会增加PK值，不会增加诅咒。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "FILECOPY",
+  "signature": "FILECOPY A B",
+  "desc": "请到说明书中搜索 | 用于复制一个文件到指定目录",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "FILLTEXT",
+  "signature": "FILLTEXT A B",
+  "desc": "请到说明书中搜索 | 将字符变量A以空格填满至B长度",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "FilterString",
+  "signature": "FilterString A B C",
+  "desc": "A=要清理的字符串 B=变量名，存放处理后的字符串 C=类型 | 参数B:不填默认为0 0=尾部是否带数字 1=头部是否带数字 2=字符串中所有数字 | 清理字符串里的数字",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "FIREBURNZONE",
+  "signature": "FIREBURNZONE A B C E F",
+  "desc": "A=目标X B=目标Y C=范围 D=类型 E=时间(秒) F=伤害 | 参数D：调用特效，与安全区光圈一致 | 产生一个伤害区域",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "flag",
+  "signature": "flag = \"A\"",
+  "desc": "字体动作 | flag = \"3\" | 范围 1~6",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "fontsize",
+  "signature": "fontsize = \"A\"",
+  "desc": "字体大小 | fontsize = \"12\" | 范围 1~30 | 触发脚本： 参数1 = 对应 OtherTipsCfg 文件内脚本",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "FORMATSTR",
+  "signature": "FORMATSTR A B C",
+  "desc": "A=变量名称，将格式化后的字符写入相应的文本变量 B=文本格式，应该由字符和格式化文本组成 类似：我的名字是%s C=变量内容，B参数中有几个格式化参数，这里就应该有几个变量内容，使用“&#124;”隔开。 | 注意：格式化参数最多支持10个%s | 详细查询说明书",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "framecolor",
+  "signature": "framecolor = \"A\"",
+  "desc": "字体描边颜色 | framecolor = \"0xFF000000\" | 0xFF + 颜色值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "Friend",
+  "signature": "Friend A B",
+  "desc": "参数一 0=添加好友 1=删除好友 参数二 名字 | 脚本添加，删除好友",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "FULLNAME",
+  "signature": "FULLNAME",
+  "desc": "宝宝数据库完整名字",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+ },
+ {
+  "name": "FUNC",
+  "signature": "FUNC A @lable",
+  "desc": "A=（1，2） | A=1时 调用QF中的@lable A=2时，调用QM中的@lable | 调用QF，QM的指定标签",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "FUSHEN",
+  "signature": "FUSHEN A B",
+  "desc": "使用方法查阅说明书",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GAMEGOLD",
+  "signature": "GAMEGOLD A B",
+  "desc": "A=操作符 + - = B=数值 | 调整玩家当前的元宝",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GAMEPOINT",
+  "signature": "GAMEPOINT A B",
+  "desc": "A=操作符 + - = B=数值 | 调整玩家当前的游戏点",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GEMCOUNT",
+  "signature": "GEMCOUNT A B C",
+  "desc": "使用方法及介绍查阅说明书 | 宝石存仓，调整当前玩家的宝石数量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GetAllBuffID",
+  "signature": "GetAllBuffID",
+  "desc": "是否可省略 | 数值类型 | 说明",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1945"
+ },
+ {
+  "name": "GETEXP",
+  "signature": "GETEXP A",
+  "desc": "A=经验数值 | 请到说明书中搜索 | 单独给人物增加经验",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GetMonRate",
+  "signature": "GetMonRate A B C D E F G",
+  "desc": "A=目标ID(0表示使用坐标) B=地图号 C=坐标x D=坐标y E=范围 F=类型 G=是否忽略自己 | 参数F: 0：全部 1：玩家 2：元神 3：npc 4：怪物 5：角色尸体 12：玩家、元神 13：玩家、npc 14：玩家、怪物 23：元神、npc 24：元神、怪物 34：npc、怪物 123：玩家、元神、npc 124：玩家、元神、怪物 134：玩家、npc、怪物 234：元神、npc、怪物 参数G:0或不填为不忽略，1=代表忽略自身 | 获取范围内目标信息",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GETVALIDSTR",
+  "signature": "GETVALIDSTR A B C D",
+  "desc": "请到说明书中搜索 | 获取某段文本中以某文本为分割的第一段文本和剩余内容",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GETVALUE",
+  "signature": "GETVALUE A B C",
+  "desc": "请到说明书中搜索 | (无效)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GIVE",
+  "signature": "GIVE A B C D",
+  "desc": "A=物品名字 B=数量 C=1绑定 D=1不自动叠加 | 给玩家指定数量的物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GIVEB",
+  "signature": "GIVEB A B",
+  "desc": "A=物品名字 B=物品数量 | 给予指定数量的物品(在当前角色身边爆出)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GLOOMPOINT",
+  "signature": "GLOOMPOINT",
+  "desc": "黑暗魔力",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "GmExeCute",
+  "signature": "GmExeCute A",
+  "desc": "A: Gm命令，不需要@ | 调用GM命令，无需权限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GOBACKHOME",
+  "signature": "GOBACKHOME",
+  "desc": "无参数 | 回程命令；传奇对应命令Gohome",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GOTO",
+  "signature": "GOTO A",
+  "desc": "A=脚本标签 B=模式(可省略) C=范围(仅B=4) | 比如: #ACT GOTO @测试 [@测试] #SAY 哈撒哈撒给 B参数有值则触发改为: 模式(1,2,3,4) 0或者不填=原始功能 1=小组成员触发 2=同行会人员触发 3=当前地图玩家触发 4=以玩家自身中心的范围玩家触发 | 跳转到同一个脚本里指定的脚本",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GROUPMOVE",
+  "signature": "GROUPMOVE A",
+  "desc": "A=地图编号 | 所有本组队员均可以使用该命令 | 把本编组队员传送到指定地图",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GuildAuraePoint",
+  "signature": "GuildAuraePoint Type Count",
+  "desc": "调整行会建筑、繁荣、人气、安定指数",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1427"
+ },
+ {
+  "name": "GuildBuildPoint",
+  "signature": "GuildBuildPoint Type Count",
+  "desc": "调整行会建筑、繁荣、人气、安定指数",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1427"
+ },
+ {
+  "name": "GUILDDOSCRIPT",
+  "signature": "GUILDDOSCRIPT A B",
+  "desc": "A=行会名称 B=脚本标签 | 当A参数为\"ALL\"时候则表示所有行会 | 让系统代替某行会执行QManager.txt中特定脚本标签",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GUILDEXP",
+  "signature": "GUILDEXP A B C",
+  "desc": "A=行会名称 B=操作符 + - = C=数值 | 调整行会经验",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GuildFileName",
+  "signature": "GuildFileName",
+  "desc": "行会列表文件名",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1428"
+ },
+ {
+  "name": "GuildFlourishPoint",
+  "signature": "GuildFlourishPoint Type Count",
+  "desc": "调整行会建筑、繁荣、人气、安定指数",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1427"
+ },
+ {
+  "name": "GUILDGOLD",
+  "signature": "GUILDGOLD A B",
+  "desc": "A=操作符 + - = B=数值 | 设置人物行会银两",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GUILDMAPMOVE",
+  "signature": "GUILDMAPMOVE A B C",
+  "desc": "A=地图编号 B=坐标X C=坐标Y | 行会传送，把本行会成员传送到地图坐标",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GUILDMEMBERS",
+  "signature": "GUILDMEMBERS A B C",
+  "desc": "A=行会名字 B= 控制符 + - = C= 数量 | 增加行会的人数上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GUILDPUBLICGOLD",
+  "signature": "GUILDPUBLICGOLD A B C",
+  "desc": "A=需要操作的行会名称 B=操作符 + - = C=数值 | A参数写SELF时为当前人物的行会 | 设置行会的公共银两",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GuildStabilityPoint",
+  "signature": "GuildStabilityPoint Type Count",
+  "desc": "调整行会建筑、繁荣、人气、安定指数",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1427"
+ },
+ {
+  "name": "GUILDTOWERGRADE",
+  "signature": "GUILDTOWERGRADE A B C",
+  "desc": "A=需要操作的行会名称 B=操作符 + - = C=数值 | A参数写SELF时为当前人物的行会 | 设置行会通灵塔等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "GuildWar",
+  "signature": "GuildWar A B",
+  "desc": "A=行会名字 B=时间（单位：分钟，0或不写则为引擎设置的时间） | 开启行会战命令",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "HAIRCOLOR",
+  "signature": "HAIRCOLOR A",
+  "desc": "A=发色代码 | 取值范围: 0 恢复默认 1...15种颜色 | 改变人物的头发颜色",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "HAIRSTYLE",
+  "signature": "HAIRSTYLE A",
+  "desc": "A=发型代码 | 取值范围: *0-3:*男性四种发型 *4-7:*女性四种发型 | 改变人物的头发类型",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "HCALL",
+  "signature": "HCALL A B",
+  "desc": "使用方法及介绍查阅说明书 | 让指定一个玩家执行QManage.txt内的一段脚本",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "HEROLIST",
+  "signature": "HEROLIST A",
+  "desc": "显示英雄排名榜(无效)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "Hint",
+  "signature": "Hint",
+  "desc": "对话框上显示的文字，换行用\"\\\"",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1376"
+ },
+ {
+  "name": "HITSPEED",
+  "signature": "HITSPEED",
+  "desc": "攻击速度",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+ },
+ {
+  "name": "HUMANHP",
+  "signature": "HUMANHP A B",
+  "desc": "A=操作符 + - = B=数值 | 调整玩家的血量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "HUMANMP",
+  "signature": "HUMANMP A B",
+  "desc": "A=操作符 + - = B=数值 | 调整玩家的魔法",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "INC",
+  "signature": "INC A B",
+  "desc": "A=变量 B=字符或数值 | 加",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "INCGAMEGOLD",
+  "signature": "INCGAMEGOLD",
+  "desc": "进入本地图后自动加元宝 格式：INCGAMEGOLD(1/10) 说明 1/10 1代表加的间隔(秒)，10代表一次加多少元宝；",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "INCGAMEPOINT",
+  "signature": "INCGAMEPOINT",
+  "desc": "进入本地图后自动加游戏点 格式：INCGAMEPOINT(1/10) 说明 1/10 1代表加的间隔(秒)，10代表一次加多少点；",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "INCHP",
+  "signature": "INCHP",
+  "desc": "进入本地图后自动加HP 格式：INCHP(1/10) 说明 1/10 1代表减的间隔(秒)，10代表一次减多少点；",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "INSERT",
+  "signature": "INSERT",
+  "desc": "增加脚本命令：Insert X Y Z 作用：对S变量和A变量（都是字符串变量）进行插入操作。 参数：X--为S或A变量， 例如：A10 Y--插入字符的开始位置 Z--要插入的字符，如果没有，则表示插入一个空格 | 插入数据指定行",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "INSERTVARLIST",
+  "signature": "INSERTVARLIST A B C D",
+  "desc": "请到说明书中搜索 | 将数据插入指定文本的指定行",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "itemsplit",
+  "signature": "itemsplit A B",
+  "desc": "A=物品唯一id B=拆分数量 | 拆分可叠加物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "Jump",
+  "signature": "Jump srcx=\"A\"",
+  "desc": "目的地的X坐标 | Jump srcx=“70\" | 设置当前地图预览框的 按钮索引",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "KICK",
+  "signature": "KICK",
+  "desc": "无 | 将当前玩家踢下线",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "KILL",
+  "signature": "KILL A",
+  "desc": "A=提示类型 | 取值范围: 0 人物死亡.不显示凶手信息 *1* 人物死亡不掉物品.不显示凶手信息 *2* 人物死亡.显示凶手信息为NPC *3* 人物死亡不掉物品.显示凶手信息为NPC | 将玩家杀死",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "KILLMONBURSTRATE",
+  "signature": "KILLMONBURSTRATE A B",
+  "desc": "A=倍率 B=时长 | 除以100为实际爆率 单位秒(0表示永久) | 调整玩家杀怪爆物品几率、爆率倍数",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "KILLMONEXPMULTIPLE",
+  "signature": "KILLMONEXPMULTIPLE A",
+  "desc": "A=数值 | 调整服务器所有玩家杀怪获得的经验倍数",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "KILLMONEXPRATE",
+  "signature": "KILLMONEXPRATE A B",
+  "desc": "A=经验倍数 B=时长 | A参数: 倍数除以100为真正的倍率(如:200为2倍 ,150为1.5倍) B参数: 时长单位: 秒 | 设置当前玩家的杀怪经验倍数",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "KILLSLAVE",
+  "signature": "KILLSLAVE A",
+  "desc": "A=宝宝名字 | 如果A参数为空，则杀死所有的宝宝 | 杀死指定的宝宝或全部宝宝",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "Label",
+  "signature": "Label",
+  "desc": "执行的脚本标签",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1418"
+ },
+ {
+  "name": "LOADEXVAR",
+  "signature": "LOADEXVAR A B C D E",
+  "desc": "值 玩家名称 变量名称 文件路径 文本或数据库 | 从指定文本读取指定玩家的自定义变量的值 | 读取和修改离线人物的自定义变量;",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "LogOut",
+  "signature": "LogOut",
+  "desc": "无参数 | 退出游戏选择区服界面",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/736"
+ },
+ {
+  "name": "LOOKS",
+  "signature": "LOOKS",
+  "desc": "数据库字段",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "MAC",
+  "signature": "MAC",
+  "desc": "魔御下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+ },
+ {
+  "name": "MAC1",
+  "signature": "MAC1",
+  "desc": "魔防下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "MAC2",
+  "signature": "MAC2",
+  "desc": "魔防上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "MailGive",
+  "signature": "MailGive A B C",
+  "desc": "给当前角色发送自定义邮件",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/981"
+ },
+ {
+  "name": "MakeMonster",
+  "signature": "MakeMonster",
+  "desc": "参数一，0=关闭，1=开启,默认开启 | 用于控制 MonGen.txt 是否刷怪",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "Map",
+  "signature": "Map id=\"A\"",
+  "desc": "地图编号 | Map id=\"996diy2\" | 设置当前地图的小地图展示图",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "MapBuff",
+  "signature": "MapBuff A B C D E F G",
+  "desc": "地图BUFF命令",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/862"
+ },
+ {
+  "name": "MAPMOVE",
+  "signature": "MAPMOVE A B C",
+  "desc": "A=地图号 B=坐标X C=坐标Y | 把玩家定点传送指定的地图坐标",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "MAPMOVEHUM",
+  "signature": "MAPMOVEHUM A B",
+  "desc": "A=源地图 B=目的地图 | 执行该脚本命令的人物不会被传送 源或目的地图可以使用SELF表示当前人物地图 | 作用和GM命令MAPMOVE一样",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "MASTER",
+  "signature": "MASTER",
+  "desc": "无参数 | 拜师",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "MaxHP",
+  "signature": "MaxHP",
+  "desc": "HP值上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1175"
+ },
+ {
+  "name": "MAXLEVEL",
+  "signature": "MAXLEVEL",
+  "desc": "宝宝最高可升等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+ },
+ {
+  "name": "maxwidth",
+  "signature": "maxwidth = \"A\"",
+  "desc": "tip提示框的宽度 | maxwidth = \"150\" | 触发Tip功能后 会读取 OtherTipsCfg 文件",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "MC1",
+  "signature": "MC1",
+  "desc": "魔法下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "MC2",
+  "signature": "MC2",
+  "desc": "魔法上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "MINE",
+  "signature": "MINE",
+  "desc": "可以挖矿 给予矿石()。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "mining",
+  "signature": "mining A B",
+  "desc": "A=坐标X B=坐标Y | 挖矿",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "Mir",
+  "signature": "Mir",
+  "desc": "附身持续时间（分钟）",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1043"
+ },
+ {
+  "name": "MISSION",
+  "signature": "MISSION A B C",
+  "desc": "请查看MONGEN | 设置怪物集结点，表示后面刷出的怪物将向这个设置坐标点移动集中",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "MOBFIREBURN",
+  "signature": "MOBFIREBURN A B C D E F",
+  "desc": "A=地图号 B=X C=Y D=效果 E=持续时间 F=伤害 | 在指定的地图坐标设置一个效果",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "Mobnpc",
+  "signature": "Mobnpc A B C D(x,y) E",
+  "desc": "A=Npc的名字 B=读取Market_def里脚本文件，支持同读，且支持2级目录 C=外形 D = 地图号 x = x坐标 y = y坐标 E 有效时间，单位为秒，时间到后Npc消失 | 临时生成一个NPC，并且加载脚本，指定时间后消失 | 在指定位置制造一个NPC并加在脚本",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "MOBPLACE",
+  "signature": "MOBPLACE A B",
+  "desc": "请查看MONGEN | 此命令不能设置刷怪地图，默认是当前地图，多用于天关活动刷怪",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "MONDROP",
+  "signature": "MONDROP",
+  "desc": "地图怪物死亡会掉落物品。 例：FIGHT MONDROP // 表示在FIGHT地图中，怪物还是可以掉落物品。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "MONGEN",
+  "signature": "MONGEN",
+  "desc": "方式一： MonGenEx A B C D E F 参数 解释 A 地图号 B 坐标X C 坐标Y D 怪物名字 E 范围 F 数量 方式二： PARAM1 A PARAM2 B PARAM3 C MonGen D E F G H 参数说明 参数 解释 说明 A 地图编号 $M表示当前地图编号 B 坐标X $X表示当前地图X C 坐标Y $Y表示当前地图Y D 怪物名字 E 数量 F 范围 G 怪物新名字 可省略 H 怪物寿命 可省略，单位：天 方式三： MISSION A B C PARAM1 D PARAM2 E PARAM3 F PARAM4 G MOBPLACE H I J K L 参",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "MONGENEX",
+  "signature": "MONGENEX A B C D E F",
+  "desc": "A 地图号 B 坐标X C 坐标Y D 怪物名字 E 范围 F 数量 | 在指定的地图和坐标范围刷指定数量的怪物",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "MONINTEVAL",
+  "signature": "MONINTEVAL",
+  "desc": "用于设置单个地图的怪物休眠时间长 优先取MONINTEVAL,没有设置的默认都取ProcessMonsterInterval (!setup.txt-ProcessMonsterInterval=4 设置的值越大怪物休眠时间越长,为0表示不启动)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "MonsterName",
+  "signature": "MonsterName",
+  "desc": "怪物名称",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/728"
+ },
+ {
+  "name": "MOV",
+  "signature": "MOV A B",
+  "desc": "A=变量 B=字符或数值 | 赋值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "MOVR",
+  "signature": "MOVR A B C",
+  "desc": "A=需要随机赋值的变量 B=没有参数三时，为最大范围，有参数三时为范围最小值 C=范围最大值 | 赋值随机数给变量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "Ms",
+  "signature": "Ms",
+  "desc": "延时时间(毫秒)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1418"
+ },
+ {
+  "name": "MULT",
+  "signature": "MULT A B",
+  "desc": "使用方法及介绍查阅说明书 | A=A\\*B",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "NEED",
+  "signature": "NEED",
+  "desc": "数据库字段,佩戴需求",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "NEEDAMBIT",
+  "signature": "NEEDAMBIT",
+  "desc": "所需境界(NEED为7时才有效)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "NEEDLEVEL",
+  "signature": "NEEDLEVEL",
+  "desc": "数据库字段,装备需要等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "NewName",
+  "signature": "NewName",
+  "desc": "新名字",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/728"
+ },
+ {
+  "name": "NextSkillTime",
+  "signature": "NextSkillTime A B",
+  "desc": "A=技能id B=时间(毫秒) | 重设技能下次CD时间",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "NIMBUSPOINT",
+  "signature": "NIMBUSPOINT A B",
+  "desc": "A=操作符 + - = B=数值 | 调整人物灵力值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "NOBATFLY",
+  "signature": "NOBATFLY",
+  "desc": "禁止使用飞技(化身蝙蝠、遁地、移形换影)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOCHATTACKMODE",
+  "signature": "NOCHATTACKMODE",
+  "desc": "禁止更改攻击模式",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NODEARRECALL",
+  "signature": "NODEARRECALL",
+  "desc": "禁止夫妻传送",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NODECDURA",
+  "signature": "NODECDURA",
+  "desc": "不减装备持久",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NODOSHOP",
+  "signature": "NODOSHOP",
+  "desc": "具有此属性的地图禁止摆摊",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NODRUG",
+  "signature": "NODRUG",
+  "desc": "禁止使用任何恢复药品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOFRIENDRECALL",
+  "signature": "NOFRIENDRECALL",
+  "desc": "禁止好友传送",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOGUILDRECALL",
+  "signature": "NOGUILDRECALL",
+  "desc": "禁止行会传送",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOHORSE",
+  "signature": "NOHORSE",
+  "desc": "马匹不能放出,跟随或骑乘的马进地图消失",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOMasterRECALL",
+  "signature": "NOMasterRECALL",
+  "desc": "禁止师徒传送",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOPNEUMA",
+  "signature": "NOPNEUMA",
+  "desc": "禁止释放元神，但是未限制释放元神后进入。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOPOSITIONMOVE",
+  "signature": "NOPOSITIONMOVE",
+  "desc": "禁止定座标移动",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NORANDOMMOVE",
+  "signature": "NORANDOMMOVE",
+  "desc": "禁止随机传送",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NORECALL",
+  "signature": "NORECALL",
+  "desc": "禁止记忆、组队传送",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NORECEIVEMSG",
+  "signature": "NORECEIVEMSG A",
+  "desc": "A=消息类型 | Sendmsg 的类型0-30，多个类型有\",\"链接 | 屏蔽sendmsg消息",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "NORIDEPET",
+  "signature": "NORIDEPET",
+  "desc": "禁止骑豹子，但豹子可以放出来",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOSAY",
+  "signature": "NOSAY",
+  "desc": "设置地图禁止说话，包括喊话，私聊等任意形势说话",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOSMARTGEN",
+  "signature": "NOSMARTGEN",
+  "desc": "带此地图标记的地图禁用智能刷怪模式",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOTAKEON",
+  "signature": "NOTAKEON",
+  "desc": "设置地图禁止穿戴装备(包括取下装备);",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NOTIGER",
+  "signature": "NOTIGER",
+  "desc": "禁止释放虎王/龙王",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NUMTOCHR",
+  "signature": "NUMTOCHR A B",
+  "desc": "A=变量 B=变量或字符 | 将一个阿拉伯数字转换为中文数字",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "OFFLINE",
+  "signature": "OFFLINE A",
+  "desc": "A=留言内容支持变量 | 设置玩家的留言信息",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "offx",
+  "signature": "offx = \"A\"",
+  "desc": "字体X偏移坐标 | offx = \"1\"",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "offy",
+  "signature": "offy = \"A\"",
+  "desc": "字体Y偏移坐标 | offy = \"1\"",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "OpenAutoKill",
+  "signature": "OpenAutoKill A B C D",
+  "desc": "A=开启/关闭 B=寻路坐标x C=寻路坐标y D=优先打怪列表 | xy有一个为0或空表示随机位置 参数D:怪物名字1,怪物名字2,...怪物名字n | 开启自动打怪",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "OpenGroup",
+  "signature": "OpenGroup A",
+  "desc": "参数一：0=关闭组队 1=允许组队 | 脚本开关组队",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "OPENITEMBOX",
+  "signature": "OPENITEMBOX A",
+  "desc": "A=怪物名称 | 调用数据库中的怪物暴率，物品会散落在触发该脚本的玩家身边",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "OVERLAP",
+  "signature": "OVERLAP",
+  "desc": "神秘符石重叠个数,属性位置71",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "PARAM1",
+  "signature": "PARAM1 值",
+  "desc": "配合其他命令传递参数(第1位)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PARAM2",
+  "signature": "PARAM2 值",
+  "desc": "配合其他命令传递参数(第2位)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PARAM3",
+  "signature": "PARAM3 值",
+  "desc": "配合其他命令传递参数(第3位)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PARAM4",
+  "signature": "PARAM4 值",
+  "desc": "配合其他命令传递参数(第4位)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PERCENT",
+  "signature": "PERCENT A B",
+  "desc": "请到说明书中搜索 | 百分比",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PERMILL",
+  "signature": "PERMILL A B",
+  "desc": "请到说明书中搜索 | 千分比",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PETBAGSIZE",
+  "signature": "PETBAGSIZE A B",
+  "desc": "A=操作符号(+、-、=) B=值 | 请到说明书中搜索 | 设置灵兽包裹大小",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PETQUICKPICK",
+  "signature": "PETQUICKPICK A",
+  "desc": "A=0表示关闭，1~8 表示拾取范围 | 如果全局开关开启，则命令无效 | 开启灵兽范围拾取",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PICKUPITEMS",
+  "signature": "PICKUPITEMS A B C D E F G",
+  "desc": "A=X坐标 B=Y坐标 C=以坐标为中心的拾取范围 D=延迟拾取时间,至小值500 E=是否按客户端设置拾取 F=预留 G=多次执行是否重置 | 请到说明书中搜索 | 范围拾取",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PILEEXP",
+  "signature": "PILEEXP",
+  "desc": "积累经验",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1390"
+ },
+ {
+  "name": "PKLOSTEXP",
+  "signature": "PKLOSTEXP",
+  "desc": "进入本地图后可以PK死亡掉经验 格式：PKLOSTEXPP(1000) 说明：1000代表掉多少经验；",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "PKLOSTLEVEL",
+  "signature": "PKLOSTLEVEL",
+  "desc": "进入本地图后可以PK死亡掉等级 格式：PKLOSTLEVEL(1) 说明：1代表掉多少等级；",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "PKWINEXP",
+  "signature": "PKWINEXP",
+  "desc": "进入本地图后可以PK得经验 格式：PKWINEXP(1000) 说明：1000代表得多少经验；",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "PKWINLEVEL",
+  "signature": "PKWINLEVEL",
+  "desc": "进入本地图后可以PK升级 格式：PKWINLEVEL(1) 说明：1代表升多少级；",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "POWERRATE",
+  "signature": "POWERRATE A B",
+  "desc": "A=攻击倍数 B=时长 | A参数: 倍数除以100为真正的倍率(如:200为2倍 ,150为1.5倍) B参数: 时长单位: 秒 | 设置当前玩家的攻击力倍数",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PRINTUSETIME",
+  "signature": "PRINTUSETIME A B",
+  "desc": "A: 1=开启，2=停止计时 B: 1=发送耗时信息给全服玩家 | 脚本总耗时(需要开启管理员模式) 时间单位为微秒，1000微秒=1毫秒 操作频繁脚本控制在10000微秒以内 非经常触发脚本控制在15000微秒以内",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "PullPay",
+  "signature": "PullPay A B C D E",
+  "desc": "游戏充值接入",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/969"
+ },
+ {
+  "name": "QUERYMSG",
+  "signature": "QUERYMSG A B",
+  "desc": "使用方法及介绍查阅说明书 | 弹出选择框",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "QUERYVAL",
+  "signature": "QUERYVAL A B C D E",
+  "desc": "使用方法及介绍查阅说明书 | 在客户端弹出一个输入对话框.让玩家输入一个字符.保存到S变量或者M变量中.并且跳转到*D*标签位置执行下面的脚本",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "Quit",
+  "signature": "Quit",
+  "desc": "无参数 | 让玩家回到选择角色界面",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/736"
+ },
+ {
+  "name": "QUITGROUP",
+  "signature": "QUITGROUP A",
+  "desc": "A=操作对象的名称，A参数可以忽略，忽略则为当前操作者 | 踢出队伍，退出者如果为队长，队伍解散",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "QUIZ",
+  "signature": "QUIZ",
+  "desc": "禁止喊话",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "Rate",
+  "signature": "Rate",
+  "desc": "防御倍数,倍数除以100为真正的倍率(200为2倍.150为1.5倍)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/978"
+ },
+ {
+  "name": "READRANDOMSTR",
+  "signature": "READRANDOMSTR A B C D E F",
+  "desc": "请到说明书中搜索 | 从指定文件内随机读取或者指定读取一行到变量中",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RECALLGROUPMEMBERS",
+  "signature": "RECALLGROUPMEMBERS A",
+  "desc": "A=地图编号 | 此命令只有队长可以使用该命令 | 把本编组队员传送到指定地图",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RECALLMAP",
+  "signature": "RECALLMAP A",
+  "desc": "A=地图 | 把某地图的人召唤过来",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RECALLMOB",
+  "signature": "RECALLMOB A B C D E",
+  "desc": "A=怪物名称 B=怪物等级 C=叛变时间 D=自动变色 E=怪物颜色 | A参数为怪物数据库的名称 B参数取值0....7 C参数叛变时间单位是分钟 D参数: *0-*不自动变色.且需要设置参数Color *1-*自动变色 E参数取值1...7 | 召唤一个指定等级、颜色的怪物作为当前玩家的宝宝",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "REDUCEAC",
+  "signature": "REDUCEAC A B",
+  "desc": "A=操作符 + - = B=数值 | 调整人物减免对方物理防御",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "REDUCEANTIMAGIC",
+  "signature": "REDUCEANTIMAGIC A B",
+  "desc": "A=操作符 + - = B=数值 | 调整人物减免对方魔法躲避",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "REDUCEMAC",
+  "signature": "REDUCEMAC A B",
+  "desc": "A=操作符 + - = B=数值 | 调整人物减免对方魔法防御",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "REDUCESPEEDPOINT",
+  "signature": "REDUCESPEEDPOINT A B",
+  "desc": "A=操作符 + - = B=数值 | 调整人物减免对方物理躲避",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "REFINEPOINT",
+  "signature": "REFINEPOINT A B",
+  "desc": "A=操作符号，支持(+、-、=) B=具体数值 | 调整玩家极品修炼值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "REFRESHTASK",
+  "signature": "REFRESHTASK A B",
+  "desc": "A=任务id B=任务step | 刷新客户端任务信息",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "ReleaseMagic",
+  "signature": "ReleaseMagic",
+  "desc": "参数1：技能ID(技能ID,需要角色本身学习了这个技能) 参数2：类型(填0，为了兼容传奇命令所留) 参数3：技能等级(最多三级) 参数4：技能对像: 1=攻击目标,0=自身(暂无效) 参数5：是否显示施法动作(0=不显示 1=显示) 参数6：1=无特效无动作 参数7：使用施毒术时，代表中毒类型,1=绿毒,2=红毒 | 使用脚本释放技能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RELIVEPET",
+  "signature": "RELIVEPET A",
+  "desc": "A=指定的灵兽石ID，可忽略此参数，如果忽略则表示复活刚才提交的物品框上的灵兽石 | 请到说明书中搜索 | 复活指定的灵兽",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RENEWLEVEL",
+  "signature": "RENEWLEVEL A B C",
+  "desc": "A=转生次数 B=转生等级 C=分配属性点 | A参数: 代表一次转多少级 B参数: 代表转生后玩家的等级.0为不改变玩家当前等级 C参数: 代表转生后可以得到的属性点数 | 设置人物转生属性",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "REPAIRALL",
+  "signature": "REPAIRALL A",
+  "desc": "A=装备位置 A忽略=修理全身 | 修理装备/修理指定位置装备",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "REPAIRHORSE",
+  "signature": "REPAIRHORSE A",
+  "desc": "使用方法及介绍查阅说明书 | 修复马牌",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "REPLACETEXT",
+  "signature": "REPLACETEXT S A B C D",
+  "desc": "请到说明书中搜索 | 将变量S中的 A 替换成 B ,S必须是文本型变量;",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RESERVED",
+  "signature": "RESERVED",
+  "desc": "数据库字段",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "RESET",
+  "signature": "RESET",
+  "desc": "A B | 设置从A开始，共B个[]标签为0",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RESTBONUSPOINT",
+  "signature": "RESTBONUSPOINT",
+  "desc": "无参数 | 清除BONUSPOINT命令调整的属性",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RESTPROVISIONALABIL",
+  "signature": "RESTPROVISIONALABIL",
+  "desc": "无参数 | 初始化所有临时属性",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RESTRENEWLEVEL",
+  "signature": "RESTRENEWLEVEL",
+  "desc": "无参数 | 清除人物转生数据",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RideOn",
+  "signature": "RideOn A B",
+  "desc": "A=0-下马 1-骑乘 2-骑战 B=灵兽临时外观 | 说明: 1、马和豹子同时存在是优先骑豹子 2、若人物当前状态与下一个状态一致,则不会执行,如已经是骑乘状态,再执行骑乘状态 3、只有马或者1转豹子时,骑战命令自动转为骑乘命令 4、参数一、参数二都省略时,等于按一下骑马按钮。 | 骑灵兽、下灵兽",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "RUNHUMAN",
+  "signature": "RUNHUMAN",
+  "desc": "允许穿人",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "RUNMON",
+  "signature": "RUNMON",
+  "desc": "允许穿怪",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "SAFE",
+  "signature": "SAFE",
+  "desc": "安全区域，不能进行PK。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "SAFEZONEONLINE",
+  "signature": "SAFEZONEONLINE A",
+  "desc": "A=0/1 | A=1表示如果这个玩家在安全区下线(小退或大退)，则自动脱机泡点。 A=0表示正常下线。 | 设置玩家下线类型",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SAVEEXVAR",
+  "signature": "SAVEEXVAR A B C D E",
+  "desc": "值 玩家名称 变量名称 文件路径 文本或数据库 | 修改指定玩家的自定义变量的值存放到指定文本 | 读取和修改离线人物的自定义变量;",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SAVEKILLMONEXPRATE",
+  "signature": "SAVEKILLMONEXPRATE A",
+  "desc": "A=1 | 多倍经验下线保存功能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SAVEVAR",
+  "signature": "SAVEVAR A B C",
+  "desc": "使用方法查阅说明书 | 保存自定义变量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SC1",
+  "signature": "SC1",
+  "desc": "道术下限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "SC2",
+  "signature": "SC2",
+  "desc": "道术上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "SceneviBration",
+  "signature": "SceneviBration A B C D",
+  "desc": "A=模式 B=震级(1~3) C=次数 D=地图ID(模式等于4时) | 参数A: 0或者不填=自己 1=在线所有人 2=屏幕范围内所有人 3=当前地图所有人 4=指定地图所有人 | 屏幕震动",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SendGiftCode",
+  "signature": "SendGiftCode A",
+  "desc": "A=字符串 | 配合客户端、后台礼包功能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SendLXMail",
+  "signature": "SendLXMail A B C D E",
+  "desc": "A=自定义邮件ID (0-20000) B=邮件标题 C=邮件内文字内容 D=离线玩家角色名 E=邮件物品内容 | 参数E:固定格式拼接邮件内容,不可省略,一次最多支持6种物品,详情查看说明书 | 给离线玩家发送邮件",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SendMagicID",
+  "signature": "SendMagicID A B C D E F G H",
+  "desc": "A=特效Magic_id B=填0 C=目标 D=坐标X E=坐标Y F=自己的userid G=暂留 H=可见类型 | 参数C为目标唯一ID时，参数D、E无效 参数C为地图号时，参数D、E为坐标 参数H: 0=视野内的都可见(默认) 1=仅自己可见 2=视野内的队伍成员可见 3=视野内的同行会成员可见 | 播放技能特效",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SendMail",
+  "signature": "SendMail A B C",
+  "desc": "给当前角色发送自定义邮件",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/981"
+ },
+ {
+  "name": "SENDMSG",
+  "signature": "SENDMSG A B C D",
+  "desc": "发送指定类型的文字信息 | A=信息类型: 1全服红字 2带NPC名全服广播 3带玩家名全服广播 4NPC公屏说话 5本人红字 6本人绿字 7本人蓝字 8/9漂浮文字 10/11右下角展开 12/13顶部飘动红字 14/15屏幕上方文字 16/17聊天框彩色文字 18/19物品框上方文字 21喊话 23本人文字信息 24-28信息框文字 29/30位置固定消息(手游) | B=文字内容(%s=人物名 %d=NPC名) | C=字体颜色0-255(可省) | D=背景颜色0-255(可省)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1003"
+ },
+ {
+  "name": "SendVerify",
+  "signature": "SendVerify",
+  "desc": "说明",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/929"
+ },
+ {
+  "name": "SET",
+  "signature": "SET A B",
+  "desc": "A=个人标记 B=值 | A参数取值1-800 B参数取值0,1 比如: SET [8] 1 | 设置个人标记值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETARROW",
+  "signature": "SETARROW A B C D E",
+  "desc": "使用方法及介绍查阅说明书 | 设置夺宝功能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETAUTOGETEXP",
+  "signature": "SETAUTOGETEXP A B C D",
+  "desc": "A=循环时间(单位:秒) B=循环时间内获得的经验 C=类型 D=地图代码 | C参数类型: *0* 在任何地方有效 *1* 在指定安全区有效.且需要设置参数Map | 设置当前玩家在指定地图在指定时间内获得指定的经验值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETBONENAME",
+  "signature": "SETBONENAME A B",
+  "desc": "A=怪物名字 B=等级 | B参数可以忽略，忽略则使用技能等级 | 设置道士\"强化骷髅术\"技能召唤的怪物名称和等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SetGetExp",
+  "signature": "SetGetExp A",
+  "desc": "A=0/1 | =0 表示阻断经验获取,获得经验触发QF [@禁止经验] $PARAM(20)=被禁止的经验 =1表示正常获取经验 | 阻断角色获得经验",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETGROUPCOMMON",
+  "signature": "SETGROUPCOMMON A B",
+  "desc": "A=表示第几个变量 B=具体的值 | 变量取值范围0.....9 | 设置队伍公共变量，$GROUPCOMMON(X)，X为0-9 返回",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETHOMEMAP",
+  "signature": "SETHOMEMAP A B C",
+  "desc": "A：地图编号 B：坐标x C：坐标y | 请到说明书中搜索 | 人物死亡后设置重生地图坐标",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETHONORSHAPE",
+  "signature": "SETHONORSHAPE A B",
+  "desc": "使用方法及介绍查阅说明书 | 修改勋章外观(无效)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETHORSENAME",
+  "signature": "SETHORSENAME A B C",
+  "desc": "使用方法及介绍查阅说明书 | 骑马功能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETITEMSEAL",
+  "signature": "SETITEMSEAL A B C",
+  "desc": "A=装备ID B=操作符号(+、-、=) C=加星等级(0..14)，0为取消装备加星 D=自定义名称 | 加星和自定义名称不能共存",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETITEMTIMESTAMP",
+  "signature": "SETITEMTIMESTAMP A B C",
+  "desc": "(无效)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETLABLEVALUE",
+  "signature": "SETLABLEVALUE A B C",
+  "desc": "A=类型(1商城积分,2荣誉值,3珍宝值) B=(+、-、=) C=值 | 调整一些特殊的货币",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETLIMITAMBITLV1",
+  "signature": "SETLIMITAMBITLV1 A",
+  "desc": "A=等级 | 限制游戏天人重数上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETLIMITAMBITLV2",
+  "signature": "SETLIMITAMBITLV2 A",
+  "desc": "A=等级 | 限制游戏天仙重数上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETLIMITAMBITLV3",
+  "signature": "SETLIMITAMBITLV3 A",
+  "desc": "A=等级 | 限制游戏上仙重数上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETLIMITLV",
+  "signature": "SETLIMITLV A",
+  "desc": "A=等级 | 限制游戏等级上限",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SetMapMode",
+  "signature": "SetMapMode A B C",
+  "desc": "参数一：地图号 参数二：RULESIDX 参数三：规则ID | 实时修改地图所属的伤害规则",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETMEMBERLEVEL",
+  "signature": "SETMEMBERLEVEL A B",
+  "desc": "A=操作符 + - = B=数值 | 调整玩家当前的会员等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETMEMBERTYPE",
+  "signature": "SETMEMBERTYPE A B",
+  "desc": "A=操作符 + - = B=数值 | 调整玩家当前的会员类型",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETNPCAPPR",
+  "signature": "SETNPCAPPR A B",
+  "desc": "A=npc的ID数值范围：2~32767 B=要设置新外观 | 使用方法及介绍查阅说明书 | 改变NPC外观",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETNPCNAME",
+  "signature": "SETNPCNAME A B",
+  "desc": "A=NPCID B=NPC名字 | 使用方法及介绍查阅说明书 | 修改指定NPC的名字",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETOBJVISIBLETYPE",
+  "signature": "SETOBJVISIBLETYPE A B",
+  "desc": "A=角色id、怪物id，NPC不支持 B=所处空间(1-63) | 设置角色所处空间",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETOFFLINELABEL",
+  "signature": "SETOFFLINELABEL A",
+  "desc": "A=脚本标签 | 其中标签是可选项，若不提供该参数，则表示清除，否则为设置 例： SETOFFLINELABEL @打擂下线 其中在QManager.TXT中必须有一个脚本为 [@打擂下线] | 设置或清除人物下线执行的脚本标签",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETONTIMER",
+  "signature": "SETONTIMER A B C",
+  "desc": "开启定时器",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1388"
+ },
+ {
+  "name": "SETPARAM",
+  "signature": "SETPARAM A B",
+  "desc": "A=要修改的位置， B=值 （可为任意类型） | 请到说明书中搜索 | 用来设置$PARAM()变量的值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETPETATTRIBUTE",
+  "signature": "SETPETATTRIBUTE A B C D A=灵兽石序列号 B=属性位置 C=操作符号 + - = D=数值",
+  "desc": "0：积累经验 1：幻化次数 2：资质 3：生命 4：魔法值 5：中毒躲避 6：魔御下限 7：魔御上限 8：魔法命中 9：躲避 10：防御下限 11：防御上限 12：魔法躲避 13：中毒命中 17：灵兽经验 19：魔法攻击下限 20：魔法攻击上限 21：道术攻击下限 22：道术攻击上限 23：攻击下限 24：攻击上限 25：命中 最高：7 26：幸运 最高：3 27：骑战速度 最高：1 28：麻痹几率 29：暴击几率 30：抗性 31：减免对方物理防御 32：减免对方魔法防御 33：减免对方物理命中 34：减免对方魔法命中 35：灵兽等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1390"
+ },
+ {
+  "name": "SETPETLEVEL",
+  "signature": "SETPETLEVEL A",
+  "desc": "A=级别 | 调整当前玩家的宝宝等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETPETNAME",
+  "signature": "SETPETNAME A",
+  "desc": "A=变量 | 更改灵兽名字",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SetPlayInfo",
+  "signature": "SetPlayInfo 参数一 参数二 参数三",
+  "desc": "SetPlayInfo A B C",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1399"
+ },
+ {
+  "name": "SetPneumaSetting",
+  "signature": "SetPneumaSetting A B C D",
+  "desc": "A=控件ID B=是否勾选 C=滑动条值 D=技能id | 修改前端元神设置",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETPROFFER",
+  "signature": "SETPROFFER A B",
+  "desc": "A=操作符 + - = B=数值 | B参数取值(0，1) | 设置人物通灵塔贡献状态，状态为1时，附加属性才有效",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETPROVISIONALABIL",
+  "signature": "SETPROVISIONALABIL A B C D",
+  "desc": "请到说明书中搜索 | 设置临时增加人物属性",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETRANKLEVELNAME",
+  "signature": "SETRANKLEVELNAME A",
+  "desc": "A=%s封号 | 注： 个行封号前必须加%s,多个封号换行使用\"\\\", 如:%s传奇世界\\无限精彩 必须在!Setup.txt里把该功能打开：ShowRankLevelName= 1 | 人物个性封号系统",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETROBOTTIMER",
+  "signature": "SETROBOTTIMER A B C",
+  "desc": "请到说明书中搜索 | 机器人脚本延迟执行脚本",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETSECRETINFO",
+  "signature": "SETSECRETINFO A B C D E F G",
+  "desc": "参数说明： 同时忽略参数B、参数C为取消神秘人状态 A：玩家的新名字 B：衣服外观 C：武器外观 D：龙魂 E：龙魂特效 F：翅膀 G：翅膀特效 | 请到说明书中搜索 | 神秘人功能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETSELITEMS",
+  "signature": "SETSELITEMS A B",
+  "desc": "A=bagitemid B=物品唯一id | 参数B: 物品唯一id,物品唯一id 多个物品用\",\"链接 | 设置BagItems组件已勾选物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SetTaskValue",
+  "signature": "SetTaskValue A B C D",
+  "desc": "任务相关变量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1008"
+ },
+ {
+  "name": "SETTIMER",
+  "signature": "SETTIMER A B",
+  "desc": "A=时间 B=标签 | 参数： A是计时时间长度，单位是秒， B是一个QManag.TXT中的脚本标签 如果A=0，则表示取消这个计时。 同时只能有一个计时存在，在前一个计时还没结束前又调用A<>0的计时命令，则后面的会覆盖前面的。 | 在红/蓝血球上方显示一柱香的效果，并开始计时，时间到后执行指定的脚本。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETTIMEREX",
+  "signature": "SETTIMEREX A B C D",
+  "desc": "A=玩家名称 B=延迟时间(单位：秒) C=脚本标签，将触发QManager.txt 中的此标签 D=执行次数(可省略，默认为1) | 个人计时器玩家在计时中途重新登录，计时器将仍然有效",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SETVISIBLEOBJTYPE",
+  "signature": "SETVISIBLEOBJTYPE A B C",
+  "desc": "A=操作符 B=可以看到的空间 C=目标id | 参数A: +、-、=，+ 增加视线，- 减少视线，= 代表 覆盖 参数B: 设置可以看到的空间，多个用\",\"链接 | 设置角色视线",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SHAPE",
+  "signature": "SHAPE",
+  "desc": "数据库字段",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "shield",
+  "signature": "shield A B",
+  "desc": "A=盾牌外观编号 B=盾牌外观特效编号 | 调给角色设置盾牌外观",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SHOWHUMEFFECT",
+  "signature": "SHOWHUMEFFECT A",
+  "desc": "A=效果代码 | 显示一个人物效果",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SHOWSPOTDLG",
+  "signature": "SHOWSPOTDLG A B C",
+  "desc": "使用方法及介绍查阅说明书 | 弹出物品放取托盘",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SKILLDEFPOWER",
+  "signature": "SKILLDEFPOWER A B C",
+  "desc": "参数一：技能ID（All代表所有技能） 参数二：操作符（+-=） 参数三：数值（千分比） | 抵抗指定技能伤害千份比 (技能免伤)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "skilleffect",
+  "signature": "skilleffect A B C D",
+  "desc": "A=技能ID B=特效ID C=有效时间/次数 D=计时方式 | 参数B: 特效ID，不填表示取消 参数C:有效时间/次数，0表示永久有效 参数D:0=时间秒，1=次数 | 修改技能特效",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SKILLLEVEL",
+  "signature": "SKILLLEVEL A B C",
+  "desc": "A=技能名称 B=操作符 + - = C=技能等级 | 技能等级根据技能不同等级也不同 范围: 0...15 | 调整当前玩家的技能等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SkillName",
+  "signature": "SkillName",
+  "desc": "技能名称",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1195"
+ },
+ {
+  "name": "SKILLPOWERPERMILL",
+  "signature": "SKILLPOWERPERMILL A B C",
+  "desc": "A //技能名称或者技能ID B //操作符号 C //数值 | 请到说明书中搜索 | 调整玩家所学的技能威力千分比",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SkillSpeed",
+  "signature": "SkillSpeed A B C D E F",
+  "desc": "A=技能ID B=操作符(+,-,=) C=数值 D=类型 E=是否百分比 | 参数D: 0:自动修改 比较技能delay和cooldown，然后计算完后视情况修改 1:Delay 2:CoolDown | 调整技能CD 每次命令都是重新计算的，不累计",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SKYROCKET",
+  "signature": "SKYROCKET A B C D",
+  "desc": "A=地图 B=坐标X C=坐标Y D=烟花效果代码 | 烟花代码取值范围: 2：姹紫嫣红 3：红色恋人 4：蓝色妖姬 5：红粉佳人 6：金碧辉煌 7：心心相映 8：花开并蒂 9：双宿双飞 10：天若有情 11：地久天长 12：痴心一片 13：两心缠绵 当地图是“SELF” 时，地图使用该人物所在地图，坐标是相对当前人物的坐标 | 在指定的位置产生一个烟花效果",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SMELTBOXRESULT",
+  "signature": "SMELTBOXRESULT A",
+  "desc": "请到更新历史中搜索",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "SOURCE",
+  "signature": "SOURCE",
+  "desc": "数据库字段",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "SPLIT",
+  "signature": "SPLIT A B C D",
+  "desc": "请到说明书中搜索 | 分割文本字符串变量命令",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "StartEff",
+  "signature": "StartEff A B C D E F G",
+  "desc": "A=编号 B=magic_id C=偏移X D=偏移Y E=时间(毫秒) F=触发标签 G=目标唯一id | 参数A: 唯一标识，删除特效时使用 只填参数A标识删除: 参数B:参考magiccfg中的magic_id 参数E:0=永久 参数F: 计时结束触发QF中的标签 参数G:不填是给自己加 | 给角色添加定时特效； 若技能触发或攻击前触发，特效播放不完整，加延迟处理",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "STARTTIMER",
+  "signature": "STARTTIMER A",
+  "desc": "请到说明书中搜索 | 计时器功能脚本",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "STDMODE",
+  "signature": "STDMODE",
+  "desc": "数据库物品类型",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "STDNAME",
+  "signature": "STDNAME",
+  "desc": "物品在数据库中的名称",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "Step",
+  "signature": "Step",
+  "desc": "任务的当前步骤",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1008"
+ },
+ {
+  "name": "STOPTIMER",
+  "signature": "STOPTIMER A B",
+  "desc": "请到说明书中搜索 | 计时器功能脚本",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "STORAGESIZE",
+  "signature": "STORAGESIZE A B",
+  "desc": "A=操作符 + - = B=数值 | 请到说明书中搜索 | 设置仓库大小命令",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "STORESORT",
+  "signature": "STORESORT",
+  "desc": "整理仓库",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TABLE",
+  "signature": "TABLE A B C D",
+  "desc": "请到说明书中搜索 | 设置数据变量值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TAKE",
+  "signature": "TAKE A B",
+  "desc": "A=物品名字 B=数量 | 从玩家包裹收回指定数量物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TAKEB",
+  "signature": "TAKEB A B",
+  "desc": "使用方法及介绍查阅说明书 | 把玩家身上的装备放入包裹中",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TAKECHECKITEM",
+  "signature": "TAKECHECKITEM",
+  "desc": "无参数 | 收走CHECKITEM的物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TAKEDUREITEM",
+  "signature": "TAKEDUREITEM A B C",
+  "desc": "A=物品名称 B=持久数值 C=数量 | 请到说明书中搜索 | 取走指定数量持久在指定数值以上的物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TAKEM",
+  "signature": "TAKEM A",
+  "desc": "A=物品的序列号 | 收走指定编号的物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TAKEON",
+  "signature": "TAKEON A B",
+  "desc": "请到说明书中搜索 | 从包裹里把物品名字是y的物品装备到x位置，如果x位置已经有物品，则原来的物品会放背包里,如果没有提供y参数，则表示把x位置的物品收回到包裹里。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TAKETOWERITEM",
+  "signature": "TAKETOWERITEM A",
+  "desc": "A=被操作物品的ID | 用于收走行会通灵塔资源捐献中的物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TAKEW",
+  "signature": "TAKEW A B",
+  "desc": "A=物品名字 B=数量 | 从玩家身上收回指定物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TaskID",
+  "signature": "TaskID",
+  "desc": "任务文件中定义的ID值",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1008"
+ },
+ {
+  "name": "TEMPRANK",
+  "signature": "TEMPRANK A",
+  "desc": "A=封号 | 使用方法及介绍查阅说明书 | 设置人物临时封号",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TENTHOUSANDTH",
+  "signature": "TENTHOUSANDTH A B",
+  "desc": "请到说明书中搜索 | 万分比",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "THUMPRATE",
+  "signature": "THUMPRATE A B",
+  "desc": "A=操作符 + - = B=数值 | 调整人物暴击概率",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TIME",
+  "signature": "TIME",
+  "desc": "剩余叛变时间(分钟)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+ },
+ {
+  "name": "TIMERECALL",
+  "signature": "TIMERECALL A",
+  "desc": "A=数值 | 单位:分 | 设置进入某个地图的时间后返回源地图",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "tip",
+  "signature": "tip name = \"A\"",
+  "desc": "tip对应读取的编号 | tip name = \"205\" | 游戏中鼠标放置此按钮素材的地方能出现提示框",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/914"
+ },
+ {
+  "name": "TOPLIST",
+  "signature": "TOPLIST A",
+  "desc": "A=排行榜类型 | 打开排行榜",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "TRIM",
+  "signature": "TRIM A",
+  "desc": "请到说明书中搜索 | 将字符变量A中的空格去除，A必须为字符类变量;",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "UNMASTER",
+  "signature": "UNMASTER",
+  "desc": "无参数 | 出师",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "UPDATETASK",
+  "signature": "UPDATETASK A B",
+  "desc": "使用方法及介绍查阅说明书 | 更新任务步骤",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "UPGRADEMON",
+  "signature": "UPGRADEMON A",
+  "desc": "A=参数类型 | 参数类型取值: 无参数时:在原来的转生等级上再转一级 *1:*踏云豹/天狮兽 变为黄色 *2:*踏云豹变为黑色/天狮兽变为白色 *3:*踏云豹变为白色/天狮兽变为黑色 | 改变灵兽的颜色或转生等级",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "UPGRADEUSERITEM",
+  "signature": "UPGRADEUSERITEM A B C D A=灵兽石序列号 B=属性位置 C=操作符号 + - = D=数值",
+  "desc": "4：灵兽等级 6：灵兽经验 8：灵兽的颜色 9：灵兽转生等级 71：灵兽上次喂食时间的时间戳",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1390"
+ },
+ {
+  "name": "UseBONUSPOINT",
+  "signature": "UseBONUSPOINT A B C",
+  "desc": "A=属性 B=操作符 +或 - C=数值 | 属性取值: DC ;攻击 MC ;魔法 SC ;道术 HP ;血 MP ;魔 AC ;防御 MAC ;魔防 HIT ;命中 SPD ;准确 | 调整玩家当前的属性点 不支持=操作",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "USERID",
+  "signature": "USERID",
+  "desc": "宝宝唯一id",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+ },
+ {
+  "name": "VAR",
+  "signature": "VAR A B C",
+  "desc": "使用方法查阅说明书 | 声明自定以变量",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "VIEWPLAYER",
+  "signature": "VIEWPLAYER A",
+  "desc": "A=角色名或角色ID | 只支持查看在线用户,使用前需脚本先检测用户是否在线 | 查看指定玩家装备",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "WALKSPEED",
+  "signature": "WALKSPEED",
+  "desc": "走路速度",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+ },
+ {
+  "name": "WATERNEED",
+  "signature": "WATERNEED",
+  "desc": "该地图骑乘/战豹子/麒麟等 人物需要拥有避水属性(战鲨不在此限制);",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "WEARCOLOR",
+  "signature": "WEARCOLOR A",
+  "desc": "A=衣服代码 | 取值范围: 0..15种颜色 说明: 女性衣服和男性衣服的颜色配置是不一样的 具体的颜色请自己在游戏内调试 | 改变人物的衣服颜色",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "WEIGHT",
+  "signature": "WEIGHT",
+  "desc": "数据库字段",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/704"
+ },
+ {
+  "name": "wingtype",
+  "signature": "wingtype A B",
+  "desc": "A=翅膀外观编号 B=翅膀外观特效编号 | 给角色设置翅膀外观",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+ },
+ {
+  "name": "XINMOBB",
+  "signature": "XINMOBB",
+  "desc": "该地图可以带心魔宝宝。 增加使用镇魔符召心魔为宝宝的功能，仅在具有XINMOBB属性的地图使用有效， 召唤成功后，会触发QFunction-0.TXT中的\\[@镇魔符招怪\\]标签， 目前仅允许携带一个心魔宝宝。",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "FORMULATION",
+  "signature": "FORMULATION A B",
+  "desc": "A=计算公式 B=存入变量 | 四则运算(/除 *乘 +加 -减 %取余，括号优先；支持MAX/MIN取最大最小值，须大写)，结果存入变量B，运算符号书写错误返回-1",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1023"
+ },
+ {
+  "name": "FOR",
+  "signature": "FOR A B C",
+  "desc": "A=变量/值 B=比较符号(>大于 <小于 =等于 !不等于 大于等于) C=变量/值 | 脚本循环开始(上限10000次自动停止)，条件达到后自动停止往后执行；需与ENDFOR配对，循环内不能用GOTO、不能嵌套循环、不能加条件检测",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1005"
+ },
+ {
+  "name": "ENDFOR",
+  "signature": "ENDFOR",
+  "desc": "脚本循环结束位置，与FOR配对使用",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1005"
+ },
+ {
+  "name": "RETURN",
+  "signature": "RETURN A",
+  "desc": "A=返回值(可忽略) | 流程控制：向引擎触发逻辑返回结果(如0=禁止/不执行)并中断当前脚本段后续命令",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+ },
+ {
+  "name": "STOP",
+  "signature": "STOP",
+  "desc": "流程控制：中断当前触发/操作(如禁止上架、中断中毒/交易等)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+ },
+ {
+  "name": "MESSAGEBOX",
+  "signature": "MESSAGEBOX A",
+  "desc": "A=提示文字 | 弹出信息提示框；在自定义放取框脚本中使用后须增加CLOSE命令销毁窗口",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1142"
+ },
+ {
+  "name": "ADDBTN",
+  "signature": "ADDBTN A B C D E F G H I J",
+  "desc": "A=按钮编号 B=正常显示素材编号 C=鼠标悬停素材编号 D=鼠标点击素材编号 E=X坐标 F=Y坐标 G=按钮文字(支持变量) H=文字X坐标 I=文字Y坐标 J=鼠标指向按钮显示文字(可忽略) | 自定义UI界面增加按钮，坐标以当前界面右上角为起点",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1024"
+ },
+ {
+  "name": "SENDSWUI",
+  "signature": "SENDSWUI A B C",
+  "desc": "A=序号(1~5，最多5个) B=备注 C=组件 | 发送交易行试玩自定义标签数据给客户端(手游)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/966"
+ },
+ {
+  "name": "SENDDIYMSG",
+  "signature": "SENDDIYMSG A",
+  "desc": "A=json字符串 | 自定义行为上报(如上报创建行会等事件，需后台开通)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/949"
+ },
+ {
+  "name": "ALLOWPAIMAI",
+  "signature": "ALLOWPAIMAI A",
+  "desc": "A=1禁止(其他或不填为允许) | 拍卖行触发中设置禁止/允许上架、下架、购买、竞价",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+ },
+ {
+  "name": "CEIL",
+  "signature": "CEIL A B",
+  "desc": "A=变量 B=除数 | A除以B后向上取整，结果存回A(用法与INC、DEC、MULT、DIV一致)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/970"
+ },
+ {
+  "name": "FLOOR",
+  "signature": "FLOOR A B",
+  "desc": "A=变量 B=除数 | A除以B后向下取整，结果存回A(用法与INC、DEC、MULT、DIV一致)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/970"
+ },
+ {
+  "name": "TAKEQUALIFIEDITEMS",
+  "signature": "TAKEQUALIFIEDITEMS A",
+  "desc": "A=数量 | 收取包裹内满足CHECKQUALIFIEDITEMS检测条件的物品",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/703"
+ },
+ {
+  "name": "UPGRADEQUALIFIEDITEMS",
+  "signature": "UPGRADEQUALIFIEDITEMS A B C D",
+  "desc": "A=数量 B=位置 C=操作符(+、-、=) D=数值 | 调整包裹内满足CHECKQUALIFIEDITEMS条件的物品(如打印时间戳)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/703"
+ },
+ {
+  "name": "TAKENPCITEM",
+  "signature": "TAKENPCITEM A",
+  "desc": "A=物品框编号(1-29，0=全部取下) | 从自定义物品框取下物品返回到背包",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1142"
+ },
+ {
+  "name": "SETNPCITEM",
+  "signature": "SETNPCITEM A B",
+  "desc": "A=框编号 B=物品序列号 | 将物品放入指定编号的自定义物品框(只执行放回操作，不触发原始脚本)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1142"
+ },
+ {
+  "name": "SENDFORQQWX",
+  "signature": "SENDFORQQWX A B",
+  "desc": "A=类型(1=拉起QQ 2=QQ好友 3=QQ群 4=微信) B=QQ号或QQ群KEY | 手游专用命令，调出手机QQ或者微信",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/886"
+ },
+ {
+  "name": "RECALLMOBEX",
+  "signature": "RECALLMOBEX A B C D E F",
+  "desc": "A=怪物名字(SELF=克隆自己的心魔为宝宝，大刀不攻击不叛变) B=刷新地图 C=坐标X(-1=玩家右手边) D=坐标Y E=是否可移动(0不移动/1可移动) F=宝宝新名字(不显示主人名) | 召唤一个怪物作为当前玩家的宝宝",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/728"
+ },
+ {
+  "name": "ADDFH",
+  "signature": "ADDFH A B C D E F G",
+  "desc": "A=位置 B=图包编号 C=素材编号 D=偏移X E=偏移Y F=类型(HUM/NPC/MON/BaoBao，可忽略默认HUM) G=目标ID(可忽略) | 增加顶戴花翎(头顶封号)效果；刷怪命令(MonGenEx/MonGen/MOBPLACE)后使用可给新刷的怪加封号",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/990"
+ },
+ {
+  "name": "DELFH",
+  "signature": "DELFH A B",
+  "desc": "A=位置 B=类型(HUM/NPC/MON/BaoBao，可忽略) | 删除顶戴花翎(头顶封号)效果",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/990"
+ },
+ {
+  "name": "UPDATETONGVAR",
+  "signature": "UPDATETONGVAR A",
+  "desc": "A=全局变量名(G/A/I变量或无限全局变量) | 通区变量功能：把本区变量同步更新到其他区服",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1018"
+ },
+ {
+  "name": "NEWREADCSV",
+  "signature": "NEWREADCSV A",
+  "desc": "A=csv文件路径 | 加载csv表格；文件名以cfg_开头时以常量形式存放内存(建议放在QM的[@GlobalVar]执行)，配合<$cfg_xxx(行_列)>等变量读取",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
+ },
+ {
+  "name": "MONTOMB",
+  "signature": "MONTOMB A B C D E F G",
+  "desc": "A=地图|X|Y|刷怪范围|墓碑间隔(分钟) B=怪物名称|新名字 C=头顶封号1|2|3 D=刷怪触发标签 E=是否溜达 F=墓碑类型|素材|小地图图标|tips标识|墓碑文字|小地图文字|墓碑模式 G=光源 | 刷墓碑怪功能",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1411"
+ },
+ {
+  "name": "REGETGIFTLIST",
+  "signature": "REGETGIFTLIST",
+  "desc": "重新加载盒子礼包(无参数)，放到[@GlobalVar]里执行；不能频繁执行否则引擎卡死，纯PC端使用",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1509"
+ },
+ {
+  "name": "POSTGIFTTYPE",
+  "signature": "POSTGIFTTYPE A B",
+  "desc": "A=类型 B=礼包码字符(A=3时才生效) | 领取后台配置的礼包",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1509"
+ },
+ {
+  "name": "HPMPMAPOPT",
+  "signature": "HPMPMAPOPT A",
+  "desc": "A=间隔时间(毫秒) | 地图参数：除自己与被伤害玩家外，同屏其他玩家血量按间隔时间更新，减缓服务器压力",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "NORECONNECT",
+  "signature": "NORECONNECT A",
+  "desc": "A=地图号 | 地图参数：在该地图上线后将被传送到A地图",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "LOLMISSION",
+  "signature": "LOLMISSION A B C",
+  "desc": "A=地图名 B=坐标X C=坐标Y | LOL塔模式(RACE 255)：设置小兵到达的最后坐标(怪物集中点)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/759"
+ },
+ {
+  "name": "LOLMOB",
+  "signature": "LOLMOB A B",
+  "desc": "A=怪物名字 B=阵营(0-255) | LOL塔模式：设置刷出怪物的阵营",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/759"
+ },
+ {
+  "name": "MONEY",
+  "signature": "MONEY A B C",
+  "desc": "A=货币名称或编号 B=操作符(+ - =) C=数值(最大21亿) | 操作新货币系统中指定货币的数量(货币数据库idx1-99)",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/698"
+ },
+ {
+  "name": "GETBINDMONEY",
+  "signature": "GETBINDMONEY A B",
+  "desc": "A=货币ID/货币名称/分组名称 B=存入变量(只支持S0-S99) | 获取组合货币数量并存入变量, 也可用 <$BINDMONEY(货币)> 直接读取",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1216"
+ },
+ {
+  "name": "CHANGEBINDMONEY",
+  "signature": "CHANGEBINDMONEY A B",
+  "desc": "A=货币ID/货币名称/分组名称 B=扣除数量 | 扣除组合货币; 货币不足时直接扣完, 建议先用 CHECKBINDMONEY 检测",
+  "kind": "action",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1216"
+ }
+]

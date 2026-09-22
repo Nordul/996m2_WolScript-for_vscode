@@ -1,0 +1,171 @@
+{
+  "name": "m2script-tools",
+  "displayName": "996M2 传世脚本工具",
+  "description": "996M2传世引擎脚本语言支持：语法高亮、上下文感知代码补全、已占用变量查询",
+  "version": "0.1.0",
+  "publisher": "m2script",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Visualization"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile",
+    "crawl": "node scripts/crawl-docs.js && node scripts/build-grammar.js",
+    "build:grammar": "node scripts/build-grammar.js",
+    "selftest": "node scripts/selftest.js && node scripts/grammartest.js && node scripts/interpretertest.js"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "m2script",
+        "aliases": [
+          "996M2 Script",
+          "m2script"
+        ],
+        "configuration": "./language-configuration.json",
+        "filenamePatterns": [
+          "**/QuestDiary/**/*.txt",
+          "**/Market_def/**/*.txt",
+          "**/Npc_def/**/*.txt",
+          "**/MapQuest_def/**/*.txt",
+          "**/Robot_def/**/*.txt",
+          "**/Funtion_def/**/*.txt",
+          "**/QFunction-*.txt",
+          "**/QManage*.txt",
+          "**/QWolShop-*.txt",
+          "**/RobotManage.txt",
+          "**/AutoRunRobot.txt"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "m2script",
+        "scopeName": "source.m2script",
+        "path": "./syntaxes/m2script.tmLanguage.json"
+      }
+    ],
+    "configurationDefaults": {
+      "[m2script]": {
+        "files.encoding": "gbk",
+        "editor.tokenColorCustomizations": {
+          "comments": "#6A737D"
+        }
+      }
+    },
+    "breakpoints": [
+      {
+        "language": "m2script"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "m2script",
+        "label": "996M2 脚本调试",
+        "languages": [
+          "m2script"
+        ],
+        "configurationAttributes": {
+          "launch": {
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "要调试的脚本文件路径",
+                "default": "${file}"
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "description": "启动后在第一行暂停",
+                "default": true
+              },
+              "maxSteps": {
+                "type": "number",
+                "description": "最大执行步数(防死循环)",
+                "default": 100000
+              },
+              "presetVars": {
+                "type": "object",
+                "description": "预设变量值, 用于进入依赖游戏状态的分支, 如 {\"D0\": \"1\", \"S0\": \"测试\"}",
+                "default": {}
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "name": "调试当前996脚本",
+            "type": "m2script",
+            "request": "launch",
+            "program": "${file}",
+            "stopOnEntry": true
+          }
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "m2script.refreshVars",
+        "title": "996脚本: 刷新变量占用扫描",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "m2script.markAsScript",
+        "title": "996脚本: 将当前文件识别为996脚本",
+        "icon": "$(file-code)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "m2script",
+          "title": "996脚本",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "m2script": [
+        {
+          "type": "webview",
+          "id": "m2script.varPanel",
+          "name": "已占用变量查询"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "m2script.refreshVars",
+          "when": "view == m2script.varPanel",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "m2script.markAsScript",
+          "when": "resourceExtname == .txt && resourceLangId != m2script",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^4.0.0",
+    "typescript": "^5.9.3",
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.3.2"
+  }
+}

@@ -1,0 +1,1325 @@
+[
+ {
+  "name": "CANADDGUILDMEMBER",
+  "signature": "CANADDGUILDMEMBER",
+  "desc": "检测行会是否还能继续招收成员",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CanArrive",
+  "signature": "CanArrive",
+  "desc": "A B | A=坐标X B=坐标Y | 检测指定坐标是否可以到达 只能支持当前地图",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CANMIRROR",
+  "signature": "CANMIRROR",
+  "desc": "玩家进入此地图后，系统将自动镜像副本地图，退出后将自动删除",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "CANMIRRORCLAN",
+  "signature": "CANMIRRORCLAN",
+  "desc": "创建宗族镜像地图，所有宗族成员可进入同一个镜像地图中！",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "CANMIRRORTEAM",
+  "signature": "CANMIRRORTEAM",
+  "desc": "队伍成员可以进入一个同副本地图中",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "CANRECALLEVIL",
+  "signature": "CANRECALLEVIL",
+  "desc": "设置该地图允许召唤心魔宝宝",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "CANRELIVE",
+  "signature": "CANRELIVE",
+  "desc": "死亡后允许使用还魂符原地复活，适用于神威狱等地图; 说明： 点击后将触发QManage脚本中\\[@原地复活\\] 标签 其中 $PARAM(0) 返回地图编号;",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "CanRide",
+  "signature": "CanRide",
+  "desc": "可以骑马。",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "CANRIDESHARK",
+  "signature": "CANRIDESHARK",
+  "desc": "允许该地图放出海神战鲨并骑乘/战",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "CASTLECHANGEDAY",
+  "signature": "CASTLECHANGEDAY",
+  "desc": "A B | A： = B：天数 | 检测沙城占领天数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CASTLEWARDAY",
+  "signature": "CASTLEWARDAY",
+  "desc": "A B | A： = B：天数 | 检测沙城战争天数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECK",
+  "signature": "CHECK",
+  "desc": "A | 检测个人标记,范围[1-800] | 只有0和1两种状态",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKACCOUNTIPLIST",
+  "signature": "CHECKACCOUNTIPLIST",
+  "desc": "A | A=文件路径 | 检测当前玩家登陆帐号与指定列表内IP数据是否一致",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKACCOUNTLIST",
+  "signature": "CHECKACCOUNTLIST",
+  "desc": "A | A=文件路径 | 检测当前玩家登陆帐号是否在指定文件内",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKBAGGAGE",
+  "signature": "CHECKBAGGAGE",
+  "desc": "检测背包是否有空位",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKBAGSIZE",
+  "signature": "CHECKBAGSIZE",
+  "desc": "A | A=数值 | 检测玩家包裹空格数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKBBCOUNT",
+  "signature": "CHECKBBCOUNT",
+  "desc": "A | A=数量 | 检测宝宝数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKBINDGAMEGOLD",
+  "signature": "CHECKBINDGAMEGOLD",
+  "desc": "A B | A=判断符> < = \\ B=检测的数值 | 检测绑定元宝",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKBINDGOLD",
+  "signature": "CHECKBINDGOLD",
+  "desc": "A B | A=判断符> < = \\ B=检测的数值 | 检测绑定金币",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKBONUSPOINT",
+  "signature": "CHECKBONUSPOINT",
+  "desc": "A B | A=判断符 = B=数值 | 检测转生后属性点数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKCASTLEDOOR",
+  "signature": "CHECKCASTLEDOOR",
+  "desc": "A | A=损坏、开启、关闭 | 检测城堡城门状态",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKCASTLEDOOROPEN",
+  "signature": "CHECKCASTLEDOOROPEN",
+  "desc": "A | (无效)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKCASTLEGOLD",
+  "signature": "CHECKCASTLEGOLD",
+  "desc": "A B | A=判断符 = B=值 | 检测沙城资金",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKCASTLEWARGUILD",
+  "signature": "CHECKCASTLEWARGUILD",
+  "desc": "A B | A=行会名 B=城堡名 | 检测行会是否在攻城列表中",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKCOLLECTPOINT",
+  "signature": "CHECKCOLLECTPOINT",
+  "desc": "A B | A=判断符 = B=数值 | 检测盛大积分",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKCREDITPOINT",
+  "signature": "CHECKCREDITPOINT",
+  "desc": "A B | A=判断符 = B=数值 | 检查声望点是否等于指定点数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKDAY",
+  "signature": "CHECKDAY",
+  "desc": "A B | A： = B：日 | 检测日(1-31)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKDC",
+  "signature": "CHECKDC",
+  "desc": "A B C D | A=判断符 = B=下限数值 C=判断符 = D=上限数值 | 检测当前玩家物理攻击的下限和上限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKDURA",
+  "signature": "CHECKDURA",
+  "desc": "A B | A=矿石 B=纯度 | 测试纯度(矿+纯度值)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKDURAEVA",
+  "signature": "CHECKDURAEVA",
+  "desc": "A B | A=肉类 B=纯度 | 测试纯度(肉+纯度值)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKEXP",
+  "signature": "CHECKEXP",
+  "desc": "A B | A=判断符 = B=值 | 检测当前角色的经验值",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGAMEGOLD",
+  "signature": "CHECKGAMEGOLD",
+  "desc": "A B | A=判断符 = B=数值 | 检测人物身上有多少元宝",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGAMEPOINT",
+  "signature": "CHECKGAMEPOINT",
+  "desc": "检查玩家当前的游戏点情况",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGEMCOUNT",
+  "signature": "CHECKGEMCOUNT",
+  "desc": "A B C | A=代表宝石的类型: *0:*红宝石 *1:*蓝宝石 *2:*绿宝石 B=判断符 = C=数值 | 检测当前玩家的宝石数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGOLD",
+  "signature": "CHECKGOLD",
+  "desc": "A | A=数量 | 检测玩家金币数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGROUPCOUNT",
+  "signature": "CHECKGROUPCOUNT",
+  "desc": "A B | A=判断符 = B=数值 | 检测队伍人数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDAURAEPOINT",
+  "signature": "CHECKGUILDAURAEPOINT",
+  "desc": "A B | A=判断符 = B=数值 | 检测行会繁荣指数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDBUILDPOINT",
+  "signature": "CHECKGUILDBUILDPOINT",
+  "desc": "A B | A=判断符 = B=数值 | 检测行会建筑指数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDFLOURISHPOINT",
+  "signature": "CHECKGUILDFLOURISHPOINT",
+  "desc": "A B | A=判断符 = B=数值 | 检测行会安定指数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDGOLD",
+  "signature": "CHECKGUILDGOLD",
+  "desc": "A B | A=判断符> < = \\ B=检测的数值 | 检测当前玩家的行会银两",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDLIST",
+  "signature": "CHECKGUILDLIST",
+  "desc": "A | A=文件路径 | 检测行会名是否在指定列表",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDMAXMEMBER",
+  "signature": "CHECKGUILDMAXMEMBER",
+  "desc": "A B C | A=行会名 B=判断符 = C=数值 | 检测指定行会的最大人数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDMEMBER",
+  "signature": "CHECKGUILDMEMBER",
+  "desc": "A B C | A=行会名 B=判断符 = C=数值 | 检测指定行会的当前人数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDPNEUMA",
+  "signature": "CHECKGUILDPNEUMA",
+  "desc": "检测行会元神数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDPUBLICGOLD",
+  "signature": "CHECKGUILDPUBLICGOLD",
+  "desc": "A B C | A=行会名称，SELF为当前角色的行会 B=判断符> < = \\ C=检测的数值 | 检测指定行会的公共银两",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDSTABILITYPOINT",
+  "signature": "CHECKGUILDSTABILITYPOINT",
+  "desc": "A B | A=判断符 = B=数值 | 检测行会人气指数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDTOWERGRADE",
+  "signature": "CHECKGUILDTOWERGRADE",
+  "desc": "A B C | A=行会名称，SELF为当前角色的行会 B=判断符> < = \\ C=检测的数值 | 检测指定行会通灵塔等级",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDWAR",
+  "signature": "CHECKGUILDWAR",
+  "desc": "无 | 无 | 不处于行会战返回False，无行会返回False",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKGUILDWARRIOR",
+  "signature": "CHECKGUILDWARRIOR",
+  "desc": "检测行会猛将数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKHITMONHP",
+  "signature": "CHECKHITMONHP",
+  "desc": "检测命令整理汇总",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKHITMONNAME",
+  "signature": "CHECKHITMONNAME",
+  "desc": "检测命令整理汇总",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKHORSE",
+  "signature": "CHECKHORSE",
+  "desc": "无 | 检测是否骑乘",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKHP",
+  "signature": "CHECKHP",
+  "desc": "A B C D | A=判断符 = B=下限数值 C=判断符 = D=上限数值 | 检测当前玩家HP的下限和上限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKHUM",
+  "signature": "CHECKHUM",
+  "desc": "A B | A=地图代码 B=数值 | 检测指定地图的人数（不含元神）",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKHUNPO",
+  "signature": "CHECKHUNPO",
+  "desc": "X M Y | 其中： X取值1-10，分别表示上面10个魂魄 M是运算符号：=、>、=36 若当前人物没有元神，结果总是返回否",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKINMAPRANGE",
+  "signature": "CHECKINMAPRANGE",
+  "desc": "A B C D | A=地图 B=X坐标 C=Y坐标 D=范围 | 检测角色是否在指定的区域内",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKINTEVEN",
+  "signature": "CHECKINTEVEN",
+  "desc": "A | A=数值.支持变量 | 检测数值是否为偶数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKIPLIST",
+  "signature": "CHECKIPLIST",
+  "desc": "A | A=文件路径 | 检测当前玩家登陆IP是否在指定文件内",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKISFRIEND",
+  "signature": "CHECKISFRIEND",
+  "desc": "A | A=角色名字 | 检测是否是好友",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKISMASTER",
+  "signature": "CHECKISMASTER",
+  "desc": "无 | 检测是否为别人的师傅",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CheckIsProperTarget",
+  "signature": "CheckIsProperTarget",
+  "desc": "A | A=怪物或角色唯一ID | 判断目标是否可攻击标",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CheckIsShop",
+  "signature": "CheckIsShop",
+  "desc": "A=范围 | 检测指定范围内是否有人正在摆摊",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKITEM",
+  "signature": "CHECKITEM",
+  "desc": "A B C | A=物品名 B=数量 C=人物名,为空检测自己 | 检测玩家包裹内是否存在指定数量的物品",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKITEMDURE",
+  "signature": "CHECKITEMDURE",
+  "desc": "A B C | A=物品名 B=持久值 C=数量 | 检测物品持久在指定数值以上的数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKITEMID",
+  "signature": "CHECKITEMID",
+  "desc": "A | A=物品的序列号 | 检测包裹中是否存在指定ID的物品",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKITEMINLIST",
+  "signature": "CHECKITEMINLIST",
+  "desc": "A B | A=文件路径 B=数值(S变量获取) | 检测包裹中是否有列表中所存在的物品，将结果返回B变量;",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKITEMTYPE",
+  "signature": "CHECKITEMTYPE",
+  "desc": "A B | A=装备位置 B=物品类型 | 检测当前玩家指定位置装备的类型",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKITEMW",
+  "signature": "CHECKITEMW",
+  "desc": "A B | A=物品名 B=数量,默认为1.但该参数还是填写最为安全 | 检测玩家身上是否存在指定数量的物品",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKJOB",
+  "signature": "CHECKJOB",
+  "desc": "A | A=职业名称 Warrior 、 Wizard、 Taoist | 检测职业",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKLEVELEX",
+  "signature": "CHECKLEVELEX",
+  "desc": "A B | A=判断符 = B=数值 | 检查人物的等级是否等于指定级别",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKLUCKYPOINT",
+  "signature": "CHECKLUCKYPOINT",
+  "desc": "A B | A=判断符(>、<、=) B=值 判断幸运值的多少",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMAGIC",
+  "signature": "CHECKMAGIC",
+  "desc": "A | A=技能名字 | 检测是否学习了指定技能",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMAGICID",
+  "signature": "CHECKMAGICID",
+  "desc": "A | A:技能IDX编号 | 检测指定编号的技能是否学习",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMAPHUMANCOUNT",
+  "signature": "CHECKMAPHUMANCOUNT",
+  "desc": "A B C | A=地图 B=>、<、= C=数量 | 检测地图玩家数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMAPMONCOUNT",
+  "signature": "CHECKMAPMONCOUNT",
+  "desc": "A B C | A=地图 B=>、<、= C=数量 | 检测地图怪物数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMAPMONNAMECOUNT",
+  "signature": "CHECKMAPMONNAMECOUNT",
+  "desc": "A B C D E F | A=地图代码 B=坐标X,范围小于1时，则检测全地图 C=坐标Y,范围小于1时，则检测全地图 D=范围 E=怪物名字 F=数量,当这个值为负数时 则检测是否小于当前正值 | 检查指定地图、是否存在指定名字指定数量条件的怪物,，包括宝宝",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMAPMONNAMECOUNTEX",
+  "signature": "CHECKMAPMONNAMECOUNTEX",
+  "desc": "A B C D E F | A=地图代码 B=坐标X,范围小于1时，则检测全地图 C=坐标Y,范围小于1时，则检测全地图 D=范围 E=怪物名字 F=数量,当这个值为负数时 则检测是否小于当前正值 | 检查指定地图、是否存在指定名字指定数量条件的怪物，不包括宝宝",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMAPNAME",
+  "signature": "CHECKMAPNAME",
+  "desc": "A | A=地图代码 | 检测玩家所在地图的名字",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMARRY",
+  "signature": "CHECKMARRY",
+  "desc": "无 | 检测是否结婚",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMARRYCOUNT",
+  "signature": "CHECKMARRYCOUNT",
+  "desc": "A B | A=判断符 = B=数值 | 检测结婚次数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMASTER",
+  "signature": "CHECKMASTER",
+  "desc": "无 | 检测是否有师傅",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMC",
+  "signature": "CHECKMC",
+  "desc": "A B C D | A=判断符 = B=下限数值 C=判断符 = D=上限数值 | 检测当前玩家魔法攻击的下限和上限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMEMBERLEVEL",
+  "signature": "CHECKMEMBERLEVEL",
+  "desc": "A B | A=判断符 = B=数值 | 检查玩家当前会员等级",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMEMBERTYPE",
+  "signature": "CHECKMEMBERTYPE",
+  "desc": "A B | A=判断符 = B=数值 | 检查玩家当前的会员类型",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMONAREA",
+  "signature": "CHECKMONAREA",
+  "desc": "(无效)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMONMAP",
+  "signature": "CHECKMONMAP",
+  "desc": "A B | A=地图代码 B=数值 | 检测地图怪物数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMONPOS",
+  "signature": "CHECKMONPOS",
+  "desc": "A B | A=怪物名称 B= 地图编号 | 检测怪物某地图中是否存在有指定怪物，有则返回怪物坐标; 参数说明：(只会返回第一个怪物的坐标) $PARAM(31) -- 记录怪物X坐标 $PARAM(32) -- 记录怪物Y坐标",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMONTH",
+  "signature": "CHECKMONTH",
+  "desc": "A B | A： = B：月 | 检测月(1-12)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMP",
+  "signature": "CHECKMP",
+  "desc": "A B C D | A=判断符 = B=下限数值 C=判断符 = D=上限数值 | 检测当前玩家MP的下限和上限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKMYGUILD",
+  "signature": "CHECKMYGUILD",
+  "desc": "A B | A=行会名字A B=行会名字B | 检测两个行会是否敌对,不是返回true",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKNAMEIPLIST",
+  "signature": "CHECKNAMEIPLIST",
+  "desc": "A | A=文件路径 | 检测当前玩家名与IP在指定列表内数据是否匹配",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKNAMELISTPOSITION",
+  "signature": "CHECKNAMELISTPOSITION",
+  "desc": "A B | A=玩家列表文件名 B=位置 | 检测玩家名是否在指定文件的的指定位置内",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKOFGUILD",
+  "signature": "CHECKOFGUILD",
+  "desc": "A | A=行会名 | 检测当前玩家是否在指定行会内",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKONLINE",
+  "signature": "CHECKONLINE",
+  "desc": "A | A=玩家名 | 检测指定玩家是否在线",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKPAYMENT",
+  "signature": "CHECKPAYMENT",
+  "desc": "检测命令整理汇总",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKPETFOLLOW",
+  "signature": "CHECKPETFOLLOW",
+  "desc": "无 | 检测是否放出灵兽",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKPKPOINT",
+  "signature": "CHECKPKPOINT",
+  "desc": "A=0、1、2 判断当前角色状态 数字0白名、1黄名、2红名 | 检测玩家PK点数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKPOSEDIR",
+  "signature": "CHECKPOSEDIR",
+  "desc": "A B | A=(0-2) 0:不判断职业 1:职业相同 2:职业不同 B=返回对面角色的名字S变量 | 检测对面玩家职业信息并返回",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKPOSEGENDER",
+  "signature": "CHECKPOSEGENDER",
+  "desc": "A | A=性别. 可选Man或Woman | 检测对面玩家的性别",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKPOSEISMASTER",
+  "signature": "CHECKPOSEISMASTER",
+  "desc": "无 | 检测对面玩家是否为别人的师傅",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKPOSELEVEL",
+  "signature": "CHECKPOSELEVEL",
+  "desc": "A B | A=判断符 = B=数值 | 检测对面玩家等级",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKPOSEMARRY",
+  "signature": "CHECKPOSEMARRY",
+  "desc": "检测对方玩家是否结婚",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKPOSEMASTER",
+  "signature": "CHECKPOSEMASTER",
+  "desc": "无 | 检测对面的玩家是否为别人的徒弟",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKPRENTICECOUNT",
+  "signature": "CHECKPRENTICECOUNT",
+  "desc": "A B | A=判断符 = B=数值 | 检测徒弟数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKQUEST",
+  "signature": "CHECKQUEST",
+  "desc": "进入本地图执行任务脚本 格式：CHECKQUEST(Q001) 说明： Q001 代表脚本名。",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/913"
+ },
+ {
+  "name": "CHECKRANGEHUMCOUNTA",
+  "signature": "CHECKRANGEHUMCOUNTA",
+  "desc": "A B C D E F | A=地图编号，SELF表示当前玩家地图 B=x坐标 C=y坐标 D=范围大小 E=判断符 > < = \\ F=检测数值 | 检测一定范围内的玩家数量，包含元神",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKRANGEHUMCOUNTB",
+  "signature": "CHECKRANGEHUMCOUNTB",
+  "desc": "A B C D E F | A=地图编号，SELF表示当前玩家地图 B=x坐标 C=y坐标 D=范围大小 E=判断符 > < = \\ F=检测数值 | 检测一定范围内的玩家数量，不包含元神",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKRANGEMONCOUNT",
+  "signature": "CHECKRANGEMONCOUNT",
+  "desc": "A B C D E F | A=地图代码 B=坐标X C=坐标Y D=范围 E=判断符 = F=数量 | 检测指定范围内怪物数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKRENEWLEVEL",
+  "signature": "CHECKRENEWLEVEL",
+  "desc": "A B | A=判断符 = B=等级 | 检测玩家转生等级",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKSC",
+  "signature": "CHECKSC",
+  "desc": "A B C D | A=判断符 = B=下限数值 C=判断符 = D=上限数值 | 检测当前玩家道术力的下限和上限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKSERVERNAME",
+  "signature": "CHECKSERVERNAME",
+  "desc": "A | A=服务器名字 | 检测服务器名字",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKSIGNMAP",
+  "signature": "CHECKSIGNMAP",
+  "desc": "无 | 检查是否有死亡地点",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKSKILL",
+  "signature": "CHECKSKILL",
+  "desc": "A B C | A=技能 B=>、<、= C=等级 | 检测角色指定的技能等级",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKSLAVECOUNT",
+  "signature": "CHECKSLAVECOUNT",
+  "desc": "A B | A=判断符 = B=数量 | 检测宝宝数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKSLAVELEVEL",
+  "signature": "CHECKSLAVELEVEL",
+  "desc": "A B | A=判断符 = B=等级 | 检测宝宝最高等级",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKSLAVENAME",
+  "signature": "CHECKSLAVENAME",
+  "desc": "A B | A=宝宝名字 B=数量 | 检测玩家携带的宝宝名字是否大于等于指定的数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CheckStrForDigts",
+  "signature": "CheckStrForDigts",
+  "desc": "A=要检测的字符串 B=类型 | 参数B:不填默认为0 0=尾部是否带数字 1=头部是否带数字 2=字符串是否包含数值 | 检测字符串里是否包含数字",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKTREASUREBOXITEM",
+  "signature": "CHECKTREASUREBOXITEM",
+  "desc": "A B | A=物品名 B=数量 | 检测灵犀宝盒中指定数量的物品",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKTXT",
+  "signature": "CHECKTXT",
+  "desc": "A | A=文件路径 | 用于检测目标文件是否存在",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKUPGRADECOUNT",
+  "signature": "CHECKUPGRADECOUNT",
+  "desc": "A B C D | A=装备位置 B=属性位置 C=判断符 D=数值 | 检测指定位置装备对应位置的升级点数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKUSEITEM",
+  "signature": "CHECKUSEITEM",
+  "desc": "A | A=装备位置 | 检测当前玩家指定位置是否戴装备",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKUSERDATE",
+  "signature": "CHECKUSERDATE",
+  "desc": "A B C D E F | A=文件名 B=判断符 = C=天数 D=使用天数 E=剩余天数 F=1,表示忽略人物名,否则请留空 | 检查会员剩余剩余天数 相关命令: 加入会员人物及时间： ADDUSERDATE 会员.txt 删除会员人物及时间： DELUSERDATE 会员.txt",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKUSERGAP",
+  "signature": "CHECKUSERGAP",
+  "desc": "A B | A=判断符 = B=距离数值 | 本命令用于检测当前玩家与该NPC之间的距离",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKUSERPETGAP",
+  "signature": "CHECKUSERPETGAP",
+  "desc": "A B C | A=宠物名字 B=判断符= ^ C=数值 | 检测玩家与宠物之间的距离",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKUSERPOSGAP",
+  "signature": "CHECKUSERPOSGAP",
+  "desc": "A B C D E F | A=玩家名(SELF表示自己) B=地图编号 C=坐标X D=坐标Y E=判断符 = F=距离数值 | 检测玩家与指定坐标之间的距离",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKVALIDPARAM",
+  "signature": "CHECKVALIDPARAM A B C",
+  "desc": "A=类型 B=起始值 C=结束值 | 参数A: 0=param值 1=input值 2=自定义。比如:S0,S1 当参数A为0或1时 参数B：起始值 参数C：结束值 | 检测变量是否存在相同的ID",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKVAR",
+  "signature": "CHECKVAR",
+  "desc": "检测自定义变量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKVARLIST",
+  "signature": "CHECKVARLIST",
+  "desc": "A B | A=变量名 B=文件路径 | 检查指定变量内容是否在指定文本中存在",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "CHECKYEAR",
+  "signature": "CHECKYEAR",
+  "desc": "A B | A： = B：年 | 检测年(1988-????)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "COMPARETEXT",
+  "signature": "COMPARETEXT",
+  "desc": "A B C | A 字符 B 字符 C 0/1 | 检测A字符是否与B字符相同",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "Day",
+  "signature": "Day",
+  "desc": "天数",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1156"
+ },
+ {
+  "name": "DAYOFWEEK",
+  "signature": "DAYOFWEEK",
+  "desc": "A | sun 周日 mon 周一 tue 周二 wed 周三 thu 周四 fri 周五 sat 周六 | 检测星期",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "DAYTIME",
+  "signature": "DAYTIME",
+  "desc": "A | SUNRAISE 日出 DAY 白天 SUNSET 日落 NIGHT 夜晚 | 检测当前时段",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "EQUAL",
+  "signature": "EQUAL",
+  "desc": "=",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "GENDER",
+  "signature": "GENDER",
+  "desc": "A | A=性别. 可选Man或Woman | 检测当前玩家的性别",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "HasBuff",
+  "signature": "HasBuff",
+  "desc": "是否可省略 | 数值类型 | 说明",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1945"
+ },
+ {
+  "name": "HASPNEUMA",
+  "signature": "HASPNEUMA",
+  "desc": "A | A=1、2 | 检测是否存在内敛元神，参数值为(1、2)，不写A或者A=1参数默认为检测是否有元神，即外现元神;",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "HASTASK",
+  "signature": "HASTASK",
+  "desc": "A B | A=任务ID B=任务ID | 检测当前人物是否正在执行某个任务，A、B是任务ID，检测是否拥有参数1到参数2之间的任务！",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "HAVEGUILD",
+  "signature": "HAVEGUILD",
+  "desc": "无 | 检测玩家是否加入行会",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "HAVEMASTER",
+  "signature": "HAVEMASTER",
+  "desc": "无 | 检测是否有徒弟",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "HOUR",
+  "signature": "HOUR",
+  "desc": "A B | A=时 B=时 A和B同时有参数代表判断是否在A~B时 | 检测小时",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISADMIN",
+  "signature": "ISADMIN",
+  "desc": "无 | 检测是否为游戏管理员",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISATTACKALLYGUILD",
+  "signature": "ISATTACKALLYGUILD",
+  "desc": "是否为攻城方行会的联盟行会",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISATTACKGUILD",
+  "signature": "ISATTACKGUILD",
+  "desc": "检测玩家是否攻城方成员",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISBEAST",
+  "signature": "ISBEAST",
+  "desc": "无 | 检测是否为魂佑附体状态",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISCASTLEGUILD",
+  "signature": "ISCASTLEGUILD",
+  "desc": "检测玩家是否为沙城成员",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISCASTLEMASTER",
+  "signature": "ISCASTLEMASTER",
+  "desc": "无 | 检测玩家是否为沙城城主",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISDEFENSEALLYGUILD",
+  "signature": "ISDEFENSEALLYGUILD A",
+  "desc": "A=行会名 | 1.参数A有填行会名字 检测行会与指定行会是否为联盟 2.参数A不填则检测沙城行会与执行人行会是否为联盟(攻沙期间) | 是否为守城方行会的联盟行会",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISDEFENSEGUILD",
+  "signature": "ISDEFENSEGUILD",
+  "desc": "检测玩家是否守城方成员",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISDOSHOP",
+  "signature": "ISDOSHOP",
+  "desc": "无 | 检测当前人物是否处于摆摊状态",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISGROUPOWNER",
+  "signature": "ISGROUPOWNER",
+  "desc": "无 | 检测当前人物是否是组队的队长",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISGUILDMASTER",
+  "signature": "ISGUILDMASTER",
+  "desc": "A | 参数A： 0 或者不填 为 行会会长 1 副会长 2 同时检测 | 检测玩家是否为行会掌门",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISINSAFEZONE",
+  "signature": "ISINSAFEZONE",
+  "desc": "无 | 检测是否在安全区",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISNEWHUMAN",
+  "signature": "ISNEWHUMAN",
+  "desc": "无 | 检测玩家是否新人(第一次登录)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISOFFLINE",
+  "signature": "ISOFFLINE",
+  "desc": "无 | 检测玩家是否为离线挂机状态",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISONCASTLEWAR",
+  "signature": "ISONCASTLEWAR",
+  "desc": "检测是否在沙城攻城战期间",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISPNEUMA",
+  "signature": "ISPNEUMA",
+  "desc": "无 | 检测当前角色是元神还是玩家，如果是元神，则返回真",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISTAKEITEM",
+  "signature": "ISTAKEITEM",
+  "desc": "A | A=物品名 | 检测取走物品",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ISTOPLEVEL",
+  "signature": "ISTOPLEVEL",
+  "desc": "A B | A=0：只对玩家排名 1：只对元神排名 2：不区分玩家和元神 B=检测对象,当该参数为Self时表示检测自己 | 检测指定玩家是否是他(她)同性别且同职业当前在线玩家中的最高等级",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "Killbyhum",
+  "signature": "Killbyhum",
+  "desc": "检测当前是被人杀还是被怪杀死",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "LARGE",
+  "signature": "LARGE",
+  "desc": ">",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "Level",
+  "signature": "Level",
+  "desc": "等级",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1146"
+ },
+ {
+  "name": "MAPHUMISSAMEGROUP",
+  "signature": "MAPHUMISSAMEGROUP",
+  "desc": "A | A=地图编号，SELF表示当前玩家地图 | 检测指定地图中玩家是否都为同一队伍",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "MAPHUMISSAMEGUILD",
+  "signature": "MAPHUMISSAMEGUILD",
+  "desc": "A B | A=地图名 B=行会名 | 检测当前地图中的人物是否属于同一个行会",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "MAPRANGEHUM",
+  "signature": "MAPRANGEHUM",
+  "desc": "A B C D E F | A=地图代码 B=坐标X C=坐标Y D=范围 E= 判断符 = F=数量 | 检测指定地图指定范围的人数(含元神)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "MaxDC",
+  "signature": "MaxDC",
+  "desc": "物理攻击上限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1175"
+ },
+ {
+  "name": "MaxMC",
+  "signature": "MaxMC",
+  "desc": "魔法攻击上限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1175"
+ },
+ {
+  "name": "MaxMP",
+  "signature": "MaxMP",
+  "desc": "MP值上限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1175"
+ },
+ {
+  "name": "MaxSC",
+  "signature": "MaxSC",
+  "desc": "道术力上限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1175"
+ },
+ {
+  "name": "MIN",
+  "signature": "MIN",
+  "desc": "A B | A=分 B=分 A和B同时有参数代表判断是否在A~B分 | 检测分钟",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "MinDC",
+  "signature": "MinDC",
+  "desc": "物理攻击下限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1175"
+ },
+ {
+  "name": "MinHP",
+  "signature": "MinHP",
+  "desc": "HP值下限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1175"
+ },
+ {
+  "name": "MinMC",
+  "signature": "MinMC",
+  "desc": "魔法攻击下限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1175"
+ },
+ {
+  "name": "MinMP",
+  "signature": "MinMP",
+  "desc": "MP值下限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1175"
+ },
+ {
+  "name": "MinSC",
+  "signature": "MinSC",
+  "desc": "道术力下限",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1175"
+ },
+ {
+  "name": "Month",
+  "signature": "Month",
+  "desc": "月份",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1192"
+ },
+ {
+  "name": "OFFLINEPLAYERCOUNT",
+  "signature": "OFFLINEPLAYERCOUNT",
+  "desc": "A B | A=判断符 = B=数值 | 检测全服离线角色数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "ONLINELONGMIN",
+  "signature": "ONLINELONGMIN",
+  "desc": "A B | A： = B：在线时间.单位为分钟 | 检测当前玩家在线时间情况",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "PNEUMARELEASED",
+  "signature": "PNEUMARELEASED",
+  "desc": "无 | 检测当前人物是否释放出了分身（如果没有修炼元神，返回为False）",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "POS",
+  "signature": "POS",
+  "desc": "检测包含",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "POSEHAVEMASTER",
+  "signature": "POSEHAVEMASTER",
+  "desc": "无 | 检测对面玩家是否有徒弟",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "POSINLIST",
+  "signature": "POSINLIST",
+  "desc": "A B C | A=字符支持变量 B=文件路径 C=变量(可忽略) | //检测某文本中是否包含另外一段字符 //检测B文本中是否包含A内容，如果存在则返回内容至C变量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "RANDOM",
+  "signature": "RANDOM",
+  "desc": "A B C | A=数值 B=数值 c=数值(0=旧算法 1=新的算法默认0) | 在参数2中有参数1的概率触发执行 [@示范] #IF RANDOM 3 1000 #ACT SENDMSG 5 本次触发的概率为3/1000(千分之三) break 旧的算法说明： Random 1 2 从0 1 2中取一个随机数,结果小于等于1返回True 新算法说明： Random 1 2 从0 1中取一个随机数,结果小于1返回True",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "Range",
+  "signature": "Range",
+  "desc": "检测范围",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1171"
+ },
+ {
+  "name": "SMALL",
+  "signature": "SMALL",
+  "desc": "<",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+ },
+ {
+  "name": "Year",
+  "signature": "Year",
+  "desc": "年份",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1192"
+ },
+ {
+  "name": "CHECKQUALIFIEDITEMS",
+  "signature": "CHECKQUALIFIEDITEMS A B C D E",
+  "desc": "A=检测条件参数(如STDMODE/SHAPE/VALUE/ITEMEXT，多个条件时按顺序叠加检测) B=检测符(> < = 大于等于) C=数值 D=返回数量-整数型变量(可忽略) E=返回ID列表-字符型变量(可忽略) | 检测包裹满足条件的物品并返回数量",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/703"
+ },
+ {
+  "name": "CHECKMONEY",
+  "signature": "CHECKMONEY A B C",
+  "desc": "A=货币名称或编号 B=检测符(> < =) C=数量 | 检测新货币系统中指定货币的数量(货币数据库idx1-99)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/698"
+ },
+ {
+  "name": "CHECKBINDMONEY",
+  "signature": "CHECKBINDMONEY A B C",
+  "desc": "A=货币ID/货币名称/分组名称 B=检测符(> < = ?大于等于 !小于等于) C=检测数量 | 检测组合货币数量(分组内多种货币合并检测)",
+  "kind": "check",
+  "docUrl": "http://cshelp.996m2.com/web/#/17/1216"
+ }
+]

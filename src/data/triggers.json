@@ -1,0 +1,697 @@
+[
+  {
+    "name": "_队员加入",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "_队员退出",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "_加入队伍",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "_退出队伍",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "_物品掉落触发",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "_DiyMenu",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "_MonDropItemFun",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Addbag",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "AddJYHItem",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "AddMagicExpFunc",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "AddStorage",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "AppraisalItemX",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "Attack",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "AttackDamage",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "AttackDamage_Mon",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "AttackDamage_Play",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "AttackDamageBB",
+    "desc": "宝宝相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+  },
+  {
+    "name": "AutoKillStop",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "baobao",
+    "desc": "宝宝相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+  },
+  {
+    "name": "baobaobyebye",
+    "desc": "宝宝相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+  },
+  {
+    "name": "BeforeEatItem",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "beforeSpace",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "BeginMagic",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "BeginReleasePet",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "BiddingPaimaiItem",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "BigCharge",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Btn_Fun",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Btn_Pick",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Btn_Task",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Btn_Top",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "BuildGuild",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "BuyPaimaiItem",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "CancelTask",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "CanGetBackPaimaiItem",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "CanPaimaiItem",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "CanPushed",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "ChangeMoney",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "CheckBuildGuild",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "DeadDrop",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Disarm",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "DisposeMonGhost_Begin",
+    "desc": "心魔相关命令、触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1542"
+  },
+  {
+    "name": "DisposeMonGhost_end",
+    "desc": "心魔相关命令、触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1542"
+  },
+  {
+    "name": "DisposeMonGhost_Fail",
+    "desc": "心魔相关命令、触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1542"
+  },
+  {
+    "name": "DiyUseItem",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "DressUpgrade_Diy",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "DropBind",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "DropItem50",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "DropItemX",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "Evil_死亡触发",
+    "desc": "心魔相关命令、触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1542"
+  },
+  {
+    "name": "Evil_Login",
+    "desc": "心魔相关命令、触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1542"
+  },
+  {
+    "name": "FastMove",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Fastuse",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "FastUse",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Fastuseclose",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "FastUseClose",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "FcCharge",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Getexpfucn",
+    "desc": "获得经验触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/738"
+  },
+  {
+    "name": "GetExpFucn",
+    "desc": "获得经验触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/738"
+  },
+  {
+    "name": "GetPaimaiItem",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "GuildAddMember",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "GuildAddMemberAfter",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "GuildChiefDelMember",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "GuildClose",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "GuildCloseBefore",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "GuildDelMember",
+    "desc": "QManage",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/966"
+  },
+  {
+    "name": "GuildDelMemberBefore",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "InivitGuild",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "KillerAddPk",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "LowDura",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "MagFunc1",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "MagFuncX",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "MapTips",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "MiniMap",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "MiniMapList",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "MinMapNpc",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "MISS_ITEM",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "MobWG",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "MobWG_1",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "MountState",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Navigation",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "NewStdModeFunc990",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "NewStdModeFunc991",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "NewStdModeFuncX",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "NEWSTDMODEFUNCX",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "NextDie",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "NODRUEBEGIN",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "NoMonster",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "NPCSELL",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "NPInfo",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Offlinemode",
+    "desc": "QManage",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/966"
+  },
+  {
+    "name": "PickUpItem50",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "PickUpItems_End",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "PickUpItemX",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "PneumaSetting",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Pre_AddFriend",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Pre_CatchMonster",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Pre_DropItem",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Pre_MountState",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Pre_PickItem",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "QuickLocation",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "ReCharge",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "ReleasePet",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "ReloadAllNpc_Begin",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "ReloadAllNpc_End",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Resume",
+    "desc": "离线人物上线触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/742"
+  },
+  {
+    "name": "SHOP_LOW_PRICE",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Slavebb",
+    "desc": "宝宝相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+  },
+  {
+    "name": "SlavePanel",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "SlavePower",
+    "desc": "宝宝相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+  },
+  {
+    "name": "SlavePower206",
+    "desc": "宝宝相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+  },
+  {
+    "name": "StdModeFunc996",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "StdModeFuncX",
+    "desc": "物品相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
+  },
+  {
+    "name": "STDMODEFUNCX",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "struck",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Struck",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "StruckDamage",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "StruckDamageBB",
+    "desc": "宝宝相关触发",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/723"
+  },
+  {
+    "name": "SWLogin",
+    "desc": "QManage",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/966"
+  },
+  {
+    "name": "TakeOff0",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "TAKEOFF0",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "TakeOffAll",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "TakeOffX",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "TakeOn0",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "TAKEON0",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "TakeOnAll",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "TakeOnX",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "Triggerchat",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "UiStatus",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "UNIONLEAGUE_BF",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "UNIONWAR_BF",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "UpdateGuildNotice",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "UpdateMember",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "VerifyError",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "VerifyNot",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "VerifyOn",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "WeaponUnluck",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "WeaponUpgrade_Diy",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "YidunFJ",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  },
+  {
+    "name": "YidunJF",
+    "desc": "QFunction",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
+  }
+]

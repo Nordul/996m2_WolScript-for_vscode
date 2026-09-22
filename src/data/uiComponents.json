@@ -1,0 +1,1393 @@
+[
+  {
+    "name": "BagItems",
+    "params": [
+      {
+        "name": "x",
+        "desc": "偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "偏移Y坐标"
+      },
+      {
+        "name": "condition",
+        "desc": "筛选条件，可使用explain文件支持的变量。大于、小于用文字替代，其他运算符不变。字符串需要用单引号引起来，包括$NAME 变量"
+      },
+      {
+        "name": "bagitemid",
+        "desc": "包裹组件id，用于获取返回变量"
+      },
+      {
+        "name": "selectcount",
+        "desc": "可勾选数量。大于1时，到达可选择数量，点击下一个不再勾选。为1时，勾选时取消上一个勾选。"
+      },
+      {
+        "name": "count",
+        "desc": "每行格子数"
+      },
+      {
+        "name": "iwidth",
+        "desc": "每个格子宽度"
+      },
+      {
+        "name": "iheight",
+        "desc": "每个格子高度"
+      },
+      {
+        "name": "showtips",
+        "desc": "0：长按显示TIPS，1：单击或鼠标悬浮显示TIPS，2：双击显示显示TIPS"
+      },
+      {
+        "name": "width",
+        "desc": "组件宽度"
+      },
+      {
+        "name": "height",
+        "desc": "组件高度"
+      },
+      {
+        "name": "bgtype",
+        "desc": "0：不显示格子背景，1：显示默认格子背景， 素材路径：自定义格子背景，例:bgtype=picpackage/3/60001.png"
+      },
+      {
+        "name": "exclude",
+        "desc": "物品唯一id。设置不显示的物品，多个id以\",\"分割"
+      },
+      {
+        "name": "select",
+        "desc": "物品唯一id。物品默认带勾选"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，默认为0，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "link",
+        "desc": "点击按钮后的触发事件 @label"
+      },
+      {
+        "name": "link0",
+        "desc": "长按按钮后的触发事件 @label"
+      },
+      {
+        "name": "link2",
+        "desc": "双击按钮后的触发事件 @label"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1410",
+    "desc": "手游端包裹物品组件说明"
+  },
+  {
+    "name": "Button",
+    "params": [
+      {
+        "name": "nimg",
+        "desc": "正常显示图片路径"
+      },
+      {
+        "name": "pimg",
+        "desc": "按钮按下图片路径"
+      },
+      {
+        "name": "text",
+        "desc": "按钮上的文字"
+      },
+      {
+        "name": "color",
+        "desc": "按钮上文字的颜色0-255"
+      },
+      {
+        "name": "size",
+        "desc": "按钮上文字大小"
+      },
+      {
+        "name": "width",
+        "desc": "按钮图片宽度(一般默认即可，也可根据需要自行拉伸)"
+      },
+      {
+        "name": "height",
+        "desc": "按钮图片高度(一般默认即可，也可根据需要自行拉伸)"
+      },
+      {
+        "name": "bag",
+        "desc": "拖动物品放入对应包裹 1=本体包裹 2=宠物包裹 100=元神包裹"
+      },
+      {
+        "name": "dye",
+        "desc": "组件染色，使用16进制颜色"
+      },
+      {
+        "name": "grey",
+        "desc": "1=组件置灰"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，默认为0，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "link",
+        "desc": "点击按钮后的触发事件 @label"
+      },
+      {
+        "name": "link0",
+        "desc": "长按按钮后的触发事件 @label"
+      },
+      {
+        "name": "link2",
+        "desc": "双击按钮后的触发事件 @label"
+      },
+      {
+        "name": "ax",
+        "desc": "横向锚点"
+      },
+      {
+        "name": "ay",
+        "desc": "纵向锚点"
+      },
+      {
+        "name": "percentx",
+        "desc": "百分比X"
+      },
+      {
+        "name": "percenty",
+        "desc": "百分比Y"
+      },
+      {
+        "name": "rotate",
+        "desc": "顺时针旋转角度"
+      },
+      {
+        "name": "children",
+        "desc": "子组件id列表，子组件需要有id参数，多个子组件用\",\"分割"
+      },
+      {
+        "name": "tips",
+        "desc": "显示的tips"
+      },
+      {
+        "name": "tipssize",
+        "desc": "tips文字大小"
+      },
+      {
+        "name": "tipsex",
+        "desc": "其他组件的id，作为tips调用(无法与tips共存)"
+      },
+      {
+        "name": "tipsx",
+        "desc": "tips偏移X"
+      },
+      {
+        "name": "tipsy",
+        "desc": "tips偏移Y"
+      },
+      {
+        "name": "showtips",
+        "desc": "0：长按显示TIPS，1：单击或鼠标悬浮显示TIPS，2：双击显示显示TIPS"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/898",
+    "desc": "手游端自定义NPC按钮组件"
+  },
+  {
+    "name": "CheckBox",
+    "params": [
+      {
+        "name": "x",
+        "desc": "坐标x"
+      },
+      {
+        "name": "y",
+        "desc": "坐标y"
+      },
+      {
+        "name": "checkboxid",
+        "desc": "复选框ID(目前没有实际作用，可忽略)"
+      },
+      {
+        "name": "nimg",
+        "desc": "未选择时显示的图片"
+      },
+      {
+        "name": "pimg",
+        "desc": "选择时显示的图片"
+      },
+      {
+        "name": "default",
+        "desc": "默认选择状态 1显示勾选 0显示未选择"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/903",
+    "desc": "手游复选框组件说明"
+  },
+  {
+    "name": "Clock",
+    "params": [],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/923",
+    "desc": "手游端时间组件"
+  },
+  {
+    "name": "COUNTDOWN",
+    "params": [],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/923",
+    "desc": "手游端时间组件"
+  },
+  {
+    "name": "Effect",
+    "params": [
+      {
+        "name": "x",
+        "desc": "容器偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "容器偏移Y坐标"
+      },
+      {
+        "name": "effecttype",
+        "desc": "特效分类，0.普通特效 1.npc 2.怪物 3.Magic 4.角色 5.武器 6.翅膀 7.发型"
+      },
+      {
+        "name": "effectid",
+        "desc": "特效id，参考手游设计版F4"
+      },
+      {
+        "name": "sex",
+        "desc": "性别"
+      },
+      {
+        "name": "speed",
+        "desc": "播放速度"
+      },
+      {
+        "name": "count",
+        "desc": "播放次数"
+      },
+      {
+        "name": "act",
+        "desc": "动作"
+      },
+      {
+        "name": "dir",
+        "desc": "方向"
+      },
+      {
+        "name": "dye",
+        "desc": "组件染色，使用16进制颜色"
+      },
+      {
+        "name": "grey",
+        "desc": "1=组件置灰"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "rotate",
+        "desc": "顺时针旋转角度"
+      },
+      {
+        "name": "children",
+        "desc": "子组件id列表，子组件需要有id参数，多个子组件用\",\"分割"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/900",
+    "desc": "手游端自定义NPC内特效组件"
+  },
+  {
+    "name": "EquipShow",
+    "params": [
+      {
+        "name": "x",
+        "desc": "偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "偏移Y坐标"
+      },
+      {
+        "name": "width",
+        "desc": "宽度(默认即可)"
+      },
+      {
+        "name": "height",
+        "desc": "高度(默认即可)"
+      },
+      {
+        "name": "index",
+        "desc": "需要显示的物品装备位置"
+      },
+      {
+        "name": "showtips",
+        "desc": "是否展示物品描述，默认1开启展示，=0长按显示,=1单击显示,=2双击显示"
+      },
+      {
+        "name": "bgtype",
+        "desc": "未启用，参数默认即可"
+      },
+      {
+        "name": "source",
+        "desc": "1=显示元神物品"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "counttype",
+        "desc": "数量显示类型，0=不简写，1=简写无小数，2=简写有小数"
+      },
+      {
+        "name": "link",
+        "desc": "点击按钮后的触发事件 @label"
+      },
+      {
+        "name": "link0",
+        "desc": "长按按钮后的触发事件 @label"
+      },
+      {
+        "name": "link2",
+        "desc": "双击按钮后的触发事件 @label"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/907",
+    "desc": "手游端显示当前身上佩戴装备"
+  },
+  {
+    "name": "Frames",
+    "params": [
+      {
+        "name": "x",
+        "desc": "偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "偏移Y坐标"
+      },
+      {
+        "name": "count",
+        "desc": "播放多少张图片 ,填写0的话,客户端自动检索素材数量"
+      },
+      {
+        "name": "prefix",
+        "desc": "播放图片的前缀名(必须配置路径)，比如配置为 public/expic/00089\\_ 配置的图片前缀名必须一致，其他图片应该是 00089\\_n.png,第一张则是00089.png"
+      },
+      {
+        "name": "suffix",
+        "desc": "播放图片的后缀名 .png .jpg 等"
+      },
+      {
+        "name": "loop",
+        "desc": "是否循环 -1.循环 1.播放1次 2.播放2次"
+      },
+      {
+        "name": "speed",
+        "desc": "播放速度 每张图片播放的间隔 100为1毫秒"
+      },
+      {
+        "name": "blend",
+        "desc": "通道"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/901",
+    "desc": "手游端自定义序列帧播放"
+  },
+  {
+    "name": "GoodsShow",
+    "params": [
+      {
+        "name": "x",
+        "desc": "偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "偏移Y坐标"
+      },
+      {
+        "name": "width",
+        "desc": "宽度(默认即可)"
+      },
+      {
+        "name": "height",
+        "desc": "高度(默认即可)"
+      },
+      {
+        "name": "index",
+        "desc": "需要显示的物品的makeindex"
+      },
+      {
+        "name": "showtips",
+        "desc": "是否展示物品描述，默认1开启展示，=0长按显示,=1单击显示,=2双击显示"
+      },
+      {
+        "name": "bgtype",
+        "desc": "未启用，参数默认即可"
+      },
+      {
+        "name": "state",
+        "desc": "是否同步包裹勾选,开启后使用selectbagitem勾选物品后该组件也会显示勾选"
+      },
+      {
+        "name": "showcount",
+        "desc": "显示物品数量"
+      },
+      {
+        "name": "source",
+        "desc": "1=显示元神物品"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "counttype",
+        "desc": "数量显示类型，0=不简写，1=简写无小数，2=简写有小数"
+      },
+      {
+        "name": "link",
+        "desc": "点击按钮后的触发事件 @label"
+      },
+      {
+        "name": "link0",
+        "desc": "长按按钮后的触发事件 @label"
+      },
+      {
+        "name": "link2",
+        "desc": "双击按钮后的触发事件 @label"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/909",
+    "desc": "手游端自定义物品展示组件"
+  },
+  {
+    "name": "Img",
+    "params": [
+      {
+        "name": "x",
+        "desc": "图片偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "图片偏移Y坐标"
+      },
+      {
+        "name": "show",
+        "desc": "处于主界面的位置（1-9）对应屏幕中9个默认锚点 默认为0"
+      },
+      {
+        "name": "move",
+        "desc": "默认为0， 1=可拖动，关闭复位，2=可拖动，关闭不复位，3=支持将其拖拽至有参数dlink的组件上，触发该组件的dlink标签标签写到QF中"
+      },
+      {
+        "name": "dtime",
+        "desc": "配合参数move=3使用，配置拖动组件重现时间"
+      },
+      {
+        "name": "bg",
+        "desc": "等于1代表是菜单背景图片，等于0代表非菜单背景"
+      },
+      {
+        "name": "img",
+        "desc": "图片素材在手游端素材包里面的位置，需要路径+文件名"
+      },
+      {
+        "name": "width",
+        "desc": "图片宽度(一般默认即可，也可根据需要自行拉伸)"
+      },
+      {
+        "name": "height",
+        "desc": "图片高度(一般默认即可，也可根据需要自行拉伸)"
+      },
+      {
+        "name": "reset",
+        "desc": "默认为1"
+      },
+      {
+        "name": "loadDelay",
+        "desc": "是否延迟加载 0=容器内的组件一次性显示 1=容器内的组件逐帧加载（列表内的组件会表现出闪烁）"
+      },
+      {
+        "name": "loadcount",
+        "desc": "第一帧加载组件数量，必须loadDelay=1"
+      },
+      {
+        "name": "loadStep",
+        "desc": "后续每帧加载组件数量，必须loadDelay=1"
+      },
+      {
+        "name": "dye",
+        "desc": "组件染色，使用16进制颜色"
+      },
+      {
+        "name": "grey",
+        "desc": "1=组件置灰"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "ax",
+        "desc": "横向锚点"
+      },
+      {
+        "name": "ay",
+        "desc": "纵向锚点"
+      },
+      {
+        "name": "percentx",
+        "desc": "百分比X"
+      },
+      {
+        "name": "percenty",
+        "desc": "百分比Y"
+      },
+      {
+        "name": "scale9t",
+        "desc": "顶部不拉伸像素"
+      },
+      {
+        "name": "scale9b",
+        "desc": "底部不拉伸像素"
+      },
+      {
+        "name": "scale9l",
+        "desc": "左侧不拉伸像素"
+      },
+      {
+        "name": "scale9r",
+        "desc": "右侧不拉伸像素"
+      },
+      {
+        "name": "rotate",
+        "desc": "顺时针旋转角度"
+      },
+      {
+        "name": "children",
+        "desc": "子组件id列表，子组件需要有id参数，多个子组件用\",\"分割"
+      },
+      {
+        "name": "tips",
+        "desc": "显示的tips"
+      },
+      {
+        "name": "tipssize",
+        "desc": "tips文字大小"
+      },
+      {
+        "name": "tipsex",
+        "desc": "其他组件的id，作为tips调用(无法与tips共存)"
+      },
+      {
+        "name": "tipsx",
+        "desc": "tips偏移X"
+      },
+      {
+        "name": "tipsy",
+        "desc": "tips偏移Y"
+      },
+      {
+        "name": "showtips",
+        "desc": "0：长按显示TIPS，1：单击或鼠标悬浮显示TIPS，2：双击显示显示TIPS"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/897",
+    "desc": "手游端自定义图片组件"
+  },
+  {
+    "name": "Input",
+    "params": [
+      {
+        "name": "inputid",
+        "desc": "(0~9),输入框ID,用于提交数据"
+      },
+      {
+        "name": "type",
+        "desc": "输入类型 0任意文本 1数字 2密码"
+      },
+      {
+        "name": "place",
+        "desc": "空着时提醒文本"
+      },
+      {
+        "name": "placecolor",
+        "desc": "空着时提醒文本颜色"
+      },
+      {
+        "name": "width",
+        "desc": "输入框宽度"
+      },
+      {
+        "name": "height",
+        "desc": "输入框高度"
+      },
+      {
+        "name": "color",
+        "desc": "输入文本颜色"
+      },
+      {
+        "name": "size",
+        "desc": "输入文本大小"
+      },
+      {
+        "name": "mincount",
+        "desc": "最小输入字符数(数字、字母、汉字均算一个字符)"
+      },
+      {
+        "name": "maxcount",
+        "desc": "最大输入字符数(数字、字母、汉字均算一个字符)"
+      },
+      {
+        "name": "sensitive",
+        "desc": "=0时不走敏感词验证（本地和易盾都不走）默认=1"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/902",
+    "desc": "手游端自定义输入框说明"
+  },
+  {
+    "name": "ITEMBOX",
+    "params": [
+      {
+        "name": "x",
+        "desc": "偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "偏移Y坐标"
+      },
+      {
+        "name": "width",
+        "desc": "放取框宽度"
+      },
+      {
+        "name": "height",
+        "desc": "放取框高度"
+      },
+      {
+        "name": "boxindex",
+        "desc": "放取框的ID号"
+      },
+      {
+        "name": "stdmode",
+        "desc": "放入类型 多个之间用逗号连接 &#42;，代表所有物品可放入"
+      },
+      {
+        "name": "img",
+        "desc": "物品放取框的背景图片"
+      },
+      {
+        "name": "link",
+        "desc": "放入物品触发事件 @label"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/905",
+    "desc": "手游端放取框组件"
+  },
+  {
+    "name": "ItemShow",
+    "params": [
+      {
+        "name": "x",
+        "desc": "偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "偏移Y坐标"
+      },
+      {
+        "name": "width",
+        "desc": "宽度"
+      },
+      {
+        "name": "height",
+        "desc": "高度"
+      },
+      {
+        "name": "itemid",
+        "desc": "需要显示的物品looks"
+      },
+      {
+        "name": "itemcount",
+        "desc": "默认1，大于1时显示数量"
+      },
+      {
+        "name": "name",
+        "desc": "需要显示出的物品名字，调用数据库属性根据此项参数"
+      },
+      {
+        "name": "bgtype",
+        "desc": "物品背景图片，类似img组件的img参数"
+      },
+      {
+        "name": "showtips",
+        "desc": "是否显示物品Tips，=0长按显示,=1单击显示,=2双击显示"
+      },
+      {
+        "name": "compare",
+        "desc": "是否显示装备对比"
+      },
+      {
+        "name": "drop",
+        "desc": "=1拖动丢弃金币"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "counttype",
+        "desc": "数量显示类型，0=不简写，1=简写无小数，2=简写有小数"
+      },
+      {
+        "name": "link",
+        "desc": "点击按钮后的触发事件 @label"
+      },
+      {
+        "name": "link0",
+        "desc": "长按按钮后的触发事件 @label"
+      },
+      {
+        "name": "link2",
+        "desc": "双击按钮后的触发事件 @label"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/906",
+    "desc": "手游端展示数据库物品"
+  },
+  {
+    "name": "Layout",
+    "params": [
+      {
+        "name": "x",
+        "desc": "容器偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "容器偏移Y坐标"
+      },
+      {
+        "name": "width",
+        "desc": "容器宽度"
+      },
+      {
+        "name": "height",
+        "desc": "容器高度"
+      },
+      {
+        "name": "color",
+        "desc": "容器背景颜色，留空为透明"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，默认为0，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "link",
+        "desc": "点击按钮后的触发事件 @label"
+      },
+      {
+        "name": "link0",
+        "desc": "长按按钮后的触发事件 @label"
+      },
+      {
+        "name": "link2",
+        "desc": "双击按钮后的触发事件 @label"
+      },
+      {
+        "name": "ax",
+        "desc": "横向锚点"
+      },
+      {
+        "name": "ay",
+        "desc": "纵向锚点"
+      },
+      {
+        "name": "percentx",
+        "desc": "百分比X"
+      },
+      {
+        "name": "percenty",
+        "desc": "百分比Y"
+      },
+      {
+        "name": "rotate",
+        "desc": "顺时针旋转角度"
+      },
+      {
+        "name": "children",
+        "desc": "子组件id列表，子组件需要有id参数，多个子组件用\",\"分割"
+      },
+      {
+        "name": "anim",
+        "desc": "是否开启移动动画 0=关闭，1=开启"
+      },
+      {
+        "name": "mx",
+        "desc": "相对原坐标的横向移动"
+      },
+      {
+        "name": "my",
+        "desc": "相对原坐标的纵向移动"
+      },
+      {
+        "name": "mtime",
+        "desc": "动画的持续时间 毫秒"
+      },
+      {
+        "name": "mloop",
+        "desc": "循环播放次数0=无限循环"
+      },
+      {
+        "name": "rotateAnim",
+        "desc": "是否开启旋转动画 0=关闭，1=开启"
+      },
+      {
+        "name": "rotateAngle",
+        "desc": "总旋转角度"
+      },
+      {
+        "name": "rotateTime",
+        "desc": "动画的持续时间 秒"
+      },
+      {
+        "name": "rotateLoop",
+        "desc": "循环播放次数0=无限循环"
+      },
+      {
+        "name": "skewAnim",
+        "desc": "是否开启倾斜 0=关闭，1=开启"
+      },
+      {
+        "name": "skewx",
+        "desc": "x轴倾斜角度"
+      },
+      {
+        "name": "skewy",
+        "desc": "y轴倾斜角度"
+      },
+      {
+        "name": "scrolldirection",
+        "desc": "滚动方向 暂时只有1，横向"
+      },
+      {
+        "name": "scrollType",
+        "desc": "滚动方式 暂时只有1 从右至左，消失后再次从右侧滚入"
+      },
+      {
+        "name": "scrollSpeed",
+        "desc": "滚动速度，1秒滚动N个像素点"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/899",
+    "desc": "手游端基础容器组件"
+  },
+  {
+    "name": "ListView",
+    "params": [
+      {
+        "name": "x",
+        "desc": "文本偏移X"
+      },
+      {
+        "name": "y",
+        "desc": "文本偏移Y"
+      },
+      {
+        "name": "children",
+        "desc": "容器内子控件的ID号"
+      },
+      {
+        "name": "direction",
+        "desc": "容器内空间滑动方向 1竖向 2横向"
+      },
+      {
+        "name": "bounce",
+        "desc": "滑动到底之后是否有个弹性效果 就是弹回 1是 0否"
+      },
+      {
+        "name": "margin",
+        "desc": "子控件之间的坐标间隔"
+      },
+      {
+        "name": "reload",
+        "desc": "刷新面板=1 不刷新=0"
+      },
+      {
+        "name": "default",
+        "desc": "索引跳转第几个容器（难以描述，自己测试）"
+      },
+      {
+        "name": "img",
+        "desc": "增加滑动指示素材"
+      },
+      {
+        "name": "color",
+        "desc": "列表容器背景色，需要透明请删除color参数"
+      },
+      {
+        "name": "colcount",
+        "desc": "每行组件的数量"
+      },
+      {
+        "name": "colmargin",
+        "desc": "每行的间隔"
+      },
+      {
+        "name": "colwidth",
+        "desc": "每个子组件的宽度"
+      },
+      {
+        "name": "colheight",
+        "desc": "每行的高度"
+      },
+      {
+        "name": "linktop",
+        "desc": "到顶后再上拉触发"
+      },
+      {
+        "name": "linkbottom",
+        "desc": "到底后再上拉触发"
+      },
+      {
+        "name": "defaultex",
+        "desc": "列表滚动。格式:像素,毫秒"
+      },
+      {
+        "name": "pos",
+        "desc": "1=关闭界面后依然会记录当前列表滚动位置"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "verticalscroll",
+        "desc": "1=显示垂直滚动条，0=隐藏垂直滚动条(默认)"
+      },
+      {
+        "name": "horizontalscroll",
+        "desc": "1=显示水平滚动条，0=隐藏水平滚动条(默认)"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/904",
+    "desc": "手游端列表容器说明"
+  },
+  {
+    "name": "LoadingBar",
+    "params": [
+      {
+        "name": "x",
+        "desc": "偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "偏移Y坐标"
+      },
+      {
+        "name": "maxLen",
+        "desc": "进度条最大长度"
+      },
+      {
+        "name": "curLen",
+        "desc": "进度条当前长度"
+      },
+      {
+        "name": "img",
+        "desc": "进度条图片(路径+文件名)"
+      },
+      {
+        "name": "width",
+        "desc": "进度条宽度"
+      },
+      {
+        "name": "height",
+        "desc": "进度条高度"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/908",
+    "desc": "手游端自定义进度条"
+  },
+  {
+    "name": "MenuBtn",
+    "params": [
+      {
+        "name": "menuindex",
+        "desc": "下拉框编号"
+      },
+      {
+        "name": "default",
+        "desc": "默认选中项(0开始)"
+      },
+      {
+        "name": "combobox",
+        "desc": "下拉框内容(,分隔 如 回城石,回城神石,回城卷轴)"
+      },
+      {
+        "name": "link",
+        "desc": "为点击标签"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/10398",
+    "desc": "手游端下拉框组件"
+  },
+  {
+    "name": "PageView",
+    "params": [
+      {
+        "name": "children",
+        "desc": "容器内子控件的ID号"
+      },
+      {
+        "name": "direction",
+        "desc": "容器内空间滑动方向 1竖向 2横向"
+      },
+      {
+        "name": "width",
+        "desc": "页面宽度"
+      },
+      {
+        "name": "height",
+        "desc": "页面高度"
+      },
+      {
+        "name": "img",
+        "desc": "增加滑动指示素材"
+      },
+      {
+        "name": "color",
+        "desc": "列表容器背景色，需要透明请删除color参数"
+      },
+      {
+        "name": "plink",
+        "desc": "@Label 翻页触发，在对应标签返回参数<$996(标签名).id>，返回界面id"
+      },
+      {
+        "name": "pos",
+        "desc": "pos=1时，关闭npc界面保存当前页数，0或不填不保存"
+      },
+      {
+        "name": "default",
+        "desc": "打开界面的默认页"
+      },
+      {
+        "name": "defaultex",
+        "desc": "打开界面后翻页至对应页，defaultex=页码，时间 存在defaultex时，default无效"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1412",
+    "desc": "手游端翻页容器说明"
+  },
+  {
+    "name": "PlayerPanel",
+    "params": [
+      {
+        "name": "showtips",
+        "desc": "0：长按显示TIPS，1：单击或鼠标悬浮显示TIPS，2：双击显示显示TIPS"
+      },
+      {
+        "name": "slot",
+        "desc": "可显示装备位置 例如:0,1,3 显示衣服 武器 项链"
+      },
+      {
+        "name": "player",
+        "desc": "玩家名"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "shownode",
+        "desc": "1=隐藏角色模型"
+      },
+      {
+        "name": "takeoff",
+        "desc": "1=双击可以脱下自己装备"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1420",
+    "desc": "手游端自定义角色界面组件"
+  },
+  {
+    "name": "RText",
+    "params": [
+      {
+        "name": "x",
+        "desc": "文本偏移X"
+      },
+      {
+        "name": "y",
+        "desc": "文本偏移Y"
+      },
+      {
+        "name": "color",
+        "desc": "富文本内文文本基础颜色"
+      },
+      {
+        "name": "size",
+        "desc": "文本大小"
+      },
+      {
+        "name": "text",
+        "desc": "文本内容，可以是各种内容 <>自定义颜色文字需要/FCOLOR=(0-255)来配置颜色，比如 也可以在内容内插入文字跳转标签 比如 \\测试说明/@测试说明 和端游自定义文字位置意思一致"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "ax",
+        "desc": "横向锚点"
+      },
+      {
+        "name": "ay",
+        "desc": "纵向锚点"
+      },
+      {
+        "name": "percentx",
+        "desc": "百分比X"
+      },
+      {
+        "name": "percenty",
+        "desc": "百分比Y"
+      },
+      {
+        "name": "width",
+        "desc": "宽"
+      },
+      {
+        "name": "height",
+        "desc": "高"
+      },
+      {
+        "name": "children",
+        "desc": "子组件id列表，子组件需要有id参数，多个子组件用\",\"分割"
+      },
+      {
+        "name": "rotate",
+        "desc": "顺时针旋转角度"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/896",
+    "desc": "手游端自定义富文本组件"
+  },
+  {
+    "name": "Skillicon",
+    "params": [
+      {
+        "name": "showtips",
+        "desc": "是否显示tips"
+      },
+      {
+        "name": "bgtype",
+        "desc": "是否带背景框"
+      },
+      {
+        "name": "mask",
+        "desc": "是否加黑色透明遮罩"
+      },
+      {
+        "name": "name",
+        "desc": "要显示的技能"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1223",
+    "desc": "手游端自定义技能组件"
+  },
+  {
+    "name": "Text",
+    "params": [
+      {
+        "name": "x",
+        "desc": "文本偏移X"
+      },
+      {
+        "name": "y",
+        "desc": "文本偏移Y"
+      },
+      {
+        "name": "color",
+        "desc": "文本颜色，可填写多个值，代表1秒变色1次，变色为填写的颜色，使用,号隔开"
+      },
+      {
+        "name": "size",
+        "desc": "文本大小"
+      },
+      {
+        "name": "outline",
+        "desc": "文本描边大小"
+      },
+      {
+        "name": "outlinecolor",
+        "desc": "文本描边颜色"
+      },
+      {
+        "name": "text",
+        "desc": "文本内容"
+      },
+      {
+        "name": "link",
+        "desc": "事件名@label，代表点击文字后触发@label，可省略本参数代表非触发文本"
+      },
+      {
+        "name": "ver",
+        "desc": "垂直方向，0=顶对齐，1=居中，2=底对齐"
+      },
+      {
+        "name": "hor",
+        "desc": "水平方向，0=左对齐，1=居中，2=右对齐"
+      },
+      {
+        "name": "scrollWidth",
+        "desc": "文本滚动长度"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "ax",
+        "desc": "横向锚点"
+      },
+      {
+        "name": "ay",
+        "desc": "纵向锚点"
+      },
+      {
+        "name": "percentx",
+        "desc": "百分比X"
+      },
+      {
+        "name": "percenty",
+        "desc": "百分比Y"
+      },
+      {
+        "name": "width",
+        "desc": "宽"
+      },
+      {
+        "name": "height",
+        "desc": "高"
+      },
+      {
+        "name": "children",
+        "desc": "子组件id列表，子组件需要有id参数，多个子组件用\",\"分割"
+      },
+      {
+        "name": "rotate",
+        "desc": "顺时针旋转角度"
+      },
+      {
+        "name": "tips",
+        "desc": "显示的tips"
+      },
+      {
+        "name": "tipssize",
+        "desc": "tips文字大小"
+      },
+      {
+        "name": "tipsex",
+        "desc": "其他组件的id，作为tips调用(无法与tips，scrollWidth共存)"
+      },
+      {
+        "name": "tipsx",
+        "desc": "tips偏移X"
+      },
+      {
+        "name": "tipsy",
+        "desc": "tips偏移Y"
+      },
+      {
+        "name": "showtips",
+        "desc": "0：长按显示TIPS，1：单击或鼠标悬浮显示TIPS，2：双击显示显示TIPS"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/895",
+    "desc": "手游端自定义文本组件"
+  },
+  {
+    "name": "TIMETIPS",
+    "params": [
+      {
+        "name": "x",
+        "desc": "偏移X坐标"
+      },
+      {
+        "name": "y",
+        "desc": "偏移Y坐标"
+      },
+      {
+        "name": "color",
+        "desc": "倒计时文本的颜色"
+      },
+      {
+        "name": "size",
+        "desc": "倒计时文本的字体大小"
+      },
+      {
+        "name": "time",
+        "desc": "倒计时的秒数"
+      },
+      {
+        "name": "count",
+        "desc": "循环次数"
+      },
+      {
+        "name": "text",
+        "desc": "组件除了时间之外显示的文字，%s是倒计时时间显示的位置"
+      },
+      {
+        "name": "oftext",
+        "desc": "倒计时结束显示文字"
+      },
+      {
+        "name": "ofsize",
+        "desc": "倒计时结束显示文字颜色"
+      },
+      {
+        "name": "ofcolor",
+        "desc": "倒计时结束显示文字字号"
+      },
+      {
+        "name": "outline",
+        "desc": "文本描边大小"
+      },
+      {
+        "name": "outlinecolor",
+        "desc": "文本描边颜色"
+      },
+      {
+        "name": "_localZOrder",
+        "desc": "组件层级，数值越大的越后渲染，越小的越先渲染"
+      },
+      {
+        "name": "link",
+        "desc": "倒计时结束后前往的标签@label"
+      }
+    ],
+    "docUrl": "http://cshelp.996m2.com/web/#/17/923",
+    "desc": "手游端时间组件"
+  }
+]

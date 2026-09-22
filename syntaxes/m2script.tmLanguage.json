@@ -1,0 +1,358 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "996M2 Script",
+  "scopeName": "source.m2script",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#sections"
+    },
+    {
+      "include": "#callCmd"
+    },
+    {
+      "include": "#sayLink"
+    },
+    {
+      "include": "#uiComponent"
+    },
+    {
+      "include": "#caretFn"
+    },
+    {
+      "include": "#sysVarCall"
+    },
+    {
+      "include": "#cfgRef"
+    },
+    {
+      "include": "#sysVar"
+    },
+    {
+      "include": "#strCall"
+    },
+    {
+      "include": "#customVarDecl"
+    },
+    {
+      "include": "#customVarOp"
+    },
+    {
+      "include": "#labelDef"
+    },
+    {
+      "include": "#namedVar"
+    },
+    {
+      "include": "#typedVar"
+    },
+    {
+      "include": "#mark"
+    },
+    {
+      "include": "#labelRef"
+    },
+    {
+      "include": "#commands"
+    },
+    {
+      "include": "#negation"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#operators"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.semicolon.m2script",
+          "match": "(^|\\s);.*$"
+        },
+        {
+          "name": "comment.line.double-slash.m2script",
+          "match": "//.*$"
+        }
+      ]
+    },
+    "sections": {
+      "name": "keyword.control.section.m2script",
+      "match": "(?i)^\\s*#(ELSEACT|ELSESAY|ELSEIF|IFONE|AUTORUN|IF|ACT|SAY)\\b"
+    },
+    "callCmd": {
+      "begin": "^(\\s*)((?i:#CALL))\\b",
+      "beginCaptures": {
+        "2": {
+          "name": "support.function.command.m2script"
+        }
+      },
+      "end": "$",
+      "name": "meta.call.m2script",
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "name": "string.other.path.m2script",
+          "match": "\\[[^\\]]+\\]"
+        },
+        {
+          "include": "#labelRef"
+        }
+      ]
+    },
+    "labelDef": {
+      "name": "entity.name.type.label.m2script",
+      "match": "\\[@[^\\]\\s]+\\]"
+    },
+    "labelRef": {
+      "name": "entity.name.type.label.m2script",
+      "match": "@[A-Za-z0-9_\\-一-鿿]+"
+    },
+    "sayLink": {
+      "begin": "\\\\<",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.tag.m2script"
+        }
+      },
+      "end": "\\\\>",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.tag.m2script"
+        }
+      },
+      "name": "meta.link.m2script",
+      "patterns": [
+        {
+          "include": "#labelRef"
+        },
+        {
+          "include": "#caretFn"
+        },
+        {
+          "include": "#cfgRef"
+        },
+        {
+          "include": "#sysVarCall"
+        },
+        {
+          "include": "#sysVar"
+        },
+        {
+          "name": "string.other.link.m2script",
+          "match": "[^\\\\>@]+"
+        }
+      ]
+    },
+    "uiComponent": {
+      "begin": "(<)(PlayerPanel|LoadingBar|ScrollView|COUNTDOWN|EquipShow|GoodsShow|Skillicon|BagItems|CheckBox|ItemShow|ListView|PageView|TIMETIPS|DropDown|RichText|Progress|ITEMBOX|MenuBtn|TabView|EditBox|Button|Effect|Frames|Layout|Slider|Clock|Input|RText|Text|Img)(?=[|>])",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.m2script"
+        },
+        "2": {
+          "name": "entity.name.tag.component.m2script"
+        }
+      },
+      "end": ">",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.tag.end.m2script"
+        }
+      },
+      "name": "meta.tag.component.m2script",
+      "patterns": [
+        {
+          "include": "#caretFn"
+        },
+        {
+          "include": "#cfgRef"
+        },
+        {
+          "include": "#sysVarCall"
+        },
+        {
+          "include": "#sysVar"
+        },
+        {
+          "include": "#strCall"
+        },
+        {
+          "include": "#typedVar"
+        },
+        {
+          "include": "#labelRef"
+        },
+        {
+          "name": "punctuation.separator.attribute.m2script",
+          "match": "\\|"
+        },
+        {
+          "match": "([A-Za-z_][A-Za-z0-9_]*)(=)",
+          "captures": {
+            "1": {
+              "name": "entity.other.attribute-name.m2script"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.m2script"
+            }
+          }
+        },
+        {
+          "name": "string.other.value.m2script",
+          "match": "(?<==)[^|>=<]+"
+        },
+        {
+          "include": "#numbers"
+        }
+      ]
+    },
+    "sysVarCall": {
+      "begin": "(<\\$)((?i:STR|HUMAN|GUILD|GLOBAL|MONEY|BINDMONEY|PARAM|CUSTOMVALUE))(\\()",
+      "beginCaptures": {
+        "0": {
+          "name": "support.variable.system.m2script"
+        }
+      },
+      "end": "(\\))(>)",
+      "endCaptures": {
+        "0": {
+          "name": "support.variable.system.m2script"
+        }
+      },
+      "name": "meta.variable.call.m2script",
+      "patterns": [
+        {
+          "include": "#typedVar"
+        },
+        {
+          "include": "#namedVar"
+        },
+        {
+          "include": "#numbers"
+        },
+        {
+          "name": "entity.name.variable.custom.m2script",
+          "match": "[A-Za-z0-9_一-鿿]+"
+        }
+      ]
+    },
+    "cfgRef": {
+      "name": "support.variable.system.m2script",
+      "match": "<\\$[A-Za-z][A-Za-z0-9_一-鿿]*\\([^>]*\\)>"
+    },
+    "sysVar": {
+      "name": "support.variable.system.m2script",
+      "match": "<\\$[A-Za-z0-9_]+>"
+    },
+    "strCall": {
+      "begin": "(\\$)((?i:STR|PARAM|996|MONEY|BINDMONEY|CUSTOMVALUE|GROUPCOMMON))(\\()",
+      "beginCaptures": {
+        "0": {
+          "name": "support.variable.system.m2script"
+        }
+      },
+      "end": "(\\))",
+      "endCaptures": {
+        "0": {
+          "name": "support.variable.system.m2script"
+        }
+      },
+      "name": "meta.variable.call.m2script",
+      "patterns": [
+        {
+          "include": "#strCall"
+        },
+        {
+          "include": "#typedVar"
+        },
+        {
+          "include": "#namedVar"
+        },
+        {
+          "include": "#numbers"
+        },
+        {
+          "name": "entity.name.variable.custom.m2script",
+          "match": "[A-Za-z0-9_一-鿿]+"
+        }
+      ]
+    },
+    "customVarDecl": {
+      "match": "^(\\s*)((?i:VAR))\\s+((?i:Integer|String))\\s+((?i:Global|Guild|Human))\\s+([^\\s;]+)",
+      "captures": {
+        "2": {
+          "name": "support.function.command.m2script"
+        },
+        "3": {
+          "name": "storage.type.m2script"
+        },
+        "4": {
+          "name": "storage.modifier.m2script"
+        },
+        "5": {
+          "name": "entity.name.variable.custom.m2script"
+        }
+      }
+    },
+    "customVarOp": {
+      "match": "^(\\s*)((?i:CALCVAR|CHECKVAR|SAVEVAR))\\s+((?i:Global|Guild|Human))\\s+([^\\s;]+)",
+      "captures": {
+        "2": {
+          "name": "support.function.command.m2script"
+        },
+        "3": {
+          "name": "storage.modifier.m2script"
+        },
+        "4": {
+          "name": "entity.name.variable.custom.m2script"
+        }
+      }
+    },
+    "namedVar": {
+      "name": "variable.other.named.m2script",
+      "match": "\\b[A-Za-z]\\$[A-Za-z0-9_一-鿿]+"
+    },
+    "typedVar": {
+      "name": "variable.other.typed.m2script",
+      "match": "\\b[ASPDGIMUTJZaspgimutjz]\\d{1,3}\\b"
+    },
+    "mark": {
+      "name": "variable.other.mark.m2script",
+      "match": "\\[\\d{1,3}\\]"
+    },
+    "negation": {
+      "name": "keyword.operator.logical.not.m2script",
+      "match": "!(?=[A-Za-z])"
+    },
+    "commands": {
+      "match": "^(\\s*)(!?)((?i:CHECKGUILDSTABILITYPOINT|CHECKGUILDFLOURISHPOINT|CHECKMAPMONNAMECOUNTEX|UPGRADEQUALIFIEDITEMS|CHECKNAMELISTPOSITION|CHECKGUILDAURAEPOINT|CHECKGUILDBUILDPOINT|CHECKGUILDPUBLICGOLD|CHECKGUILDTOWERGRADE|CHECKMAPMONNAMECOUNT|CHECKTREASUREBOXITEM|GuildStabilityPoint|RESTPROVISIONALABIL|CHECKCASTLEDOOROPEN|CHECKCASTLEWARGUILD|CHECKGUILDMAXMEMBER|CheckIsProperTarget|CHECKRANGEHUMCOUNTA|CHECKRANGEHUMCOUNTB|CHECKQUALIFIEDITEMS|ClearGlobalCustVar|GuildFlourishPoint|KILLMONEXPMULTIPLE|RECALLGROUPMEMBERS|SAVEKILLMONEXPRATE|SETPROVISIONALABIL|TAKEQUALIFIEDITEMS|CHECKACCOUNTIPLIST|CHECKMAPHUMANCOUNT|CHECKPRENTICECOUNT|CHECKRANGEMONCOUNT|ISDEFENSEALLYGUILD|OFFLINEPLAYERCOUNT|ADDCASTLEWARGUILD|CHANGECUSTOMVALUE|ChangeDamageValue|ChangeGuildMember|clearguildcustvar|SETOBJVISIBLETYPE|SETVISIBLEOBJTYPE|SKILLPOWERPERMILL|CANADDGUILDMEMBER|CHECKBINDGAMEGOLD|CHECKCOLLECTPOINT|CHECKGUILDWARRIOR|CHECKPOSEISMASTER|CHECKUPGRADECOUNT|ISATTACKALLYGUILD|MAPHUMISSAMEGROUP|MAPHUMISSAMEGUILD|CHANGEPERMISSION|CLEARCASTLEOWNER|CREATEGROUPLIGHT|ElementForceRate|KILLMONBURSTRATE|REDUCESPEEDPOINT|SETITEMTIMESTAMP|SETLIMITAMBITLV1|SETLIMITAMBITLV2|SETLIMITAMBITLV3|SetPneumaSetting|SETRANKLEVELNAME|CHECKACCOUNTLIST|CHECKCREDITPOINT|CHECKGUILDMEMBER|CHECKGUILDPNEUMA|CHECKMAPMONCOUNT|CHECKMEMBERLEVEL|CheckStrForDigts|AUTOADDGAMEGOLD|BREAKTIMERECALL|CANCELSAUSSUREA|CASTLERPAIRDOOR|ChangeGuildName|CHANGENAMECOLOR|ClearHumCustVar|DELLASTDROPITEM|ELEMENTFORCEMAX|GuildAuraePoint|GuildBuildPoint|GUILDPUBLICGOLD|GUILDTOWERGRADE|REDUCEANTIMAGIC|SETOFFLINELABEL|SETPETATTRIBUTE|UPGRADEUSERITEM|CHANGEBINDMONEY|CASTLECHANGEDAY|CHECKBONUSPOINT|CHECKCASTLEDOOR|CHECKCASTLEGOLD|CHECKGROUPCOUNT|CHECKHITMONNAME|CHECKINMAPRANGE|CHECKITEMINLIST|CHECKLUCKYPOINT|CHECKMARRYCOUNT|CHECKMEMBERTYPE|CHECKNAMEIPLIST|CHECKPOSEGENDER|CHECKPOSEMASTER|CHECKRENEWLEVEL|CHECKSERVERNAME|CHECKSLAVECOUNT|CHECKSLAVELEVEL|CHECKUSERPETGAP|CHECKUSERPOSGAP|CHECKVALIDPARAM|ADDACCOUNTLIST|ADDGUILDMEMBER|AddStorageItem|CHANGEHITMONHP|CHANGESKILLEXP|DELACCOUNTLIST|DELGUILDMEMBER|DelStorageItem|KILLMONEXPRATE|NOCHATTACKMODE|NOFRIENDRECALL|NOMasterRECALL|NOPOSITIONMOVE|RESTBONUSPOINT|RESTRENEWLEVEL|SAFEZONEONLINE|SceneviBration|SETGROUPCOMMON|SETMEMBERLEVEL|SMELTBOXRESULT|CHECKGAMEPOINT|CHECKGUILDGOLD|CHECKGUILDLIST|CHECKPETFOLLOW|CHECKPOSELEVEL|CHECKPOSEMARRY|CHECKSLAVENAME|ISCASTLEMASTER|ISDEFENSEGUILD|PNEUMARELEASED|POSEHAVEMASTER|CHECKBINDMONEY|ADDPNEUMAITEM|AutoRideHorse|bestitemlevel|ChangeHumBuff|CHANGEMAPDESC|CHANGEPKPOINT|CLEARITEMEVIL|CLEARNAMELIST|ClientSetting|DELNOJOBSKILL|DELPNEUMAITEM|GUILDDOSCRIPT|GuildFileName|INSERTVARLIST|NextSkillTime|NOGUILDRECALL|READRANDOMSTR|SETAUTOGETEXP|SETHONORSHAPE|SETLABLEVALUE|SETMEMBERTYPE|SETROBOTTIMER|SETSECRETINFO|SHOWHUMEFFECT|SKILLDEFPOWER|TAKECHECKITEM|TAKETOWERITEM|TENTHOUSANDTH|UseBONUSPOINT|UPDATETONGVAR|REGETGIFTLIST|CANMIRRORCLAN|CANMIRRORTEAM|CANRECALLEVIL|CHECKBINDGOLD|CHECKGAMEGOLD|CHECKGEMCOUNT|CHECKGUILDWAR|CHECKHITMONHP|CHECKISFRIEND|CHECKISMASTER|CHECKITEMDURE|CHECKITEMTYPE|CHECKUSERDATE|ISATTACKGUILD|ISCASTLEGUILD|ISGUILDMASTER|ISONCASTLEWAR|ONLINELONGMIN|ADDGUILDLIST|AddMapTipsEx|AllAutoLogin|ATTACHEPOINT|AutoAddGuild|BINDGAMEGOLD|CHANGEGENDER|CLEARMAPBODY|CLEARMAPITEM|CLEARMISSION|COLLECTPOINT|CreatePneuma|DECGAMEPOINT|DELGUILDLIST|DelMapTipsEx|DROPITEMDOWN|ELEMENTFORCE|FilterString|FIREBURNZONE|GetAllBuffID|GUILDMAPMOVE|GUILDMEMBERS|INCGAMEPOINT|NODEARRECALL|NORANDOMMOVE|NORECEIVEMSG|OpenAutoKill|PETQUICKPICK|PRINTUSETIME|ReleaseMagic|SendGiftCode|SETHORSENAME|SetTaskValue|TAKEDUREITEM|POSTGIFTTYPE|GETBINDMONEY|CANRIDESHARK|CASTLEWARDAY|CHECKBAGGAGE|CHECKBAGSIZE|CHECKBBCOUNT|CHECKDURAEVA|CHECKINTEVEN|CHECKLEVELEX|CHECKMAGICID|CHECKMAPNAME|CHECKMONAREA|CHECKMYGUILD|CHECKOFGUILD|CHECKPAYMENT|CHECKPKPOINT|CHECKPOSEDIR|CHECKSIGNMAP|CHECKUSEITEM|CHECKUSERGAP|CHECKVARLIST|ISGROUPOWNER|ISINSAFEZONE|AddBuffIcon|ADDNAMELIST|ADDPRENTICE|ADDUSERDATE|ADDVITALITY|AutoRidePet|CHANGELEVEL|CLEARMAPMON|CREDITPOINT|DECGAMEGOLD|DEFENCERATE|DelBuffIcon|DELNAMELIST|DELUSERDATE|EXCHANGEMAP|FASTUSEITEM|GETVALIDSTR|INCGAMEGOLD|MakeMonster|MOBFIREBURN|MonsterName|NIMBUSPOINT|OPENITEMBOX|PICKUPITEMS|PKLOSTLEVEL|REFINEPOINT|REFRESHTASK|REPAIRHORSE|REPLACETEXT|SendMagicID|SETBONENAME|SETITEMSEAL|SETPETLEVEL|SetPlayInfo|SETSELITEMS|SHOWSPOTDLG|skilleffect|STORAGESIZE|FORMULATION|ALLOWPAIMAI|TAKENPCITEM|SENDFORQQWX|RECALLMOBEX|NORECONNECT|CHECKIPLIST|CheckIsShop|CHECKITEMID|CHECKMASTER|CHECKMONMAP|CHECKMONPOS|CHECKONLINE|COMPARETEXT|MAPRANGEHUM|ADDITEMEXP|AddMapTips|ADDVARLIST|AUTODOSHOP|BalingItem|BATCHDELAY|CANCELSHOP|CHANGEAPPR|CHANGEMODE|CLEARARROW|CLEARSKILL|DelMapTips|DELVARLIST|framecolor|GetMonRate|GLOOMPOINT|GOBACKHOME|MAPMOVEHUM|MONINTEVAL|NOSMARTGEN|PETBAGSIZE|PKWINLEVEL|RENEWLEVEL|SendLXMail|SendVerify|SETHOMEMAP|SETLIMITLV|SetMapMode|SETNPCAPPR|SETNPCNAME|SETONTIMER|SETPETNAME|SETPROFFER|SETTIMEREX|SKILLLEVEL|SkillSpeed|STARTTIMER|TIMERECALL|UPDATETASK|UPGRADEMON|VIEWPLAYER|MESSAGEBOX|SENDDIYMSG|SETNPCITEM|NEWREADCSV|HPMPMAPOPT|LOLMISSION|CHECKHORSE|CHECKHUNPO|CHECKITEMW|CHECKMAGIC|CHECKMARRY|CHECKMONTH|CHECKQUEST|CHECKSKILL|HAVEMASTER|ISNEWHUMAN|ISTAKEITEM|ISTOPLEVEL|CHECKMONEY|ADDIPLIST|AUTOLOGIN|backcolor|BATCHMOVE|CHANGEEXP|CHANGEJOB|CHATCOLOR|CHOOSEPOS|COLORNAME|DELAYCALL|DELAYGIFT|DELAYGOTO|DELIPLIST|DELMASTER|DropItemW|EVILAMBIT|FORMATSTR|GAMEPOINT|GmExeCute|GROUPMOVE|GUILDGOLD|HAIRCOLOR|HAIRSTYLE|itemsplit|KILLSLAVE|LOADEXVAR|NEEDAMBIT|NEEDLEVEL|NODECDURA|NORIDEPET|OpenGroup|PKLOSTEXP|POWERRATE|QUITGROUP|RECALLMAP|RECALLMOB|REDUCEMAC|RELIVEPET|REPAIRALL|SAVEEXVAR|SetGetExp|SkillName|SKYROCKET|STOPTIMER|STORESORT|THUMPRATE|WALKSPEED|WATERNEED|WEARCOLOR|CanArrive|CANMIRROR|CANRELIVE|CHECKDURA|CHECKGOLD|CHECKITEM|CHECKYEAR|DAYOFWEEK|HASPNEUMA|HAVEGUILD|ISOFFLINE|Killbyhum|POSINLIST|ADDBATCH|ADDSKILL|ANICOUNT|BackStep|BaoBaoHP|BINDGOLD|CHATFONT|ClearEff|clearTar|CLEARVAR|COPYTEXT|debuglog|DELMARRY|DELSKILL|EVILMAC2|EVILNAME|FILECOPY|FILLTEXT|fontsize|FULLNAME|GAMEGOLD|GEMCOUNT|GETVALUE|GUILDEXP|GuildWar|HEROLIST|HITSPEED|MailGive|MAXLEVEL|maxwidth|MOBPLACE|MONGENEX|NOBATFLY|NODOSHOP|NOPNEUMA|NORECALL|NOTAKEON|NUMTOCHR|PKWINEXP|QUERYMSG|QUERYVAL|REDUCEAC|RESERVED|RUNHUMAN|SendMail|SETARROW|SETPARAM|SETTIMER|StartEff|TEMPRANK|UNMASTER|wingtype|SENDSWUI|CHECKDAY|CHECKEXP|CHECKHUM|CHECKJOB|CHECKTXT|CHECKVAR|ISDOSHOP|ISPNEUMA|AddBuff|ADDTASK|BAGSIZE|CALCVAR|content|DELALLY|DelBuff|DelTask|DURAMAX|ENDTASK|EVILAC2|EVILDC2|EVILJOB|EVILMAC|EVILMC2|EVILSC2|Exclude|EXPRATE|FENGHAO|HUMANHP|HUMANMP|MapBuff|MAPMOVE|MISSION|MONDROP|NewName|NOHORSE|NOTIGER|OFFLINE|OVERLAP|PERCENT|PERMILL|PILEEXP|PullPay|SAVEVAR|SENDMSG|STDMODE|STDNAME|TOPLIST|XINMOBB|MONTOMB|CanRide|CHECKDC|CHECKHP|CHECKMC|CHECKMP|CHECKSC|DAYTIME|HasBuff|HASTASK|ISADMIN|ISBEAST|AddLog|Amount|DELNPC|dragon|EVILAC|EVILDC|EVILMC|EVILSC|FIGHT2|FIGHT3|FIGHT4|Friend|FUSHEN|GETEXP|INSERT|LogOut|MASTER|mining|Mobnpc|MONGEN|NODRUG|PARAM1|PARAM2|PARAM3|PARAM4|RideOn|RUNMON|shield|SOURCE|TAKEON|TaskID|USERID|WEIGHT|ENDFOR|RETURN|ADDBTN|LOLMOB|GENDER|RANDOM|BREAK|CLOSE|color|DECHP|FIGHT|GIVEB|HCALL|INCHP|Label|LOOKS|MaxHP|NOSAY|RESET|SHAPE|SPLIT|TABLE|TAKEB|TAKEM|TAKEW|FLOOR|ADDFH|DELFH|MONEY|CHECK|EQUAL|LARGE|Level|MaxDC|MaxMC|MaxMP|MaxSC|MinDC|MinHP|MinMC|MinMP|MinSC|Month|Range|SMALL|DARK|DURA|flag|FUNC|GIVE|GOTO|Hint|Jump|KICK|KILL|MAC1|MAC2|MINE|MOVR|MULT|NEED|offx|offy|Quit|QUIZ|Rate|SAFE|Step|TAKE|TIME|TRIM|STOP|CEIL|HOUR|Year|AC1|AC2|col|DC1|DC2|DEC|DIV|Exp|INC|MAC|Map|MC1|MC2|Mir|MOV|SC1|SC2|SET|tip|VAR|FOR|Day|MIN|POS|Ms))(?=\\s|$)",
+      "captures": {
+        "2": {
+          "name": "keyword.operator.logical.not.m2script"
+        },
+        "3": {
+          "name": "support.function.command.m2script"
+        }
+      }
+    },
+    "caretFn": {
+      "name": "support.variable.system.m2script",
+      "match": "<?\\$(?i:INC|DEC|MULT|DIV|PERCENT|PERMILL|TENTHOUSANDTH)(?=[\\^\\.])"
+    },
+    "numbers": {
+      "name": "constant.numeric.m2script",
+      "match": "(?<![A-Za-z0-9_])\\d+(\\.\\d+)?(?![A-Za-z0-9_])"
+    },
+    "operators": {
+      "name": "keyword.operator.m2script",
+      "match": "(?<![A-Za-z0-9_<>])[+*/=]|(?<![A-Za-z0-9_])-(?![A-Za-z0-9_])"
+    }
+  }
+}

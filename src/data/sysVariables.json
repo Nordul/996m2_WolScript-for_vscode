@@ -1,0 +1,1252 @@
+[
+  {
+    "name": "ABSORDLOOD",
+    "desc": "特殊属性吸血",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "AC",
+    "desc": "  当前AC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ACCOUNT",
+    "desc": "  玩家账号",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "AGAINST",
+    "desc": "  抵抗",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ALLGUILDNUM",
+    "desc": "  返回当前游戏行会总数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ALLMONEY",
+    "desc": "  角色总充值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ANSWER",
+    "desc": "  返回人物当前题目的正确答案序号",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ANTIMAGIC",
+    "desc": "  魔法躲避",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ANTIPOISON",
+    "desc": " 中毒躲避 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ARCHERFEE",
+    "desc": "  聘用弓箭守卫费用",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ARMRING_L",
+    "desc": "  左手镯名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ARMRING_R",
+    "desc": "  右手镯名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ATTACHENAME",
+    "desc": "  武馆称号",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ATTACHEPOINT",
+    "desc": "  武馆积分",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ATTACHERANK",
+    "desc": "  武馆排名",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ATTACKMODE",
+    "desc": " 0：善&恶攻击模式 1：全体攻击模式 2：和平攻击模式 3：编组攻击模式 4：行会攻击模式 5：师徒攻击模式 6：夫妻攻击模式 返回当前人物的攻击状态代码",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "AutoKill",
+    "desc": "0:非自动打怪 1:自动打怪  返回当前是否处于自动挂机状态",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BACKORNAMENT",
+    "desc": "  返回神龙背饰名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BADLUCK",
+    "desc": " 厄运 厄运：而当玩家具有厄运属性时，攻击对方时会使对方处于“厄运”状态，10秒内幸运减少一定数值，该数值为自身厄运值。",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BAGSIZE",
+    "desc": "  返回玩家包裹大小",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BANKACCOUNT0",
+    "desc": "  银行帐号信息0",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BANKACCOUNT1",
+    "desc": "  银行帐号信息1",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BANKACCOUNT2",
+    "desc": "  银行帐号信息2",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BANKACCOUNT3",
+    "desc": "  银行帐号信息3",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BANKACCOUNT4",
+    "desc": "  银行帐号信息4",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BANKACCOUNT5",
+    "desc": "  银行帐号信息5",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BANKACCOUNT6",
+    "desc": "  银行帐号信息6",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BANKACCOUNT7",
+    "desc": "  银行帐号信息7",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BANKACCOUNT8",
+    "desc": "  银行帐号信息8",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BANKACCOUNT9",
+    "desc": "  银行帐号信息9",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BBSSITE",
+    "desc": "  论坛地址",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BELT",
+    "desc": "  腰带名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BESTITEMLEVEL",
+    "desc": "  返回拾取列表展示等级",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BINDGAMEGOLD",
+    "desc": "  绑定元宝",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BINDGOLD",
+    "desc": "  绑定金币",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BOOTS",
+    "desc": "  鞋子名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BOXDAYSTATE",
+    "desc": "  PC每日礼包领取状态",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BOXLOGIN",
+    "desc": "数值 盒子登录状态 0=非盒子登陆 1=盒子登录",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1509"
+  },
+  {
+    "name": "BOXOTHERTILE",
+    "desc": "  PC他人盒子称号状态",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BOXSELFTILE",
+    "desc": "  PC自身盒子称号状态",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BOXSUPERSTATE",
+    "desc": "  PC超级礼包领取状态",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BOXTILE",
+    "desc": "数值 返回当前称号ID",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1509"
+  },
+  {
+    "name": "BOXTILEOPEN",
+    "desc": "数值 盒子称号是否开启 0=未开启 1=已开启",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1509"
+  },
+  {
+    "name": "BUJUK",
+    "desc": "  宝石名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "BW",
+    "desc": "  当前背包重量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CASTLECHANGEDATE",
+    "desc": "  沙城相关,具体功能自己测试",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CASTLEDOORSTATE",
+    "desc": "  沙城城门状态(关闭,开启)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CASTLEGETDAYS",
+    "desc": "  沙城相关,具体功能自己测试",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CASTLEGOLD",
+    "desc": "  沙城的总收入",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CASTLENAME",
+    "desc": "  沙城的名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CASTLEWARDATE",
+    "desc": "  是否攻城期间",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CASTLEWARLASTDATE",
+    "desc": "  沙城相关,具体功能自己测试",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CHARM",
+    "desc": "12 护符(马牌)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/702"
+  },
+  {
+    "name": "CLIENTDOWNLOAD",
+    "desc": "客户端程序下载地址",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "CLIENTFLAG",
+    "desc": " 返回客户端标识，1代表电脑客户端 2代表安卓客户端/WIN32设计版 3代表苹果手机客户端 4代表苹果平板客户端 5代表cocospc端 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CLIENTVERSION",
+    "desc": "  返回客户端版本发布日期，例如：20070312",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "COLLECTPOINT",
+    "desc": "  返回盛大积分",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CREDITPOINT",
+    "desc": "  声望点数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CURSE",
+    "desc": "诅咒值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "DAMREDUCE",
+    "desc": "获取人物免伤属性百分比",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "DATE",
+    "desc": "  服务器的年月日",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "DATETIME",
+    "desc": "  服务器的年月日时分秒",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "DC",
+    "desc": "  当前DC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "DEARNAME",
+    "desc": "  夫妻名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "DefencePower",
+    "desc": "SetProvisionalAbil 35类型 免伤变量值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "DEFENCERATE",
+    "desc": "  返回当前防御倍数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "DESTROYDEFEND",
+    "desc": "  破防",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "DIR",
+    "desc": "人物面向的方向： 范围0-8",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "DRESS",
+    "desc": "0 `已取消` `使用<$USEITEMMAKEINDEX(0)>` 衣服",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/702"
+  },
+  {
+    "name": "ELEMENTFORCE",
+    "desc": "  返回人物元力值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ELEMENTFORCEMAX",
+    "desc": "  返回人物最大元力值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "EXP",
+    "desc": "  当前经验",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "EXTRALEVEL",
+    "desc": " 绿色封号等级 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "EXTRALEVELNAME",
+    "desc": " 绿色封号名字 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "FIREAC",
+    "desc": " 火防御 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "FIREDC",
+    "desc": " 火攻击 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GAMEGOLD",
+    "desc": "  元宝数量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GAMEGOLDNAME",
+    "desc": "  元宝名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GAMEID",
+    "desc": "游戏的GAMEID 一个版本的ID (包括所有的区服都是一个ID)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "GAMEPOINT",
+    "desc": "  游戏点数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GAMEPOINTNAME",
+    "desc": "  游戏点数名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GC",
+    "desc": "  当前GC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GENDER",
+    "desc": " 返回性别(男,女) 性别",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GETTICKCOUNT",
+    "desc": "系统计数,系统运行计算",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "GOLDAC",
+    "desc": " 金防御 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GOLDCOUNT",
+    "desc": "  金币数量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GOLDCOUNTMAX",
+    "desc": "  最大金币数量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GOLDDC",
+    "desc": " 金攻击 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GROUPCOUNT",
+    "desc": "  返回本组队的成员数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GROUPMASTER",
+    "desc": "  返回组队的队长名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GUARDFEE",
+    "desc": "  聘用守卫费用",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GUILDAURAEPOINT",
+    "desc": "  行会人气指数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GUILDBUILDPOINT",
+    "desc": "  行会建筑指数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GUILDFLOURISHPOINT",
+    "desc": "  行会繁荣指数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GUILDGOLD",
+    "desc": "  显示个人行会银两",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GUILDNAME",
+    "desc": " 行会名字 行会名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GUILDSTABILITYPOINT",
+    "desc": "  行会安定指数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "HELMET",
+    "desc": "  头盔名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "HEROIC",
+    "desc": " 英勇 英勇：每10点英勇增加人物1%的攻击属性！",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "HFCOUNT",
+    "desc": "合区次数(合区以后才有效)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "HFTIME",
+    "desc": "合区时间(合区以后才有效)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "HIT",
+    "desc": "  命中",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "HITSPEED",
+    "desc": "总攻速",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "HORSENAME",
+    "desc": "  马的名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "HORSETYPE",
+    "desc": "  马的类型",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "HP",
+    "desc": "  当前HP",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "HUMPRATEDAM",
+    "desc": "增加暴击伤害",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "HUNGER",
+    "desc": "  饥饿程度",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "HW",
+    "desc": "  当前腕力",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "INCASTLEWAR",
+    "desc": "  返回当前人物是否在攻城区域（开始攻沙之后，才有攻城区域）",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "INTROVERTJOB",
+    "desc": "内敛元神职业",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "INTROVERTLEVEL",
+    "desc": "内敛元神等级",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "INTROVERTSEX",
+    "desc": "内敛元神性别",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "IPADDR",
+    "desc": "  玩家登陆IP",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "IPLOCAL",
+    "desc": "  玩家登陆地区(需加载IP查询插件)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "JOB",
+    "desc": " 战士,法师,道士 玩家职业",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "JOBID",
+    "desc": "0=战士 1=法师 2=道士  返回职业",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KFTIME",
+    "desc": " 开区版引擎变量，具体需要在线上测试 后台设定的开服时间(年-月-日)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KFTIMEEX",
+    "desc": " 开区版引擎变量，具体需要在线上测试 后台设定的开服时间(几点几分几秒)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KILLERNAME",
+    "desc": "  返回最后一次杀死本玩家的其他玩家名字（如果没有，则返回空字符串） 小退后不保存",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KILLMONBURSTRATE",
+    "desc": "  返回人物杀怪爆率倍数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KILLMONBURSTRATETIME",
+    "desc": "  返回人物杀怪爆率倍数剩余时间",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KILLMONEXPMULTIPLE",
+    "desc": "  显示当前全局经验倍数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KILLMONEXPRATE",
+    "desc": "  显示当前经验倍数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KILLMONEXPRATETIME",
+    "desc": "  显示当前经验倍数时间",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KILLMONMAP",
+    "desc": "  保存当前人物杀死最后一个怪物地图号,包括宝宝杀的",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KILLMONNAME",
+    "desc": "  保存当前人物杀死的最后一个怪物名字，包括宝宝杀的",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "KILLMONRACE",
+    "desc": "  保存当前人物杀死最后一个怪物类型号,包括宝宝杀的",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "LEVEL",
+    "desc": " 角色等级 人物等级",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "LOGINLONG",
+    "desc": "  登录时长",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "LoginState",
+    "desc": "0=正常登陆 1=断线重连  登陆方式",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "LOGINTIME",
+    "desc": "  登陆时间",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "LUCK",
+    "desc": "幸运值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "MAC",
+    "desc": "  当前MAC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MACHINEID",
+    "desc": "  返回玩家机器码",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MACRUNTIME",
+    "desc": "  服务器运行时间",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAGNICETY",
+    "desc": "  魔法命中",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAPNAME",
+    "desc": " 地图名字 地图名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MASK",
+    "desc": "  返回面具名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MASTERNAME",
+    "desc": "  师傅名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAXAC",
+    "desc": "  最大AC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAXBW",
+    "desc": "  最大背包重量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAXDC",
+    "desc": "最高物理攻击力",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "MAXEXP",
+    "desc": "  最大经验",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAXGC",
+    "desc": "  最大GC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAXHP",
+    "desc": "  最大HP",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAXHW",
+    "desc": "  最高腕力",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAXMAC",
+    "desc": "最高魔法防御力",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "MAXMC",
+    "desc": "  最大MC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAXMP",
+    "desc": "  最大MP",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAXSC",
+    "desc": "  最大SC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAXWW",
+    "desc": "  最大负重",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MC",
+    "desc": "  当前MC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MENTALLEVEL",
+    "desc": "  返回人物心法天元心法等级",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MENTALPOINT",
+    "desc": "  返回人物天元值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MENTALPOINTMAX",
+    "desc": "  返回人物最大天元值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MP",
+    "desc": "  当前MP",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MYCASTLENAME",
+    "desc": "  玩家所属的城堡名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "NECKLACE",
+    "desc": "  项链名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "NIMBUSPOINT",
+    "desc": "显示人物的灵力值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "NORECEIVEMSG",
+    "desc": "  已屏蔽的消息类型",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "NOWSDKID",
+    "desc": "  apk分包ID，后台分包管理处可查看",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "NPCAPPR",
+    "desc": "  返回当前执行脚本的NPC的APPR值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "NPCID",
+    "desc": "  返回当前NPC的ID，实际ID为Merchant.txt中设置的数值减1",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "OBJVISIBLETYP",
+    "desc": "  角色所处空间",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "OWNERGUILD",
+    "desc": "  沙城所属的行会",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PENETRATION",
+    "desc": " 穿透等级 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PETBAGSIZE",
+    "desc": "  返回灵兽包裹大小",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PHONE",
+    "desc": "联系电话号码",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "PKPOINT",
+    "desc": "  PK点数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PNEUMAJOB",
+    "desc": "  元神职业",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1204"
+  },
+  {
+    "name": "PNEUMALEVEL",
+    "desc": "  元神等级",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1204"
+  },
+  {
+    "name": "PNEUMANAME",
+    "desc": "  元神名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1204"
+  },
+  {
+    "name": "PNEUMASEX",
+    "desc": "  元神性别",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1204"
+  },
+  {
+    "name": "POISONNICETY",
+    "desc": " 中毒命中 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "POWERRATE",
+    "desc": "  返回当前攻击力倍数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PRENTICECOUNT",
+    "desc": "  未出师徒弟数量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PRICERATE",
+    "desc": "  价格倍数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PROFFER",
+    "desc": "  显示人物行会贡献状态",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "QQ",
+    "desc": "  联系QQ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "QUESTION",
+    "desc": "  随机返回一个题目内容，并把这个题目设置为该人物的当前题目",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "RANKNAME",
+    "desc": " 人物个性封号 人物个性封号",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REBOUNDHURT",
+    "desc": "  反弹伤害",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REDUCEAC",
+    "desc": "  返回减免对方物理防御",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REDUCEACPERCENT",
+    "desc": "  无视防御(百分比)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REDUCEANTIMAGIC",
+    "desc": "  返回减免对方魔法躲避",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REDUCEDEFS",
+    "desc": "  抵抗减免防御(实际值)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REDUCEDEFSPERCENT",
+    "desc": "  抵抗无视防御(百分比)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REDUCEHUMPRATEDAM",
+    "desc": "暴击免伤",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "REDUCEMAC",
+    "desc": "  返回减免对方魔法防御",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REDUCEMACPERCENT",
+    "desc": "  无视魔御(百分比)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REDUCEMDEFS",
+    "desc": "  抵抗减免魔御(实际值)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REDUCEMDEFSPERCENT",
+    "desc": "  抵抗无视魔御(百分比)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REDUCESPEEDPOINT",
+    "desc": "  返回减免对方物理躲避",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REFINEPOINT",
+    "desc": "  极品修炼值变量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "RELEVEL",
+    "desc": "转生等级",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "REPAIRDOORGOLD",
+    "desc": "  修复城门费用",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REPAIRWALLGOLD",
+    "desc": "  修理皇宫城墙费用",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REQUESTBUILDGUILDITEM",
+    "desc": "  沙城相关,具体功能自己测试",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REQUESTCASTLEWARDAY",
+    "desc": "  沙城相关,具体功能自己测试",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REQUESTCASTLEWARITEM",
+    "desc": "  沙城相关,具体功能自己测试",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "REVIVALTICK",
+    "desc": "  复活戒指使用间隔计数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "RIDEDRESS",
+    "desc": "  返回极品御兽天衣名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "RIGHTHAND",
+    "desc": "2 勋章(马牌)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/702"
+  },
+  {
+    "name": "RING_L",
+    "desc": "  左戒指名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "RING_R",
+    "desc": "  右戒指名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "RULERLEVEL",
+    "desc": "  获取主宰者星星数量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SACREDDAMMAX",
+    "desc": "  神圣伤害最大值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SACREDDAMMIN",
+    "desc": "  神圣伤害最小值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SACREDREDUCE",
+    "desc": " 神圣免伤等级 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SACREDTHUMP2",
+    "desc": " 神圣双倍暴击 神圣双倍暴击：神圣暴击有几率触发神圣双倍暴击！",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SC",
+    "desc": "  当前SC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SDKID",
+    "desc": "  注册时的分包ID (后台分包对应ID)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SEAMCPOINT",
+    "desc": "  返回人物海魔值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SERVERID",
+    "desc": "返回玩家区服ID (合区后此区服ID显示玩家之前所在游戏的区服ID)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "SERVERIP",
+    "desc": "服务器IP地址",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "SERVERNAME",
+    "desc": "  服务器名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SERVERRUNTIME",
+    "desc": "  引擎运行时间",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SHIELD",
+    "desc": "  盾牌名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SHIELDANTITHUMPRATE",
+    "desc": "  暴击免伤百份比(盾牌)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SOILAC",
+    "desc": " 土防御 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SOILDC",
+    "desc": " 土攻击 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SOULBEAD",
+    "desc": "  魂珠名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SPD",
+    "desc": "  躲避",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SPIRITY",
+    "desc": "  精力值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "SPIRITYMAX",
+    "desc": "  最大精力值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "STORAGESIZE",
+    "desc": "  返回仓库大小",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "TENACITY",
+    "desc": "韧性值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "THUMPRATE",
+    "desc": "  返回暴击概率",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "TLEVEL",
+    "desc": "天人等级+标准等级（玩家50级，天人一重。此变量则显示为51级！）",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "TODAYINCOME",
+    "desc": "  沙城当天收入",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "TODMONEY",
+    "desc": "  角色今日充值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "TOTEMCOUNT",
+    "desc": "  返回已经释放的图腾数量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "UPGRADEWEAPONFEE",
+    "desc": "  升级武器价格",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "USERCOUNT",
+    "desc": "  在线人数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "USERID",
+    "desc": "<$HUMANINFO[A].B> 比如：<$HUMANINFO[$USERNAME].$X> 获取指定玩家的变量值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "USERNAME",
+    "desc": " 角色名 玩家名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "USERWEAPON",
+    "desc": "  手里拿的武器的名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "VAMPIREPOINT",
+    "desc": "吸血点数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "VAMPIRERATE",
+    "desc": "吸血几率",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "VISIBLETYPE",
+    "desc": "  角色视线",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "VITALITYPOINT",
+    "desc": "  显示当前元气值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "WATERAC",
+    "desc": " 水防御 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "WATERDC",
+    "desc": " 水攻击 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "WEAPON",
+    "desc": "  武器名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "WEBSITE",
+    "desc": "  网站网址",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "WENPEI",
+    "desc": "16 紋佩",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/702"
+  },
+  {
+    "name": "WOODAC",
+    "desc": " 木防御 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "WOODDC",
+    "desc": " 木攻击 ",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "WW",
+    "desc": "  当前负重",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  }
+]

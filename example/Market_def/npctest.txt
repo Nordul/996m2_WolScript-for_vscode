@@ -1,0 +1,1523 @@
+[@main]
+#IF
+TRUE
+#ACT
+; CHANGECUSTOMVALUE 24 = 40
+; MONEY 绑定元宝 + 99999
+MOV S$羽翼升级_消耗材料1 
+MOV S$羽翼升级_材料数量1 
+
+
+MOV S$羽翼升级_消耗货币 
+MOV S$羽翼升级_货币数量 
+MOV S$羽翼升级_合区限制 
+MOV S$羽翼升级_羽翼进度 
+
+
+
+MOV N$羽翼升级_进阶仙羽0 50
+MOV N$羽翼升级_进阶仙羽1 100
+MOV N$羽翼升级_进阶仙羽2 150
+MOV N$羽翼升级_进阶仙羽3 200
+MOV N$羽翼升级_进阶仙羽4 250
+MOV N$羽翼升级_进阶仙羽5 300
+MOV N$羽翼升级_进阶仙羽6 350
+MOV N$羽翼升级_进阶仙羽7 400
+MOV N$羽翼升级_进阶仙羽8 450
+MOV N$羽翼升级_进阶仙羽9 500
+
+
+MOV N$羽翼升级_进阶金币0 10000000
+MOV N$羽翼升级_进阶金币1 20000000
+MOV N$羽翼升级_进阶金币2 30000000
+MOV N$羽翼升级_进阶金币3 40000000
+MOV N$羽翼升级_进阶金币4 50000000
+MOV N$羽翼升级_进阶金币5 60000000
+MOV N$羽翼升级_进阶金币6 70000000
+MOV N$羽翼升级_进阶金币7 80000000
+MOV N$羽翼升级_进阶金币8 90000000
+MOV N$羽翼升级_进阶金币9 100000000
+
+
+#IF
+HasTask 7
+EQUAL <$TASK(7)> 2
+#ACT
+EndTask 7
+AddTask 8
+MailGive 幻翎之羽 10 1
+SendMail 997 任务奖励 这是您的任务奖励！
+MESSAGEBOX 奖励已发放至邮箱！
+#IF
+TRUE
+#ACT
+; CHANGECUSTOMVALUE 24 = 45
+; Money 绑定元宝 + 99999
+
+MOV S$羽翼升级_技能1 神佑#0xffffa500$
+INC S$羽翼升级_技能1 双防3-6，切割+20#0xffff00ff$
+
+MOV S$羽翼升级_技能2 神御#0xffffa500$
+INC S$羽翼升级_技能2 暴击抵抗+5，概率抵挡15%伤害，冷却时间10秒#0xffff00ff$
+
+MOV S$羽翼升级_技能3 致命#0xffffa500$
+INC S$羽翼升级_技能3 暴击等级+5，暴击伤害+10%#0xffff00ff$
+
+MOV S$羽翼升级_技能4 祝福#0xffffa500$
+INC S$羽翼升级_技能4 幸运+1，忽视目标双防+10#0xffff00ff$
+
+MOV S$羽翼升级_技能5 利刃#0xffffa500$
+INC S$羽翼升级_技能5 攻魔道+1%，概率触发10%攻击伤害持续10秒，冷却时间30秒#0xffff00ff$
+MOV N$羽翼升级_展示羽翼 <$cfg_羽翼升级(<$CustomValue(24)>_5)>
+MOV N$羽翼升级_消耗材料 1
+MOV N$羽翼升级_升级方式1 1
+MOV N$羽翼升级_升级方式2 0
+MOV N$羽翼升级_升级倍数 1
+
+GOTO @羽翼升级_界面
+
+
+[@羽翼升级_界面] NPC(26110)
+#IF
+!Large <$CustomValue(24)> 49
+#ACT
+
+MOV S$羽翼升级_消耗材料1 <$cfg_羽翼升级(<$CustomValue(24)>_1)>
+MOV S$羽翼升级_材料数量1 <$cfg_羽翼升级(<$CustomValue(24)>_2)>
+
+MOV S$羽翼升级_消耗货币 <$cfg_羽翼升级(<$CustomValue(24)>_3)>
+MOV S$羽翼升级_货币数量 <$cfg_羽翼升级(<$CustomValue(24)>_8)>
+MOV S$羽翼升级_合区限制 <$cfg_羽翼升级(<$CustomValue(24)>_6)>
+MOV S$羽翼升级_羽翼进度 <$cfg_羽翼升级(<$CustomValue(24)>_7)>
+
+#IF
+!SMALL G4 5
+Large <$CustomValue(24)> 49
+#ACT
+MOV S$羽翼升级_消耗材料1 仙翎之羽
+MOV S$羽翼升级_材料数量1 <$STR(N$羽翼升级_进阶仙羽<$CustomValue(25)>)>
+
+MOV S$羽翼升级_消耗货币 金币
+MOV S$羽翼升级_货币数量 <$STR(N$羽翼升级_进阶金币<$CustomValue(25)>)>
+
+
+
+
+#IF
+EQUAL P12 0
+#ACT
+MOV N$羽翼升级_展示羽翼 <$cfg_羽翼升级(<$CustomValue(24)>_5)>
+MOV P12 1
+#IF
+EQUAL <$JOB> 战士
+#ACT
+MOV N$羽翼升级_血量基数 12
+
+#IF
+EQUAL <$JOB> 法师
+#ACT
+MOV N$羽翼升级_血量基数 6
+
+#IF
+EQUAL <$JOB> 道士
+#ACT
+MOV N$羽翼升级_血量基数 9
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+#SAY
+<@@!XYBTN 3,80,3,81,3,82,679,-10,关闭/@exit>\
+
+;====================================================== 空偏移 - 防抖动
+<@@!ITMC 3,0,0,451,0>\
+;========================================================================== 
+
+<offx=|145|y=|7|fontsize=|22|font=|1|xy=|1|> <color=000000 羽翼升级> <|off>\
+<offx=|145|y=|9|fontsize=|22|font=|1|xy=|1|> <color=000000 羽翼升级> <|off>\
+<offx=|145|y=|5|fontsize=|22|font=|1|xy=|1|> <color=ffc600 羽翼升级> <|off>\
+
+<@@!XYITMC 3,26111,128,50,0,0.5>\
+<offx=|86|y=|67|fontsize=|14|xy=|1|ax=|0.5|>  <Color=ffc600 羽翼<$CustomValue(24)>级> <|off>\
+
+
+
+<offx=|258|y=|43|font=|1|fontsize=|22|xy=|1|ax=|0.5|>  <Color=ffc600 基础属性> <|off>\
+
+<offx=|196|y=|83|fontsize=|14|xy=|1|>  <Color=ffc600 生命值：> <|off>\
+<offx=|196|y=|103|fontsize=|14|xy=|1|>  <Color=ffc600 攻魔道：> <|off>\
+<offx=|188|y=|123|fontsize=|14|xy=|1|>  <Color=ffc600 冲撞等级：> <|off>\
+<offx=|224|y=|83|fontsize=|14|xy=|1|>  <Color=ffc600 <$MULT^<$STR(N$羽翼升级_血量基数)>^<$CustomValue(24)>>> <|off>\
+<offx=|224|y=|103|fontsize=|14|xy=|1|>  <Color=ffc600 <$cfg_羽翼属性(<$GetTypeBRow(cfg_羽翼属性,0,<$CustomValue(24)>)>_1)>-<$cfg_羽翼属性(<$GetTypeBRow(cfg_羽翼属性,0,<$CustomValue(24)>)>_2)>> <|off>\
+<offx=|224|y=|123|fontsize=|14|xy=|1|>  <Color=ffc600 <$CustomValue(24)>> <|off>\
+
+<@@!XYITMC 3,26118,510,78>\
+<@@!XYITMC 3,26118,510,98>\
+<@@!XYITMC 3,26118,510,118>\
+
+<offx=|20|y=|394|fontsize=|12|xy=|1|> <color=~<$STR(S$羽翼升级_技能1)>$ 　　> <|off>\
+<offx=|47|y=|394|fontsize=|12|xy=|1|> <color=~<$STR(S$羽翼升级_技能2)>$ 　　> <|off>\
+<offx=|74|y=|394|fontsize=|12|xy=|1|> <color=~<$STR(S$羽翼升级_技能3)>$ 　　> <|off>\
+<offx=|101|y=|394|fontsize=|12|xy=|1|> <color=~<$STR(S$羽翼升级_技能4)>$ 　　> <|off>\
+<offx=|128|y=|394|fontsize=|12|xy=|1|> <color=~<$STR(S$羽翼升级_技能5)>$ 　　> <|off>\
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 40
+#SAY
+; <Img|x=96.0|y=314.0|scale=1|esc=0|img=custom/comm/yb_barbg.png>
+; <Img|x=96.0|y=314.0|scale=1|esc=0|img=custom/comm/yb_barbg.png>
+; <Img|x=96.0|y=314.0|scale=1|esc=0|img=custom/comm/yb_barbg.png>
+; <Img|children=123,1123|x=96.0|y=314.0|scale=1|esc=0|img=custom/comm/yb_barbg.png>
+; <LoadingBar|id=123|x=2.0|y=2.0|maxLen=<$STR(S$羽翼升级_羽翼进度)>|curLen=<$CustomValue(26)>|img=custom/comm/yb_bar.png>
+; <RText|id=1123|ax=0.5|x=101|y=16.0|size=14|color=224|text=羽翼经验：<$CustomValue(26)>/<$STR(S$羽翼升级_羽翼进度)>>
+<@@!XYITMC 3,26119,73,294>\
+<@@!XYITMC 3,26119,73,294>\
+<@@!XYITMC 3,26119,73,294>\
+<@@!XYITMC 3,26119,73,294>\
+
+<@@!XYJDT 3,26120,75,296,<$CustomValue(26)>,<$STR(S$羽翼升级_羽翼进度)>,197,0,0>\
+<offx=|85|y=|292|fontsize=|12|xy=|1|ax=|0.5|>  <Color=GREEN 羽翼经验：<$CustomValue(26)>／<$STR(S$羽翼升级_羽翼进度)>> <|off>\
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+!SMALL <$CustomValue(24)> 40
+!EQUAL <$STR(S$羽翼升级_消耗材料1)> 
+#SAY
+<@@!XYITMC 3,26103,414,372,0,0.7>\
+<@@!XYPIC <$STR(S$羽翼升级_消耗材料1)>,1,419,379>\
+<offx=|220|y=|400|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffffff <$STR(S$羽翼升级_材料数量1)>> <|off>\
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+!SMALL <$CustomValue(24)> 40
+!EQUAL <$STR(S$羽翼升级_消耗货币)> 
+#SAY
+<@@!XYITMC 3,26103,484,372,0,0.7>\
+<@@!XYPIC <$STR(S$羽翼升级_消耗货币)>,1,489,379>\
+<offx=|250|y=|400|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffffff <$STR(S$羽翼升级_货币数量)>> <|off>\
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 50
+#SAY
+
+<offx=|284|y=|83|fontsize=|14|xy=|1|>  <Color=ffc600 <$MULT^<$STR(N$羽翼升级_血量基数)>^<$INC^<$CustomValue(24)>^1>>> <|off>\
+<offx=|284|y=|103|fontsize=|14|xy=|1|>  <Color=ffc600 <$cfg_羽翼属性(<$GetTypeBRow(cfg_羽翼属性,0,<$INC^<$CustomValue(24)>^1>)>_1)>-<$cfg_羽翼属性(<$GetTypeBRow(cfg_羽翼属性,0,<$INC^<$CustomValue(24)>^1>)>_2)>> <|off>\
+<offx=|284|y=|123|fontsize=|14|xy=|1|>  <Color=ffc600 <$INC^<$CustomValue(24)>^1>> <|off>\
+
+<@@!XYITMC 3,26121,610,82>\
+<@@!XYITMC 3,26121,610,102>\
+<@@!XYITMC 3,26121,610,122>\
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+!SMALL <$CustomValue(24)> 50
+#SAY
+<offx=|284|y=|83|fontsize=|14|xy=|1|>  <Color=ffc600 已满级> <|off>\
+<offx=|284|y=|103|fontsize=|14|xy=|1|>  <Color=ffc600 已满级> <|off>\
+<offx=|284|y=|123|fontsize=|14|xy=|1|>  <Color=ffc600 已满级> <|off>\
+
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+!SMALL G4 5
+!EQUAL P10 10
+Large <$CustomValue(24)> 49
+SMALL <$CustomValue(25)> 10
+#SAY
+<@@!XYBTN 3,26106,3,26106,3,26106,582,385,升级/@羽翼升级_进阶升级>\
+<offx=|311|y=|392|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 升级> <|off>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+!EQUAL P10 10
+SMALL <$CustomValue(24)> 40
+#SAY
+<@@!XYBTN 3,26106,3,26106,3,26106,582,385,升级/@羽翼升级_基础升级>\
+<offx=|311|y=|392|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 升级> <|off>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+!EQUAL P10 10
+!SMALL <$CustomValue(24)> 40
+SMALL <$CustomValue(24)> 50
+#SAY
+<@@!XYBTN 3,26106,3,26106,3,26106,582,385,升级/@羽翼升级_基础升级2>\
+<offx=|311|y=|392|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 升级> <|off>\
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL G4 5
+#SAY
+<@@!XYITMC 3,26122,357,184>\
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 50
+#SAY
+<@@!XYITMC 3,26122,357,184>\
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+!SMALL G4 5
+!SMALL <$CustomValue(24)> 50
+#SAY
+
+
+
+<offx=|258|y=|191|font=|1|fontsize=|22|xy=|1|ax=|0.5|>  <Color=ffc600 基础属性> <|off>\
+
+<offx=|196|y=|231|fontsize=|14|xy=|1|>  <Color=ffc600 生命值：> <|off>\
+<offx=|182|y=|251|fontsize=|14|xy=|1|>  <Color=ffc600 HPMP百分比：> <|off>\
+<offx=|174|y=|271|fontsize=|14|xy=|1|>  <Color=ffc600 职业攻击上限：> <|off>\
+<offx=|174|y=|291|fontsize=|14|xy=|1|>  <Color=ffc600 攻魔道百分比：> <|off>\
+<offx=|188|y=|311|fontsize=|14|xy=|1|>  <Color=ffc600 冲撞等级：> <|off>\
+
+
+
+
+<offx=|224|y=|231|fontsize=|14|xy=|1|>  <Color=ffc600 <$INC^<$MULT^<$STR(N$羽翼升级_血量基数)>^<$CustomValue(24)>>^<$MULT^<$STR(N$羽翼升级_血量基数)>^<$CustomValue(25)>>>> <|off>\
+<offx=|224|y=|251|fontsize=|14|xy=|1|>  <Color=ffc600 <$CustomValue(25)>> <|off>\
+<offx=|224|y=|271|fontsize=|14|xy=|1|>  <Color=ffc600 <$CustomValue(25)>> <|off>\
+<offx=|224|y=|291|fontsize=|14|xy=|1|>  <Color=ffc600 <$CustomValue(25)>> <|off>\
+<offx=|224|y=|311|fontsize=|14|xy=|1|>  <Color=ffc600 <$MULT^<$CustomValue(25)>^2>> <|off>\
+
+
+<@@!XYITMC 3,26118,510,226>\
+<@@!XYITMC 3,26118,510,246>\
+<@@!XYITMC 3,26118,510,266>\
+<@@!XYITMC 3,26118,510,286>\
+<@@!XYITMC 3,26118,510,306>\
+
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+!SMALL G4 5
+!SMALL <$CustomValue(24)> 50
+SMALL <$CustomValue(25)> 10
+#SAY
+
+
+<offx=|284|y=|231|fontsize=|14|xy=|1|>  <Color=ffc600 <$INC^<$MULT^<$STR(N$羽翼升级_血量基数)>^<$CustomValue(24)>>^<$MULT^<$STR(N$羽翼升级_血量基数)>^<$INC^<$CustomValue(25)>^1>>>> <|off>\
+<offx=|284|y=|251|fontsize=|14|xy=|1|>  <Color=ffc600 <$INC^<$CustomValue(25)>^1>> <|off>\
+<offx=|284|y=|271|fontsize=|14|xy=|1|>  <Color=ffc600 <$INC^<$CustomValue(25)>^1>> <|off>\
+<offx=|284|y=|291|fontsize=|14|xy=|1|>  <Color=ffc600 <$INC^<$CustomValue(25)>^1>> <|off>\
+<offx=|284|y=|311|fontsize=|14|xy=|1|>  <Color=ffc600 <$MULT^<$INC^<$CustomValue(25)>^1>^2>> <|off>\
+
+
+
+<@@!XYITMC 3,26121,610,229>\
+<@@!XYITMC 3,26121,610,249>\
+<@@!XYITMC 3,26121,610,269>\
+<@@!XYITMC 3,26121,610,289>\
+<@@!XYITMC 3,26121,610,309>\
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+!SMALL G4 5
+!SMALL <$CustomValue(24)> 50
+!SMALL <$CustomValue(25)> 10
+#SAY
+<offx=|284|y=|231|fontsize=|14|xy=|1|>  <Color=ffc600 已满级> <|off>\
+<offx=|284|y=|251|fontsize=|14|xy=|1|>  <Color=ffc600 已满级> <|off>\
+<offx=|284|y=|271|fontsize=|14|xy=|1|>  <Color=ffc600 已满级> <|off>\
+<offx=|284|y=|291|fontsize=|14|xy=|1|>  <Color=ffc600 已满级> <|off>\
+<offx=|284|y=|311|fontsize=|14|xy=|1|>  <Color=ffc600 已满级> <|off>\
+
+
+
+
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+LARGE <$CustomValue(24)> 9
+#SAY
+<@@!XYITMC 3,26123,045,374,0,0.9>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 10
+#SAY
+<@@!XYITMC 3,26128,045,374,0,0.9>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+LARGE <$CustomValue(24)> 19
+#SAY
+<@@!XYITMC 3,26124,98,374,0,0.9>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 20
+#SAY
+<@@!XYITMC 3,26129,98,374,0,0.9>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+LARGE <$CustomValue(24)> 29
+#SAY
+<@@!XYITMC 3,26125,151,374,0,0.9>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 30
+#SAY
+<@@!XYITMC 3,26130,151,374,0,0.9>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+LARGE <$CustomValue(24)> 39
+#SAY
+<@@!XYITMC 3,26126,203,374,0,0.9>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 40
+#SAY
+<@@!XYITMC 3,26131,203,374,0,0.9>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+LARGE <$CustomValue(24)> 49
+#SAY
+<@@!XYITMC 3,26127,255,374,0,0.9>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 50
+#SAY
+<@@!XYITMC 3,26132,255,374,0,0.9>\
+
+
+
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 1
+#SAY
+<@@!XYITMC 3,26112,-78,50,0,0.7>\
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 2
+#SAY
+<@@!XYITMC 3,26113,-78,50,0,0.7>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 3
+#SAY
+<@@!XYITMC 3,26114,-78,50,0,0.7>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 4
+#SAY
+<@@!XYITMC 3,26115,-78,50,0,0.7>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 5
+#SAY
+<@@!XYITMC 3,26116,-78,50,0,0.7>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 6
+#SAY
+<@@!XYITMC 3,26117,-78,50,0,0.7>\
+
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 10
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 2
+#SAY
+<@@!XYITMC 3,26133,5,50,2,1>\
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 20
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 3
+#SAY
+<@@!XYITMC 3,26133,5,50,2,1>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 30
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 4
+#SAY
+<@@!XYITMC 3,26133,5,50,2,1>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 40
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 5
+#SAY
+<@@!XYITMC 3,26133,5,50,2,1>\
+#IF
+EQUAL <$CLIENTFLAG> 1
+SMALL <$CustomValue(24)> 50
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 6
+#SAY
+<@@!XYITMC 3,26133,5,50,2,1>\
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+#SAY
+<@@!XYBTN 3,26138,3,26138,3,26138,303,208,下一页/@羽翼下一页>\
+<@@!XYBTN 3,26139,3,26139,3,26139,19,208,上一页/@羽翼上一页>\
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+!LARGE <$CustomValue(24)> 39
+#SAY
+<@@!XYBTN 3,26106,3,26106,3,26106,130,312,穿戴羽翼/@穿戴羽翼>\
+<offx=|85|y=|319|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 穿戴羽翼> <|off>\
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+LARGE <$CustomValue(24)> 39
+#SAY
+<Button|x=210.0|y=332.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|size=16|color=243|text=穿戴羽翼|link=@穿戴羽翼>
+
+<Button|x=88.0|y=332.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|size=16|color=243|text=兑换仙翎|link=@打开兑换>
+
+<@@!XYBTN 3,26106,3,26106,3,26106,80,312,穿戴羽翼/@穿戴羽翼>\
+<offx=|60|y=|319|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 穿戴羽翼> <|off>\
+
+<@@!XYBTN 3,26106,3,26106,3,26106,180,312,兑换仙翎/@打开兑换>\
+<offx=|110|y=|319|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 兑换仙翎> <|off>\
+
+#IF
+EQUAL P10 11
+EQUAL <$CLIENTFLAG> 1
+#SAY
+<@@!XYITMC 3,26140,115,50>\
+<@@!XYBTN 3,80,3,81,3,82,545,67,关闭/@关闭兑换>\
+
+<offx=|145|y=|65|fontsize=|22|font=|1|xy=|1|> <color=000000 羽翼提升> <|off>\
+<offx=|145|y=|67|fontsize=|22|font=|1|xy=|1|> <color=000000 羽翼提升> <|off>\
+<offx=|145|y=|63|fontsize=|22|font=|1|xy=|1|> <color=ffc600 羽翼提升> <|off>\
+<offx=|95|y=|105|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 <$STR(S$羽翼升级_消耗材料1)>数量> <|off>\
+
+<@@!XYITMC 3,26141,290,95>\
+<offx=|167|y=|105|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 <$STR(N$羽翼升级_消耗材料)>/@羽翼升级_自选数量> <|off>\
+<@@!XYBTN 3,26142,3,26142,3,26142,260,102,减少/@羽翼升级_升级减>\
+<@@!XYBTN 3,26144,3,26144,3,26144,404,102,增加/@羽翼升级_升级加>\
+<@@!XYBTN 3,26145,3,26145,3,26145,444,102,MAX/@羽翼升级_升级最大>\
+<offx=|236|y=|105|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 MAX> <|off>\
+; <@@!RADIO 1,290,158,<$STR(N$羽翼升级_升级方式1)>,初级升级,选择升级方式/@羽翼升级_升级方式1>\
+; <@@!RADIO 2,380,158,<$STR(N$羽翼升级_升级方式2)>,高级升级,选择升级方式/@羽翼升级_升级方式2>\
+<@@!XYBTN 3,2615<$STR(N$羽翼升级_升级方式1)>,3,2615<$STR(N$羽翼升级_升级方式1)>,3,2615<$STR(N$羽翼升级_升级方式1)>,260,158,选择升级方式/@羽翼升级_升级方式1>\
+<@@!XYBTN 3,2615<$STR(N$羽翼升级_升级方式2)>,3,2615<$STR(N$羽翼升级_升级方式2)>,3,2615<$STR(N$羽翼升级_升级方式2)>,404,158,选择升级方式/@羽翼升级_升级方式2>\
+<offx=|110|y=|163|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 初级升级> <|off>\
+<offx=|180|y=|163|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 高级升级> <|off>\
+
+
+#IF
+EQUAL <$STR(N$羽翼升级_升级方式1)> 1
+EQUAL P10 11
+#SAY
+<@@!XYBTN 3,26106,3,26106,3,26106,290,225,升级/@羽翼升级_开始基础升级>\
+<offx=|165|y=|232|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 升级> <|off>\
+<offx=|165|y=|190|fontsize=|14|xy=|1|ax=|0.5|>  <Color=GREEN 获得羽翼经验：<$STR(N$羽翼升级_消耗材料)>> <|off>\
+
+#IF
+EQUAL <$STR(N$羽翼升级_升级方式2)> 1
+EQUAL P10 11
+#SAY
+<@@!XYBTN 3,26106,3,26106,3,26106,290,225,升级/@羽翼升级_开始基础升级>\
+<offx=|165|y=|232|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 升级> <|off>\
+<offx=|165|y=|190|fontsize=|14|xy=|1|ax=|0.5|>  <Color=GREEN 获得羽翼经验：<$STR(N$羽翼升级_消耗材料)>> <|off>\
+<offx=|165|y=|205|fontsize=|14|xy=|1|ax=|0.5|>  <Color=GREEN 消耗<$MULT^<$STR(N$羽翼升级_消耗材料)>^10>绑元> <|off>\
+
+
+
+#IF
+EQUAL P10 10
+#SAY
+<@@!XYITMC 3,26140,115,50>\
+<@@!XYBTN 3,80,3,81,3,82,545,67,关闭/@关闭兑换>\
+
+<offx=|145|y=|65|fontsize=|22|font=|1|xy=|1|> <color=000000 兑换仙羽> <|off>\
+<offx=|145|y=|67|fontsize=|22|font=|1|xy=|1|> <color=000000 兑换仙羽> <|off>\
+<offx=|145|y=|63|fontsize=|22|font=|1|xy=|1|> <color=ffc600 兑换仙羽> <|off>\
+
+<@@!XYITMC 3,26103,454,132,0,0.7>\
+<@@!XYITMC 3,26103,354,132,0,0.7>\
+<@@!XYITMC 3,26103,254,132,0,0.7>\
+
+; <@@!XYITMC 3,26104,394,122,0,0.9>\
+<@@!XYITMC 3,26104,294,122,0,0.9>\
+<@@!XYITMC 3,26138,414,142,0,0.9>\
+
+<offx=|70|y=|143|fontsize=|22|font=|1|xy=|1|> <color=ffc600 兑换仙羽：> <|off>\
+
+<@@!XYPIC 幻翎之羽,1,459,137>\
+<@@!XYPIC 元宝,1,359,137>\
+<@@!XYPIC 仙翎之羽,1,259,137>\
+
+
+<offx=|140|y=|158|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffffff 100> <|off>\
+<offx=|190|y=|158|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffffff 20> <|off>\
+<offx=|240|y=|158|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffffff 1> <|off>\
+
+<@@!XYBTN 3,26106,3,26106,3,26106,180,220,兑换仙翎/@幻翎之羽兑换&羽翼兑换数量=10>\
+<offx=|110|y=|227|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 兑换10个> <|off>\
+
+<@@!XYBTN 3,26106,3,26106,3,26106,300,220,兑换仙翎/@幻翎之羽兑换&羽翼兑换数量=50>\
+<offx=|170|y=|227|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 兑换50个> <|off>\
+
+<@@!XYBTN 3,26106,3,26106,3,26106,420,220,兑换仙翎/@幻翎之羽兑换&羽翼兑换数量=100>\
+<offx=|230|y=|227|fontsize=|14|xy=|1|ax=|0.5|>  <Color=0xffffc600 兑换100个> <|off>\
+
+
+
+
+#IF
+EQUAL <$CLIENTFLAG> 1
+#ACT
+BREAK
+
+
+#IF
+LARGE $CLIENTFLAG 1
+#SAY
+<Button|x=678.0|y=-1.0|nimg=public/button/btn_close_01.png|_localZOrder=0|pimg=public/button/btn_close_01.png|link=@exit>
+<Img|show=5|move=0|bg=1|loadDelay=0|img=custom/bg/bg_8.png|esc=1|_localZOrder=-2|reset=1>
+<RText|ax=0.5|ay=1|x=370.0|y=21.0|size=16|color=251|text=羽翼升级>
+
+<Frames|id=js1|x=332.0|y=46.0|count=0|suffix=.png|loop=-1|prefix=private/404/40468_|speed=12>
+<RText|id=js2|x=330.0|y=59.0|width=54|size=30|color=255|text=<color=~羽翼说明：#0xffffff00$
+羽翼升级可选初级升级与高级升级#0xffefc68c$
+初级升级幻翎之羽与羽翼经验比例1：1#0xffefc68c$
+高级升级幻翎之羽与羽翼经验比例1：8，每根羽毛消耗10绑元#0xffefc68c$
+　#0xffefc68c$
+羽翼到达10级，20级，30级，40级，50级均自动解锁技能#0xffefc68c$
+  　　　>>
+
+
+
+
+<Img|children=5|x=101.0|y=60.0|height=44|img=custom/comm/k.png|esc=0|scale=1>
+<Text|id=5|ax=0.5|x=102.0|y=37.0|color=243|size=18|text=羽翼<$CustomValue(24)>级>
+
+
+<Text|x=512.0|y=060.0|color=243|size=18|text=基础属性>
+
+
+<Text|x=422.0|y=104.0|color=243|size=16|text=生命值：>
+<Text|x=422.0|y=134.0|color=243|size=16|text=攻魔道：>
+<Text|x=406.0|y=164.0|color=95|size=16|text=冲撞等级：>
+<Text|x=497.0|y=104.0|color=224|size=16|text=<$MULT^<$STR(N$羽翼升级_血量基数)>^<$CustomValue(24)>>>
+<Text|x=497.0|y=134.0|color=224|size=16|text=<$cfg_羽翼属性(<$GetTypeBRow(cfg_羽翼属性,0,<$CustomValue(24)>)>_1)>-<$cfg_羽翼属性(<$GetTypeBRow(cfg_羽翼属性,0,<$CustomValue(24)>)>_2)>>
+<Text|x=497.0|y=164.0|color=224|size=16|text=<$CustomValue(24)>>
+<Img|x=550.0|y=104.0|scale=1|img=custom/comm/120.png|esc=0>
+<Img|x=550.0|y=134.0|scale=1|img=custom/comm/120.png|esc=0>
+<Img|x=550.0|y=164.0|scale=1|img=custom/comm/120.png|esc=0>
+
+
+<RText|x=70|y=394|color=251|size=40|text=<color=~<$STR(S$羽翼升级_技能1)>$ 　>>
+<RText|x=123|y=394|color=251|size=40|text=<color=~<$STR(S$羽翼升级_技能2)>$ 　>>
+<RText|x=174|y=394|color=251|size=40|text=<color=~<$STR(S$羽翼升级_技能3)>$ 　>>
+<RText|x=228|y=394|color=251|size=40|text=<color=~<$STR(S$羽翼升级_技能4)>$ 　>>
+<RText|x=280|y=394|color=251|size=40|text=<color=~<$STR(S$羽翼升级_技能5)>$ 　>>
+
+
+
+
+#IF
+SMALL <$CustomValue(24)> 40
+#SAY
+<Img|x=96.0|y=314.0|scale=1|esc=0|img=custom/comm/yb_barbg.png>
+<Img|x=96.0|y=314.0|scale=1|esc=0|img=custom/comm/yb_barbg.png>
+<Img|x=96.0|y=314.0|scale=1|esc=0|img=custom/comm/yb_barbg.png>
+<Img|children=123,1123|x=96.0|y=314.0|scale=1|esc=0|img=custom/comm/yb_barbg.png>
+<LoadingBar|id=123|x=2.0|y=2.0|maxLen=<$STR(S$羽翼升级_羽翼进度)>|curLen=<$CustomValue(26)>|img=custom/comm/yb_bar.png>
+<RText|id=1123|ax=0.5|x=101|y=16.0|size=14|color=224|text=羽翼经验：<$CustomValue(26)>/<$STR(S$羽翼升级_羽翼进度)>>
+
+
+
+
+#IF
+!SMALL <$CustomValue(24)> 40
+!EQUAL <$STR(S$羽翼升级_消耗材料1)> 
+#SAY
+<Img|children=1|x=414.0|y=382.0|width=50|height=50|scale=1|img=public/frame_item_01.png|esc=0>
+<ItemShow|id=1|x=-10.0|y=-10.0|width=70|height=70|itemid=1|itemcount=<$STR(S$羽翼升级_材料数量1)>|name=<$STR(S$羽翼升级_消耗材料1)>|showtips=1|bgtype=1>
+
+#IF
+!SMALL <$CustomValue(24)> 40
+!EQUAL <$STR(S$羽翼升级_消耗货币)> 
+#SAY
+<Img|children=2|x=511.0|y=382.0|width=50|height=50|img=public/frame_item_01.png|scale=1>
+<ItemShow|id=2|x=-10.0|y=-10.0|width=70|height=70|itemid=1|itemcount=<$STR(S$羽翼升级_货币数量)>|name=<$STR(S$羽翼升级_消耗货币)>|showtips=1|bgtype=1>
+<Img|x=465.0|y=388.0|width=40|height=40|esc=0|img=custom/comm/act_item7.png|scale=1>
+
+#IF
+SMALL <$CustomValue(24)> 50
+#SAY
+<Text|x=601.0|y=104.0|color=224|size=16|text=<$MULT^<$STR(N$羽翼升级_血量基数)>^<$INC^<$CustomValue(24)>^1>>>
+<Text|x=601.0|y=134.0|color=224|size=16|text=<$cfg_羽翼属性(<$GetTypeBRow(cfg_羽翼属性,0,<$INC^<$CustomValue(24)>^1>)>_1)>-<$cfg_羽翼属性(<$GetTypeBRow(cfg_羽翼属性,0,<$INC^<$CustomValue(24)>^1>)>_2)>>
+<Text|x=601.0|y=164.0|color=224|size=16|text=<$INC^<$CustomValue(24)>^1>>
+<Img|x=644.0|y=107.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+<Img|x=644.0|y=137.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+<Img|x=644.0|y=167.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+
+#IF
+!SMALL <$CustomValue(24)> 50
+#SAY
+<Text|x=601.0|y=104.0|color=224|size=16|text=已满级>
+<Text|x=601.0|y=134.0|color=224|size=16|text=已满级>
+<Text|x=601.0|y=164.0|color=224|size=16|text=已满级>
+; <Img|x=644.0|y=107.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+; <Img|x=644.0|y=137.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+; <Img|x=644.0|y=167.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+
+
+#IF
+!SMALL G4 5
+!EQUAL P10 10
+Large <$CustomValue(24)> 49
+SMALL <$CustomValue(25)> 10
+#SAY
+<Button|x=582.0|y=395.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|color=243|size=16|text=升级|link=@羽翼升级_进阶升级>
+#IF
+!EQUAL P10 10
+SMALL <$CustomValue(24)> 40
+#SAY
+<Button|x=506.0|y=395.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|color=243|size=16|text=升级|link=@羽翼升级_基础升级>
+#IF
+!EQUAL P10 10
+!SMALL <$CustomValue(24)> 40
+SMALL <$CustomValue(24)> 50
+#SAY
+<Button|x=582.0|y=395.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|color=243|size=16|text=升级|link=@羽翼升级_基础升级2>
+
+
+#IFONE
+SMALL G4 5
+SMALL <$CustomValue(24)> 50
+#SAY
+<Img|x=382.0|y=201.0|scale=1|img=custom/comm/ttt.png|esc=0>
+
+#IF
+!SMALL G4 5
+!SMALL <$CustomValue(24)> 50
+#SAY
+<Text|x=512.0|y=207.0|color=243|size=18|text=进阶属性>
+
+<Text|x=422.0|y=243.0|color=243|size=16|text=生命值：>
+<Text|x=406.0|y=263.0|color=243|size=16|text=HPMP百分比：>
+<Text|x=406.0|y=283.0|color=243|size=16|text=职业攻击上限：>
+<Text|x=406.0|y=303.0|color=243|size=16|text=攻魔道百分比：>
+<Text|x=406.0|y=323.0|color=243|size=16|text=冲撞等级：>
+<Text|x=522.0|y=243.0|color=224|size=16|text=<$INC^<$MULT^<$STR(N$羽翼升级_血量基数)>^<$CustomValue(24)>>^<$MULT^<$STR(N$羽翼升级_血量基数)>^<$CustomValue(25)>>>>
+<Text|x=522.0|y=263.0|color=224|size=16|text=<$CustomValue(25)>>
+<Text|x=522.0|y=283.0|color=224|size=16|text=<$CustomValue(25)>>
+<Text|x=522.0|y=303.0|color=224|size=16|text=<$CustomValue(25)>>
+<Text|x=522.0|y=323.0|color=224|size=16|text=<$MULT^<$CustomValue(25)>^2>>
+
+<Img|x=550.0|y=243.0|scale=1|img=custom/comm/120.png|esc=0>
+<Img|x=550.0|y=263.0|scale=1|img=custom/comm/120.png|esc=0>
+<Img|x=550.0|y=283.0|scale=1|img=custom/comm/120.png|esc=0>
+<Img|x=550.0|y=303.0|scale=1|img=custom/comm/120.png|esc=0>
+<Img|x=550.0|y=323.0|scale=1|img=custom/comm/120.png|esc=0>
+#IF
+!SMALL G4 5
+!SMALL <$CustomValue(24)> 50
+SMALL <$CustomValue(25)> 10
+#SAY
+<Text|x=601.0|y=243.0|color=224|size=16|text=<$INC^<$MULT^<$STR(N$羽翼升级_血量基数)>^<$CustomValue(24)>>^<$MULT^<$STR(N$羽翼升级_血量基数)>^<$INC^<$CustomValue(25)>^1>>>>
+<Text|x=601.0|y=263.0|color=224|size=16|text=<$INC^<$CustomValue(25)>^1>>
+<Text|x=601.0|y=283.0|color=224|size=16|text=<$INC^<$CustomValue(25)>^1>>
+<Text|x=601.0|y=303.0|color=224|size=16|text=<$INC^<$CustomValue(25)>^1>>
+<Text|x=601.0|y=323.0|color=224|size=16|text=<$MULT^<$INC^<$CustomValue(25)>^1>^2>>
+
+<Img|x=644.0|y=246.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+<Img|x=644.0|y=266.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+<Img|x=644.0|y=286.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+<Img|x=644.0|y=306.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+<Img|x=644.0|y=326.0|esc=0|img=custom/comm/bg_up.png|scale=1>
+
+#IF
+!SMALL G4 5
+!SMALL <$CustomValue(24)> 50
+!SMALL <$CustomValue(25)> 10
+#SAY
+<Text|x=601.0|y=243.0|color=224|size=16|text=已满级>
+<Text|x=601.0|y=263.0|color=224|size=16|text=已满级>
+<Text|x=601.0|y=283.0|color=224|size=16|text=已满级>
+<Text|x=601.0|y=303.0|color=224|size=16|text=已满级>
+<Text|x=601.0|y=323.0|color=224|size=16|text=已满级>
+
+
+
+
+#IF
+LARGE <$CustomValue(24)> 9
+#SAY
+<Img|x=069.0|y=391.0|img=custom/comm/yy1.png|esc=0|scale=0.9|grey=0>
+#ELSESAY
+<Img|x=069.0|y=391.0|img=custom/comm/yy1.png|esc=0|scale=0.9|grey=1>
+#IF
+LARGE <$CustomValue(24)> 19
+#SAY
+<Img|x=122.0|y=391.0|img=custom/comm/yy2.png|esc=0|scale=0.9|grey=0>
+#ELSESAY
+<Img|x=122.0|y=391.0|img=custom/comm/yy2.png|esc=0|scale=0.9|grey=1>
+#IF
+LARGE <$CustomValue(24)> 29
+#SAY
+<Img|x=175.0|y=391.0|img=custom/comm/yy3.png|esc=0|scale=0.9|grey=0>
+#ELSESAY
+<Img|x=175.0|y=391.0|img=custom/comm/yy3.png|esc=0|scale=0.9|grey=1>
+#IF
+LARGE <$CustomValue(24)> 39
+#SAY
+<Img|x=227.0|y=391.0|img=custom/comm/yy4.png|esc=0|scale=0.9|grey=0>
+#ELSESAY
+<Img|x=227.0|y=391.0|img=custom/comm/yy4.png|esc=0|scale=0.9|grey=1>
+#IF
+LARGE <$CustomValue(24)> 49
+#SAY
+<Img|x=279.0|y=391.0|img=custom/comm/yy5.png|esc=0|scale=0.9|grey=0>
+#ELSESAY
+<Img|x=279.0|y=391.0|img=custom/comm/yy5.png|esc=0|scale=0.9|grey=1>
+
+
+
+
+#IF
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 1
+#SAY
+<Img|x=-70.0|y=43.0|esc=0|img=custom/xlz/1.png|scale=0.7>
+<Frames|x=-70.0|y=43.0|suffix=.png|count=10|speed=15|scale=0.7|prefix=custom/xlz/1/11451_|loop=-1|blend=1>
+
+#IF
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 2
+#SAY
+<Img|x=-70.0|y=43.0|esc=0|img=custom/xlz/2.png|scale=0.7>
+<Frames|x=-70.0|y=43.0|suffix=.png|count=10|speed=15|scale=0.7|prefix=custom/xlz/2/11452_|loop=-1|blend=1>
+#IF
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 3
+#SAY
+<Img|x=-70.0|y=43.0|esc=0|img=custom/xlz/3.png|scale=0.7>
+<Frames|x=-70.0|y=43.0|suffix=.png|count=10|speed=15|scale=0.7|prefix=custom/xlz/1/11451_|loop=-1|blend=1>
+#IF
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 4
+#SAY
+<Img|x=-70.0|y=43.0|esc=0|img=custom/xlz/4.png|scale=0.7>
+<Frames|x=-70.0|y=43.0|suffix=.png|count=10|speed=15|scale=0.7|prefix=custom/xlz/2/11452_|loop=-1|blend=1>
+
+#IF
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 5
+#SAY
+<Img|x=-70.0|y=43.0|esc=0|img=custom/xlz/5.png|scale=0.7>
+<Frames|x=-70.0|y=43.0|suffix=.png|count=10|speed=15|scale=0.7|prefix=custom/xlz/2/11452_|loop=-1|blend=1>
+
+#IF
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 6
+#SAY
+<Img|x=-70.0|y=43.0|esc=0|img=custom/xlz/6.png|scale=0.7>
+<Frames|x=-70.0|y=43.0|suffix=.png|count=10|speed=15|scale=0.7|prefix=custom/xlz/2/11452_|loop=-1|blend=1>
+
+; 34
+; 35
+#IF
+SMALL <$CustomValue(24)> 10
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 2
+#SAY
+<Img|x=17.0|y=57.0|scale=1|img=custom/comm/z1.png|esc=0>
+
+#IF
+SMALL <$CustomValue(24)> 20
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 3
+#SAY
+<Img|x=17.0|y=57.0|scale=1|img=custom/comm/z2.png|esc=0>
+
+#IF
+SMALL <$CustomValue(24)> 30
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 4
+#SAY
+<Img|x=17.0|y=57.0|scale=1|img=custom/comm/z3.png|esc=0>
+
+#IF
+SMALL <$CustomValue(24)> 40
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 5
+#SAY
+<Img|x=17.0|y=57.0|scale=1|img=custom/comm/z4.png|esc=0>
+
+#IF
+SMALL <$CustomValue(24)> 50
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 6
+#SAY
+<Img|x=17.0|y=57.0|scale=1|img=custom/comm/z5.png|esc=0>
+
+
+#IF
+TRUE
+#SAY
+<Button|x=353.0|y=208.0|bag=0|scale=1|size=18|color=255|nimg=custom/comm/2j.png|link=@羽翼下一页>
+<Button|x=39.0|y=232.0|rotate=180|bag=0|scale=1|size=18|color=255|nimg=custom/comm/2j.png|link=@羽翼上一页>
+
+
+#IF
+!LARGE <$CustomValue(24)> 39
+#SAY
+<Button|x=150.0|y=332.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|size=16|color=243|text=穿戴羽翼|link=@穿戴羽翼>
+
+#IF
+LARGE <$CustomValue(24)> 39
+#SAY
+<Button|x=210.0|y=332.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|size=16|color=243|text=穿戴羽翼|link=@穿戴羽翼>
+
+<Button|x=88.0|y=332.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|size=16|color=243|text=兑换仙翎|link=@打开兑换>
+
+#IF
+EQUAL P10 10
+#SAY
+<Img|children=111,112|x=146.0|y=98.0|img=public/bg_npc_01.png|reset=1>
+<Button|id=111|x=408.0|y=2.0|nimg=public/button/btn_close_01.png|link=@关闭兑换>
+<Text|id=112|ax=0.5|x=235|y=33.0|size=18|color=243|text=兑换仙翎之羽>
+<Img|x=207.0|y=160.0|scale=1|img=public/frame_item_01.png>
+<Img|x=276.0|y=159.0|scale=1|img=custom/comm/act_item7.png|esc=0>
+<Img|x=346.0|y=160.0|scale=1|img=public/frame_item_01.png>
+<Img|x=422.0|y=178.0|scale=1|img=custom/comm/icon_dfw_arrow.png|esc=0>
+<Img|x=484.0|y=159.0|scale=1|img=public/frame_item_01.png>
+<ItemShow|x=206.0|y=158.0|width=70|height=70|itemid=1|itemcount=100|name=幻翎之羽|bgtype=1|showtips=1>
+<ItemShow|x=343.0|y=157.0|width=70|height=70|itemid=1|itemcount=20|name=元宝|bgtype=1|showtips=1>
+<ItemShow|x=481.0|y=156.0|width=70|height=70|itemid=1|itemcount=1|name=仙翎之羽|bgtype=1|showtips=1>
+<Button|x=198.0|y=263.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|color=243|size=16|text=兑换10个|link=@幻翎之羽兑换&羽翼兑换数量=10>
+<Button|x=331.0|y=262.0|bag=0|scale=1|size=16|color=243|nimg=custom/bottn/btn4.png|text=兑换50个|link=@幻翎之羽兑换&羽翼兑换数量=50>
+<Button|x=469.0|y=262.0|bag=0|scale=1|size=16|color=243|nimg=custom/bottn/btn4.png|text=兑换100个|link=@幻翎之羽兑换&羽翼兑换数量=100>
+
+
+#IF
+EQUAL P10 11
+#SAY
+<Img|children=111,112|x=146.0|y=98.0|img=public/bg_npc_01.png|reset=1>
+<Button|id=111|x=408.0|y=2.0|nimg=public/button/btn_close_01.png|link=@关闭兑换>
+<Text|id=112|ax=0.5|x=235|y=33.0|color=243|size=18|text=羽翼提升>
+<Text|x=179.0|y=157.0|color=243|size=16|text=<$STR(S$羽翼升级_消耗材料1)>数量>
+<Img|x=315.0|y=151.0|scale=1|img=custom/bottn/xz0.png|esc=0>
+<Text|ax=0.5|x=369.0|y=181.0|color=255|size=18|text=<$STR(N$羽翼升级_消耗材料)>|link=@羽翼升级_自选数量>
+
+
+; <Input|x=320.0|y=156.0|width=100|height=25|type=1|color=255|inputid=1|size=16|place=<$STR(N$羽翼升级_消耗材料)>|placecolor=251>
+<Button|x=429.0|y=157.0|bag=0|scale=1|size=18|color=255|nimg=custom/bottn/jia.png|link=@羽翼升级_升级加>
+<Button|x=282.0|y=157.0|bag=0|scale=1|size=18|color=255|nimg=custom/bottn/jian.png|link=@羽翼升级_升级减>
+<Button|x=463.0|y=153.0|bag=0|scale=1|nimg=custom/bottn/btn_push.png|color=67|size=16|text=MAX|link=@羽翼升级_升级最大>
+
+<CheckBox|x=254.0|y=185.0|nimg=public/button/btn_duigou_01.png|pimg=public/button/btn_duigou_02.png|checkboxid=1|default=<$STR(N$羽翼升级_升级方式1)>|link=@羽翼升级_升级方式1>
+<Text|x=297.0|y=199.0|color=243|size=16|text=初级升级>
+<CheckBox|x=386.0|y=187.0|nimg=public/button/btn_duigou_01.png|pimg=public/button/btn_duigou_02.png|checkboxid=1|default=<$STR(N$羽翼升级_升级方式2)>|link=@羽翼升级_升级方式2>
+<Text|x=431.0|y=201.0|color=243|size=16|text=高级升级>
+
+
+#IF
+EQUAL <$STR(N$羽翼升级_升级方式1)> 1
+EQUAL P10 11
+#SAY
+<RText|ax=0.5|x=371.0|y=256.0|size=16|color=224|text=获得羽翼经验：<$STR(N$羽翼升级_消耗材料)>>
+<Button|x=324.0|y=274.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|color=243|size=16|text=升级|link=@羽翼升级_开始基础升级>
+#IF
+EQUAL <$STR(N$羽翼升级_升级方式2)> 1
+EQUAL P10 11
+#SAY
+<RText|ax=0.5|x=371.0|y=248.0|size=16|color=224|text=获得羽翼经验：<$MULT^<$STR(N$羽翼升级_消耗材料)>^<$str(n$羽翼升级_升级倍数)>>>
+<RText|ax=0.5|x=371.0|y=268.0|size=16|color=224|text=消耗<$MULT^<$STR(N$羽翼升级_消耗材料)>^10>绑元>
+<Button|x=324.0|y=274.0|bag=0|scale=1|nimg=custom/bottn/btn4.png|color=243|size=16|text=升级|link=@羽翼升级_开始基础升级>
+[@羽翼升级_自选数量]
+
+#IFONE
+!CHECKITEM <$STR(S$羽翼升级_消耗材料1)> 1
+EQUAL <$STR(S$羽翼升级_羽翼进度)> 
+EQUAL <$STR(S$羽翼升级_羽翼进度)> 0
+#ACT
+MOV M1 0
+BREAK
+
+#IF
+TRUE
+#ACT
+QueryVal 1 1 255 @羽翼升级_确定自选数量 请输入要使用的数量
+
+[@羽翼升级_确定自选数量]
+#IFONE
+!CHECKITEM <$STR(S$羽翼升级_消耗材料1)> 1
+EQUAL <$STR(S$羽翼升级_羽翼进度)> 
+EQUAL <$STR(S$羽翼升级_羽翼进度)> 0
+SMALL M1 1
+Large M1 65535
+#ACT
+MOV M1 0
+BREAK
+
+
+; #IF
+; Large <$INC^<$MULT^<$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>^<$STR(N$羽翼升级_升级倍数)>>^<$CustomValue(26)>> <$STR(S$羽翼升级_羽翼进度)>
+; #ACT
+; MESSAGEBOX 不能超过<$DIV^<$DEC^<$STR(S$羽翼升级_羽翼进度)>^<$CustomValue(26)>>^<$STR(N$羽翼升级_升级倍数)>>!
+; MOV M1 0
+; BREAK
+
+#IF
+CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$STR(M1)>
+#ACT
+MOV N$羽翼升级_消耗材料 <$STR(M1)>
+MOV M1 0
+GOTO @羽翼升级_界面
+BREAK
+#IF
+!CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$STR(M1)>
+CHECKITEM <$STR(S$羽翼升级_消耗材料1)> 1
+#ACT
+MOV N$羽翼升级_消耗材料 <$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>
+MOV M1 0
+GOTO @羽翼升级_界面
+BREAK
+
+
+
+
+
+
+
+
+[@羽翼升级_升级方式1]
+#IF
+TRUE
+#ACT
+MOV N$羽翼升级_升级方式1 1
+MOV N$羽翼升级_升级方式2 0
+MOV N$羽翼升级_升级倍数 1
+MOV N$羽翼升级_消耗材料 1
+MOV M1 0
+GOTO @羽翼升级_界面
+BREAK
+
+
+[@羽翼升级_升级方式2]
+#IF
+TRUE
+#ACT
+MOV N$羽翼升级_升级方式1 0
+MOV N$羽翼升级_升级方式2 1
+MOV N$羽翼升级_升级倍数 8
+MOV N$羽翼升级_消耗材料 1
+MOV M1 0
+GOTO @羽翼升级_界面
+BREAK
+
+[@羽翼升级_升级最大]
+#IFONE
+!CHECKITEM <$STR(S$羽翼升级_消耗材料1)> 1
+EQUAL <$STR(S$羽翼升级_羽翼进度)> 
+EQUAL <$STR(S$羽翼升级_羽翼进度)> 0
+#ACT
+BREAK
+
+#IF
+CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>
+#ACT
+MOV N$羽翼升级_消耗材料 <$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>
+GOTO @羽翼升级_界面
+BREAK
+
+
+
+; #IF
+; SMALL <$INC^<$MULT^<$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>^<$STR(N$羽翼升级_升级倍数)>>^<$CustomValue(26)>> <$STR(S$羽翼升级_羽翼进度)>
+; CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$INC^<$MULT^<$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>^<$STR(N$羽翼升级_升级倍数)>>^<$CustomValue(26)>>
+; #ACT
+; MOV N$羽翼升级_消耗材料 <$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>
+; GOTO @羽翼升级_界面
+; BREAK
+
+
+; #IF
+; !SMALL <$INC^<$MULT^<$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>^<$STR(N$羽翼升级_升级倍数)>>^<$CustomValue(26)>> <$STR(S$羽翼升级_羽翼进度)>
+; CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$DIV^<$DEC^<$STR(S$羽翼升级_羽翼进度)>^<$CustomValue(26)>>^<$STR(N$羽翼升级_升级倍数)>>
+; #ACT
+; MOV N$羽翼升级_消耗材料 <$DIV^<$DEC^<$STR(S$羽翼升级_羽翼进度)>^<$CustomValue(26)>>^<$STR(N$羽翼升级_升级倍数)>>
+; GOTO @羽翼升级_界面
+; BREAK
+
+
+[@羽翼升级_升级加]
+#IFONE
+!CHECKITEM <$STR(S$羽翼升级_消耗材料1)> 1
+EQUAL <$STR(S$羽翼升级_羽翼进度)> 
+EQUAL <$STR(S$羽翼升级_羽翼进度)> 0
+#ACT
+BREAK
+
+; #IF
+; !SMALL <$INC^<$MULT^<$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>^<$STR(S$羽翼升级_升级倍数)>>^<$CustomValue(26)>> <$STR(S$羽翼升级_羽翼进度)>
+; #ACT
+; MESSAGEBOX 已达当前等级最大
+; BREAK
+
+#IF
+!SMALL <$STR(N$羽翼升级_消耗材料)> <$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>
+#ACT
+MESSAGEBOX 已达最大
+BREAK
+
+
+#IF
+!SMALL <$STR(N$羽翼升级_消耗材料)> 10
+SMALL <$INC^<$STR(N$羽翼升级_消耗材料)>^10> <$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>
+#ACT
+INC N$羽翼升级_消耗材料 10
+GOTO @羽翼升级_界面
+BREAK
+
+
+
+#IF
+SMALL <$INC^<$STR(N$羽翼升级_消耗材料)>^1> <$ITEMCOUNT[<$STR(S$羽翼升级_消耗材料1)>]>
+#ACT
+INC N$羽翼升级_消耗材料 1
+GOTO @羽翼升级_界面
+BREAK
+
+
+[@羽翼升级_升级减]
+#IFONE
+!CHECKITEM <$STR(S$羽翼升级_消耗材料1)> 1
+EQUAL <$STR(S$羽翼升级_羽翼进度)> 
+EQUAL <$STR(S$羽翼升级_羽翼进度)> 0
+#ACT
+BREAK
+
+#IF
+SMALL <$STR(N$羽翼升级_消耗材料)> 2
+#ACT
+MESSAGEBOX 最少填入一个
+BREAK
+
+
+#IF
+!SMALL <$STR(N$羽翼升级_消耗材料)> 10
+LARGE <$DEC^<$STR(N$羽翼升级_消耗材料)>^10> 0
+#ACT
+DEC N$羽翼升级_消耗材料 10
+GOTO @羽翼升级_界面
+BREAK
+
+
+#IF
+!SMALL <$STR(N$羽翼升级_消耗材料)> 2
+#ACT
+dec N$羽翼升级_消耗材料 1
+GOTO @羽翼升级_界面
+BREAK
+
+
+[@羽翼升级_基础升级]
+#IF
+TRUE
+#ACT
+MOV P10 11
+GOTO @羽翼升级_界面
+BREAK
+
+
+
+
+[@羽翼升级_基础升级2]
+#IF
+Large <$CustomValue(24)> 49
+#ACT
+MESSAGEBOX 羽翼基础等级已满，无法继续升级！
+BREAK
+
+#IF
+SMALL <$CustomValue(24)> 40
+#ACT
+BREAK
+
+
+#IF
+!EQUAL S$羽翼升级_合区限制 
+!Large <$STR(G4)> <$STR(S$羽翼升级_合区限制)>
+#ACT
+MESSAGEBOX 已达到当前合区上限
+BREAK
+
+#IF
+!CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$STR(S$羽翼升级_材料数量1)>
+#ACT
+MESSAGEBOX <$STR(S$羽翼升级_消耗材料1)>不足<$STR(S$羽翼升级_材料数量1)>，无法升级！
+BREAK
+
+#IF
+!EQUAL <$STR(S$羽翼升级_消耗货币)> 
+SMALL <$Money(<$STR(S$羽翼升级_消耗货币)>)> <$STR(S$羽翼升级_货币数量)>
+#ACT
+MESSAGEBOX <$STR(S$羽翼升级_消耗货币)>不足<$STR(S$羽翼升级_货币数量)>，无法升级！
+BREAK
+
+
+#IF
+!EQUAL <$STR(S$羽翼升级_消耗货币)> 
+CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$STR(S$羽翼升级_材料数量1)>
+#ACT
+TAKE <$STR(S$羽翼升级_消耗材料1)> <$STR(S$羽翼升级_材料数量1)>
+Money <$STR(S$羽翼升级_消耗货币)> - <$STR(S$羽翼升级_货币数量)>
+changeCustomValue 24 + 1
+SENDMSG 7 羽翼提升成功！
+SENDMSG 19 羽翼提升成功！
+GOTO @羽翼升级_界面
+GOTO @刷新属性
+BREAK
+
+
+
+
+[@羽翼升级_开始基础升级]
+#IF
+Large <$CustomValue(24)> 49
+#ACT
+MESSAGEBOX 羽翼基础等级已满，无法继续升级！
+BREAK
+
+
+#IF
+!EQUAL S$羽翼升级_合区限制 
+!Large <$STR(G4)> <$STR(S$羽翼升级_合区限制)>
+#ACT
+MESSAGEBOX 已达到当前合区上限
+BREAK
+
+#IF
+!CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$STR(N$羽翼升级_消耗材料)>
+#ACT
+MESSAGEBOX <$STR(S$羽翼升级_消耗材料1)>不足<$STR(N$羽翼升级_消耗材料)>，无法升级！
+BREAK
+
+#IF
+LARGE <$STR(N$羽翼升级_升级倍数)> 1
+SMALL <$Money(绑定元宝)> <$MULT^<$STR(N$羽翼升级_消耗材料)>^10>
+#ACT
+MESSAGEBOX 绑定元宝不足<$MULT^<$STR(N$羽翼升级_消耗材料)>^10>
+BREAK
+
+#IF
+LARGE <$STR(N$羽翼升级_升级倍数)> 1
+!SMALL <$Money(绑定元宝)> <$MULT^<$STR(N$羽翼升级_消耗材料)>^10>
+#ACT
+Money 绑定元宝 - <$MULT^<$STR(N$羽翼升级_消耗材料)>^10>
+
+
+
+#IF
+CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$STR(N$羽翼升级_消耗材料)>
+#ACT
+TAKE <$STR(S$羽翼升级_消耗材料1)> <$STR(N$羽翼升级_消耗材料)>
+changeCustomValue 26 + <$MULT^<$STR(N$羽翼升级_消耗材料)>^<$STR(N$羽翼升级_升级倍数)>>
+LOOPGOTO @羽翼循环 50
+
+#IF
+TRUE
+#ACT
+SENDMSG 7 羽翼提升成功！
+SENDMSG 19 羽翼提升成功！
+MOV P12 0
+MOV P10 0
+MOV N$羽翼升级_消耗材料 1
+GOTO @羽翼升级_界面
+GOTO @刷新属性
+BREAK
+
+[@羽翼循环]
+#IF
+!SMALL <$CustomValue(24)> 40
+#ACT
+STOP
+BREAK
+
+
+#if
+TRUE
+#ACT
+MOV S$羽翼升级_消耗材料1 <$cfg_羽翼升级(<$CustomValue(24)>_1)>
+MOV S$羽翼升级_材料数量1 <$cfg_羽翼升级(<$CustomValue(24)>_2)>
+
+MOV S$羽翼升级_消耗货币 <$cfg_羽翼升级(<$CustomValue(24)>_3)>
+MOV S$羽翼升级_货币数量 <$cfg_羽翼升级(<$CustomValue(24)>_8)>
+MOV S$羽翼升级_合区限制 <$cfg_羽翼升级(<$CustomValue(24)>_6)>
+MOV S$羽翼升级_羽翼进度 <$cfg_羽翼升级(<$CustomValue(24)>_7)>
+
+
+#IF
+SMALL <$CustomValue(26)> <$STR(S$羽翼升级_羽翼进度)>
+#ACT
+STOP
+BREAK
+
+#IF
+EQUAL <$STR(S$羽翼升级_消耗材料1)> 仙翎之羽
+#ACT
+changeCustomValue 26 = 0
+STOP
+BREAK
+
+
+
+#IF
+!SMALL <$CustomValue(26)> <$STR(S$羽翼升级_羽翼进度)>
+#ACT
+changeCustomValue 26 - <$STR(S$羽翼升级_羽翼进度)>
+changeCustomValue 24 + 1
+
+
+[@羽翼升级_进阶升级]
+
+#IF
+!Large <$STR(G4)> 4
+#ACT
+MESSAGEBOX 已达到当前合区上限
+BREAK
+
+
+#IF
+SMALL <$CustomValue(24)> 50
+#ACT
+MESSAGEBOX 羽翼基础等级未满，无法升级！
+BREAK
+
+
+#IF
+!SMALL <$CustomValue(25)> 10
+#ACT
+MESSAGEBOX 羽翼进阶等级已满，无法升级！
+BREAK
+
+
+#IF
+!CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$STR(S$羽翼升级_材料数量1)>
+#ACT
+MESSAGEBOX <$STR(S$羽翼升级_消耗材料1)>不足<$STR(S$羽翼升级_材料数量1)>，无法升级！
+BREAK
+
+#IF
+!EQUAL <$STR(S$羽翼升级_消耗货币)> 
+SMALL <$Money(<$STR(S$羽翼升级_消耗货币)>)> <$STR(S$羽翼升级_货币数量)>
+#ACT
+MESSAGEBOX <$STR(S$羽翼升级_消耗货币)>不足<$STR(S$羽翼升级_货币数量)>，无法升级！
+BREAK
+
+#IF
+CHECKITEM <$STR(S$羽翼升级_消耗材料1)> <$STR(S$羽翼升级_材料数量1)>
+#ACT
+TAKE <$STR(S$羽翼升级_消耗材料1)> <$STR(S$羽翼升级_材料数量1)>
+Money <$STR(S$羽翼升级_消耗货币)> - <$STR(S$羽翼升级_货币数量)>
+changeCustomValue 25 + 1
+SENDMSG 7 羽翼提升成功！
+SENDMSG 19 羽翼提升成功！
+GOTO @羽翼升级_界面
+GOTO @刷新属性
+BREAK
+
+[@羽翼下一页]
+#IF
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 6
+#ACT
+MESSAGEBOX 已经是最后一页了！
+BREAK
+#ELSEACT
+INC N$羽翼升级_展示羽翼 1
+GOTO @羽翼升级_界面
+BREAK
+
+
+[@羽翼上一页]
+#IF
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 1
+#ACT
+MESSAGEBOX 已经是第一页了！
+BREAK
+#ELSEACT
+DEC N$羽翼升级_展示羽翼 1
+GOTO @羽翼升级_界面
+BREAK
+
+[@关闭兑换]
+#IF
+TRUE
+#ACT
+MOV P10 0
+MOV N$羽翼升级_消耗材料 1
+GOTO @羽翼升级_界面
+BREAK
+
+
+[@打开兑换]
+#IF
+TRUE
+#ACT
+MOV P10 10
+GOTO @羽翼升级_界面
+BREAK
+
+
+[@幻翎之羽兑换]
+#IFONE
+EQUAL S$羽翼兑换数量 
+SMALL S$羽翼兑换数量 1
+#ACT
+BREAK
+
+#IF
+!CHECKBAGSIZE 1
+#ACT
+MESSAGEBOX 背包空间不足，无法兑换
+BREAK
+
+#IF
+!CHECKITEM 幻翎之羽 <$MULT^100^<$STR(S$羽翼兑换数量)>>
+#ACT
+MESSAGEBOX 幻翎之羽不足<$MULT^100^<$STR(S$羽翼兑换数量)>>个，无法兑换
+BREAK
+
+#IF
+; SMALL <$Money(金币)> <$MULT^1100^<$STR(S$羽翼兑换数量)>>
+CheckBindMoney 2 < <$MULT^20^<$STR(S$羽翼兑换数量)>>
+#ACT
+MESSAGEBOX 元宝不足<$MULT^20^<$STR(S$羽翼兑换数量)>>个，无法兑换
+BREAK
+
+#IF
+CHECKITEM 幻翎之羽 <$MULT^10^<$STR(S$羽翼兑换数量)>>
+CheckBindMoney 2 ? <$MULT^20^<$STR(S$羽翼兑换数量)>>
+#ACT
+TAKE 幻翎之羽 <$MULT^10^<$STR(S$羽翼兑换数量)>>
+; Money 金币 - <$MULT^1100^<$STR(S$羽翼兑换数量)>>
+ChangeBindMoney 2 <$MULT^20^<$STR(S$羽翼兑换数量)>>
+GIVE 仙翎之羽 <$STR(S$羽翼兑换数量)> 1
+SENDMSG 7 兑换成功！
+SENDMSG 19 兑换成功！
+BREAK
+
+[@穿戴羽翼]
+#IF
+!Large <$CustomValue(24)> 0
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 1
+#ACT
+MESSAGEBOX 羽翼未激活，无法穿戴！
+BREAK
+
+#IF
+SMALL <$CustomValue(24)> 10
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 2
+#ACT
+MESSAGEBOX 羽翼未激活，无法穿戴！
+BREAK
+#IF
+SMALL <$CustomValue(24)> 20
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 3
+#ACT
+MESSAGEBOX 羽翼未激活，无法穿戴！
+BREAK
+#IF
+SMALL <$CustomValue(24)> 30
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 4
+#ACT
+MESSAGEBOX 羽翼未激活，无法穿戴！
+BREAK
+#IF
+SMALL <$CustomValue(24)> 40
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 5
+#ACT
+MESSAGEBOX 羽翼未激活，无法穿戴！
+BREAK
+#IF
+SMALL <$CustomValue(24)> 50
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 6
+#ACT
+MESSAGEBOX 羽翼未激活，无法穿戴！
+BREAK
+#IF
+Large <$CustomValue(24)> 0
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 1
+#ACT
+CALCVAR HUMAN 羽翼穿戴 = 0 1
+SENDMSG 7 穿戴成功！
+SENDMSG 19 穿戴成功！
+GOTO @刷新羽翼
+BREAK
+#IF
+!SMALL <$CustomValue(24)> 10
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 2
+#ACT
+CALCVAR HUMAN 羽翼穿戴 = 1 1
+SENDMSG 7 穿戴成功！
+SENDMSG 19 穿戴成功！
+GOTO @刷新羽翼
+BREAK
+
+#IF
+!SMALL <$CustomValue(24)> 20
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 3
+#ACT
+CALCVAR HUMAN 羽翼穿戴 = 2 1
+SENDMSG 7 穿戴成功！
+SENDMSG 19 穿戴成功！
+GOTO @刷新羽翼
+BREAK
+#IF
+!SMALL <$CustomValue(24)> 30
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 4
+#ACT
+CALCVAR HUMAN 羽翼穿戴 = 3 1
+SENDMSG 7 穿戴成功！
+SENDMSG 19 穿戴成功！
+GOTO @刷新羽翼
+BREAK
+#IF
+!SMALL <$CustomValue(24)> 40
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 5
+#ACT
+CALCVAR HUMAN 羽翼穿戴 = 4 1
+SENDMSG 7 穿戴成功！
+SENDMSG 19 穿戴成功！
+GOTO @刷新羽翼
+BREAK
+#IF
+!SMALL <$CustomValue(24)> 50
+EQUAL <$STR(N$羽翼升级_展示羽翼)> 6
+#ACT
+CALCVAR HUMAN 羽翼穿戴 = 5 1
+SENDMSG 7 穿戴成功！
+SENDMSG 19 穿戴成功！
+GOTO @刷新羽翼
+BREAK
+
+
+
+[@刷新属性]
+#IF
+TRUE
+#ACT
+RESTPROVISIONALABIL 99
+#CALL [\游戏功能\临时属性\怪物图鉴.txt] @怪物图鉴
+#CALL [\游戏功能\临时属性\变量属性.txt] @变量属性
+#CALL [\游戏功能\临时属性\人物双防.txt] @人物双防
+#CALL [\游戏功能\临时属性\人物攻击.txt] @人物攻击
+#CALL [\游戏功能\临时属性\人物血量.txt] @人物血量
+#CALL [\游戏功能\临时属性\人物暴击.txt] @人物暴击
+#CALL [\游戏功能\临时属性\技能威力.txt] @技能威力
+#CALL [\游戏功能\临时属性\特殊属性.txt] @特殊属性
+#CALL [\游戏功能\临时属性\爆率经验.txt] @爆率经验
+#CALL [\游戏功能\临时属性\对怪属性.txt] @对怪属性
+#CALL [\游戏功能\临时属性\对人属性.txt] @对人属性
+#CALL [\游戏功能\临时属性\命中躲避.txt] @命中躲避
+#CALL [\游戏功能\临时属性\宝宝属性.txt] @宝宝属性
+#CALL [\游戏功能\临时属性\负面状态.txt] @负面状态
+#CALL [\封号系统\封号分类.txt] @封号分类
+
+
+[@刷新羽翼]
+#IF
+TRUE
+#ACT
+#CALL [\封号系统\翅膀等级.txt] @翅膀等级

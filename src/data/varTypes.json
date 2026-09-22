@@ -1,0 +1,18 @@
+{
+  "varTypes": [
+    { "prefix": "A", "min": 0, "max": 299, "valueType": "字符型", "scope": "全局变量", "persist": "重启服务器保存", "desc": "存放在 Config\\GlobalVals.xml，全服唯一，通用传递。也可写作 T0-T299（旧写法）。", "writable": true },
+    { "prefix": "S", "min": 0, "max": 99, "valueType": "字符型", "scope": "个人变量", "persist": "下线不保存", "desc": "通用传递，存放字符型数据，人物下线消失。支持所有A变量的操作。", "writable": true },
+    { "prefix": "P", "min": 0, "max": 99, "valueType": "数字型", "scope": "个人变量", "persist": "NPC内有效", "desc": "只对当前对话NPC内有效，切换NPC或对话框关闭时归0。取值0-65375。", "writable": true },
+    { "prefix": "D", "min": 0, "max": 99, "valueType": "数字型", "scope": "个人变量", "persist": "下线不保存", "desc": "人物不下线时对全局NPC通用传递。取值0-65375，下线清空。", "writable": true },
+    { "prefix": "G", "min": 0, "max": 99, "valueType": "数字型", "scope": "全局变量", "persist": "重启服务器保存", "desc": "存放在 Config\\GlobalVals.xml，全服唯一，通用传递。", "writable": true },
+    { "prefix": "I", "min": 0, "max": 99, "valueType": "数字型", "scope": "全局变量", "persist": "重启服务器不保存", "desc": "全服唯一，通用传递，服务器关闭后清空，其余与G变量一致。", "writable": true },
+    { "prefix": "M", "min": 0, "max": 99, "valueType": "数字型", "scope": "个人变量", "persist": "下线不保存", "desc": "人物不下线时对全局NPC通用传递。取值0-65375，下线清空。", "writable": true },
+    { "prefix": "U", "min": 0, "max": 254, "valueType": "数字型", "scope": "个人变量", "persist": "可保存(SQL)", "desc": "存放在SQL角色数据库，最大值21亿。", "writable": true },
+    { "prefix": "T", "min": 0, "max": 254, "valueType": "字符型", "scope": "个人变量", "persist": "可保存(SQL)", "desc": "存放在SQL角色数据库，最大长度8000字符以内。", "writable": true },
+    { "prefix": "J", "min": 0, "max": 499, "valueType": "数字型", "scope": "个人变量", "persist": "每晚0点重置", "desc": "存放在SQL角色数据库，每晚12点自动重置。", "writable": true },
+    { "prefix": "Z", "min": 0, "max": 499, "valueType": "字符型", "scope": "个人变量", "persist": "每晚0点重置", "desc": "存放在SQL角色数据库，每晚12点自动重置。", "writable": true },
+    { "prefix": "MARK", "min": 1, "max": 800, "valueType": "标记(0/1)", "scope": "个人变量", "persist": "下线保存", "desc": "个人标记变量 [1]-[800]，只有0和1两种状态，用 SET [n] 1 设置、CHECK [n] 0 检测。", "writable": true },
+    { "prefix": "CV", "min": 0, "max": 99, "valueType": "数字型", "scope": "个人变量", "persist": "重启服务器保存", "desc": "CustomValue变量，共100个(0-99)，用 ChangeCustomValue 编号 +/-/= 值 调整，用 <$CUSTOMVALUE(编号)> 读取。", "writable": true },
+    { "prefix": "CUSTOM", "min": 0, "max": 0, "valueType": "Integer/String", "scope": "Global/Guild/Human", "persist": "可保存(数据库)", "desc": "VAR 命令声明的自定义变量，存放在数据库。", "writable": true }
+  ]
+}
