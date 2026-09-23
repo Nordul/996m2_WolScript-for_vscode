@@ -1,0 +1,26 @@
+[@main]
+#IF
+EQUAL <$STR(S$魂珠打造_选择系列)> 3
+#ACT
+INC S$魂珠打造_五行属性 <（金）/FCOLOR=251><暴击等级：/FCOLOR=95><+<$HUMAN(法宝五行金)>/FCOLOR=245>\
+INC S$魂珠打造_五行属性 <（木）/FCOLOR=224><冲撞等级：/FCOLOR=95><+<$HUMAN(法宝五行木)>/FCOLOR=245>\
+INC S$魂珠打造_五行属性 <（水）/FCOLOR=146><切割倍数：/FCOLOR=95><+<$INC^10^<$DEC^<$MULT^<$HUMAN(法宝五行水)>^5>^5>>%/FCOLOR=245>\
+
+#IF
+EQUAL <$STR(S$魂珠打造_选择系列)> 4
+#ACT
+INC S$魂珠打造_五行属性 <（金）/FCOLOR=251><暴击等级：/FCOLOR=95><+<$HUMAN(法宝五行金)>/FCOLOR=245>\
+INC S$魂珠打造_五行属性 <（木）/FCOLOR=224><冲撞等级：/FCOLOR=95><+<$HUMAN(法宝五行木)>/FCOLOR=245>\
+INC S$魂珠打造_五行属性 <（水）/FCOLOR=146><切割倍数：/FCOLOR=95><+<$INC^10^<$DEC^<$MULT^<$HUMAN(法宝五行水)>^5>^5>>%/FCOLOR=245>\
+INC S$魂珠打造_五行属性 <（火）/FCOLOR=249><单体概率附带自身职业攻击/FCOLOR=95>\<　　　<$INC^10^<$DEC^<$MULT^<$HUMAN(法宝五行火)>^5>^5>>%的真实伤害，/FCOLOR=245><冷却<$cfg_真魂珠属性(<$GetTypeBRow(cfg_真魂珠属性,0,<$cfg_真魂珠合成(<$STR(S$魂珠打造_选择系列)>_0)>)>_21)>秒/FCOLOR=245>\
+
+#IF
+LARGE <$STR(S$魂珠打造_选择系列)> 4
+#ACT
+INC S$魂珠打造_五行属性 <（金）/FCOLOR=251><暴击等级：/FCOLOR=95><+<$HUMAN(法宝五行金)>/FCOLOR=245>\
+INC S$魂珠打造_五行属性 <（木）/FCOLOR=224><冲撞等级：/FCOLOR=95><+<$HUMAN(法宝五行木)>/FCOLOR=245>\
+INC S$魂珠打造_五行属性 <（水）/FCOLOR=146><切割倍数：/FCOLOR=95><+<$INC^10^<$DEC^<$MULT^<$HUMAN(法宝五行水)>^5>^5>>%/FCOLOR=245>\
+INC S$魂珠打造_五行属性 <（火）/FCOLOR=249><单体概率附带自身职业攻击/FCOLOR=95>\<　　　<$INC^10^<$DEC^<$MULT^<$HUMAN(法宝五行火)>^5>^5>>%的真实伤害/FCOLOR=245><，冷却<$cfg_真魂珠属性(<$GetTypeBRow(cfg_真魂珠属性,0,<$cfg_真魂珠合成(<$STR(S$魂珠打造_选择系列)>_0)>)>_21)>秒/FCOLOR=245>\
+INC S$魂珠打造_五行属性 <（土）/FCOLOR=125><攻击BOSS时，概率使当前目标/FCOLOR=95>\<　　　损失<$cfg_法宝属性(<$HUMAN(法宝五行土)>_8)>%的生命值/FCOLOR=245><，道士宝宝有效/FCOLOR=95>\
+
+#CALL [\游戏功能\临时属性\技能威力.txt] @技能威力

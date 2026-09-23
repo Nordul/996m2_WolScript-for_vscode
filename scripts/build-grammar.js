@@ -37,6 +37,7 @@ const grammar = {
     { include: '#sections' },
     { include: '#callCmd' },
     { include: '#sayLink' },
+    { include: '#escape' },
     { include: '#uiComponent' },
     { include: '#caretFn' },
     { include: '#sysVarCall' },
@@ -88,21 +89,22 @@ const grammar = {
       name: 'entity.name.type.label.m2script',
       match: '@[A-Za-z0-9_\\-一-鿿]+',
     },
-    // SAY 段链接: \<文字/@标签\>
+    // SAY/RichText 链接: \<文字/@标签\> (单行匹配, 必须含 /@ 且同行以 \> 闭合;
+    // 不能用跨行 begin/end, 否则字符串中的换行符 \ 后跟 < 会被误判成链接起点吞掉后续内容)
     sayLink: {
-      begin: '\\\\<',
-      beginCaptures: { 0: { name: 'punctuation.definition.tag.m2script' } },
-      end: '\\\\>',
-      endCaptures: { 0: { name: 'punctuation.definition.tag.m2script' } },
-      name: 'meta.link.m2script',
-      patterns: [
-        { include: '#labelRef' },
-        { include: '#caretFn' },
-        { include: '#cfgRef' },
-        { include: '#sysVarCall' },
-        { include: '#sysVar' },
-        { name: 'string.other.link.m2script', match: '[^\\\\>@]+' },
-      ],
+      match: '(\\\\<)([^\\\\>]*?)(/)(@[^\\\\>]+?)(\\\\>)',
+      captures: {
+        1: { name: 'punctuation.definition.tag.m2script' },
+        2: { name: 'string.other.link.m2script' },
+        3: { name: 'punctuation.separator.link.m2script' },
+        4: { name: 'entity.name.type.label.m2script' },
+        5: { name: 'punctuation.definition.tag.m2script' },
+      },
+    },
+    // 字符串中的 \ 为换行/转义符(引擎文本内的换行标记)
+    escape: {
+      name: 'constant.character.escape.m2script',
+      match: '\\\\',
     },
     // UI 组件: <Text|x=|y=|...>
     uiComponent: {

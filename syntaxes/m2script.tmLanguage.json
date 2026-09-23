@@ -16,6 +16,9 @@
       "include": "#sayLink"
     },
     {
+      "include": "#escape"
+    },
+    {
       "include": "#uiComponent"
     },
     {
@@ -115,40 +118,28 @@
       "match": "@[A-Za-z0-9_\\-一-鿿]+"
     },
     "sayLink": {
-      "begin": "\\\\<",
-      "beginCaptures": {
-        "0": {
+      "match": "(\\\\<)([^\\\\>]*?)(/)(@[^\\\\>]+?)(\\\\>)",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.tag.m2script"
+        },
+        "2": {
+          "name": "string.other.link.m2script"
+        },
+        "3": {
+          "name": "punctuation.separator.link.m2script"
+        },
+        "4": {
+          "name": "entity.name.type.label.m2script"
+        },
+        "5": {
           "name": "punctuation.definition.tag.m2script"
         }
-      },
-      "end": "\\\\>",
-      "endCaptures": {
-        "0": {
-          "name": "punctuation.definition.tag.m2script"
-        }
-      },
-      "name": "meta.link.m2script",
-      "patterns": [
-        {
-          "include": "#labelRef"
-        },
-        {
-          "include": "#caretFn"
-        },
-        {
-          "include": "#cfgRef"
-        },
-        {
-          "include": "#sysVarCall"
-        },
-        {
-          "include": "#sysVar"
-        },
-        {
-          "name": "string.other.link.m2script",
-          "match": "[^\\\\>@]+"
-        }
-      ]
+      }
+    },
+    "escape": {
+      "name": "constant.character.escape.m2script",
+      "match": "\\\\"
     },
     "uiComponent": {
       "begin": "(<)(PlayerPanel|LoadingBar|ScrollView|COUNTDOWN|EquipShow|GoodsShow|Skillicon|BagItems|CheckBox|ItemShow|ListView|PageView|TIMETIPS|DropDown|RichText|Progress|ITEMBOX|MenuBtn|TabView|EditBox|Button|Effect|Frames|Layout|Slider|Clock|Input|RText|Text|Img)(?=[|>])",

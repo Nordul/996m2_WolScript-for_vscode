@@ -38,6 +38,10 @@ const lines = [
   '#CALL [\\商城\\回收.txt] @回收',
   'SENDMSG 5 价格:<$cfg_物品价格(1_7)>',
   'SENDMSG 5 官职:<$cfg_guanzhi(1_<$GetTypeBRow(cfg_guanzhi,4,GUANJIAN)>)>',
+  // \ 换行符后跟 < 不应被误判为链接起点, 后续 <$...> 函数仍正常着色
+  'INC S$魂珠打造_五行属性 <（火）/FCOLOR=95>\\<+<$INC^10^<$HUMAN(法宝五行水)>^10>/FCOLOR=97>',
+  // 真实链接仍识别
+  '\\<测试说明/@测试说明\\>',
 ];
 
 async function main() {
@@ -96,6 +100,10 @@ async function main() {
     [28, '@回收', 'entity.name.type.label'],
     [29, '<$cfg_物品价格(1_7)>', 'support.variable.system'],
     [30, '<$cfg_guanzhi(1_<$GetTypeBRow(cfg_guanzhi,4,GUANJIAN)>', 'support.variable.system'],
+    [31, '<$HUMAN(', 'support.variable.system'],
+    [31, '法宝五行水', 'entity.name.variable.custom'],
+    [32, '@测试说明', 'entity.name.type.label'],
+    [32, '测试说明', 'string.other.link'],
   ];
 
   let fail = 0;
