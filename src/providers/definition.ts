@@ -139,12 +139,18 @@ export class M2DefinitionProvider implements vscode.DefinitionProvider {
     }
 
     // 2. 同文件 @标签 跳转 (GOTO @xxx 等)
+    // QueryMsg 的标签参数由引擎追加按钮编号后缀: 点"确定"实际执行 [@标签1]
+    const isQueryMsg = /^\s*QueryMsg\s+/i.test(line);
     const atRe = /@([A-Za-z0-9_\-一-鿿]+)/g;
     for (const m of line.matchAll(atRe)) {
       const start = m.index!, end = start + m[0].length;
       if (position.character >= start && position.character <= end) {
         // 标签定义行本身不跳转
         if (/^\s*\[@[^\]]+\]/.test(line)) return undefined;
+        if (isQueryMsg) {
+          const pos1 = labelPosition(document, m[1] + '1');
+          if (pos1) return new vscode.Location(document.uri, pos1);
+        }
         const pos = labelPosition(document, m[1]);
         if (pos) return new vscode.Location(document.uri, pos);
         return undefined;

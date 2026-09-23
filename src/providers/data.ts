@@ -91,6 +91,7 @@ export function signatureToSnippet(signature: string, name: string): vscode.Snip
     .slice(0, 6);
   let snip = name;
   tokens.forEach((t, i) => { snip += ` \${${i + 1}:${t}}`; });
-  if (tokens.length > 0) snip += ' $0';
+  // $0 紧跟最后一个字段(不加空格): 最后一次 Tab 原地结束补全, 无多余跳转位
+  if (tokens.length > 0) snip += '$0';
   return new vscode.SnippetString(snip);
 }

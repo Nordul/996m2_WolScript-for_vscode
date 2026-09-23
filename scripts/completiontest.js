@@ -31,11 +31,14 @@ class Color {
 class ColorInformation {
   constructor(range, color) { this.range = range; this.color = color; }
 }
+class Location {
+  constructor(uri, rangeOrPosition) { this.uri = uri; this.range = rangeOrPosition; }
+}
 class ColorPresentation {
   constructor(label) { this.label = label; }
 }
 const vscodeMock = {
-  Position, Range, Selection, SnippetString, MarkdownString, CompletionItem, FoldingRange,
+  Position, Range, Selection, SnippetString, MarkdownString, CompletionItem, FoldingRange, Location,
   Color, ColorInformation, ColorPresentation,
   FoldingRangeKind: { Region: 3 },
   CompletionItemKind: {
@@ -299,4 +302,32 @@ try {
   console.log('FAIL activate: ' + e.stack.split('\n').slice(0, 3).join(' | '));
 }
 
-process.exit(fail ? 1 : 0);
+// QueryMsg 的 @标签 -> 引擎实际执行 [@标签1], 跳转需优先命中带后缀的标签
+(async () => {
+  try {
+    const { M2DefinitionProvider } = require('../out/providers/definition');
+    const dp = new M2DefinitionProvider();
+    const mkQ = (labelLine) => makeDoc(`[@main]\n#ACT\n${labelLine}\n\n[@技能修炼_确定选择卸下1]\n#ACT\nMESSAGEBOX 好\n\n[@确认]\n#ACT\nBREAK`);
+    // 1. QueryMsg 行: @技能修炼_确定选择卸下 -> 跳到 [@技能修炼_确定选择卸下1] (行4)
+    const d1 = mkQ('QueryMsg 确定要卸下该技能吗 @技能修炼_确定选择卸下');
+    const p1 = new Position(2, d1.lineAt(2).text.indexOf('@') + 2);
+    const r1 = await dp.provideDefinition(d1, p1);
+    let ok = !!r1 && r1.range.line === 4;
+    // 2. 不存在 [@标签1] 时回退 [@标签]
+    const d2 = makeDoc('[@main]\n#ACT\nQueryMsg 确定吗 @确认\n\n[@确认]\n#ACT\nBREAK');
+    const p2 = new Position(2, d2.lineAt(2).text.indexOf('@') + 2);
+    const r2 = await dp.provideDefinition(d2, p2);
+    ok = ok && !!r2 && r2.range.line === 4;
+    // 3. 非 QueryMsg 行(GOTO)不受后缀影响: 同名两标签都在时仍跳 [@确认]
+    const d3 = makeDoc('[@main]\n#ACT\nGOTO @确认\n\n[@确认1]\n#ACT\nBREAK\n\n[@确认]\n#ACT\nBREAK');
+    const p3 = new Position(2, d3.lineAt(2).text.indexOf('@') + 2);
+    const r3 = await dp.provideDefinition(d3, p3);
+    ok = ok && !!r3 && r3.range.line === 8;
+    console.log(`${ok ? 'PASS' : 'FAIL'} QueryMsg标签跳转: [@标签1]=${r1 && r1.range.line} 回退=${r2 && r2.range.line} GOTO=${r3 && r3.range.line}`);
+    if (!ok) fail++;
+  } catch (e) {
+    fail++;
+    console.log('FAIL QueryMsg标签跳转: ' + e.message);
+  }
+  process.exit(fail ? 1 : 0);
+})();
