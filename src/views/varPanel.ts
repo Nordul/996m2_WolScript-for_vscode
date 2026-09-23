@@ -132,10 +132,10 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
     </div>
     <button class="icon-btn" id="refresh" title="重新扫描">⟳</button>
   </div>
-  <div class="stats" id="stats">尚未扫描</div>
+  <div class="stats" id="stats">尚未扫描 · 点击 ⟳ 手动扫描</div>
   <div class="tabs" id="tabs"></div>
   <div id="list"></div>
-  <div class="empty" id="empty" style="display:none">未发现已占用变量<br><span style="font-size:11px">打开或保存脚本文件后自动扫描</span></div>
+  <div class="empty" id="empty" style="display:none">未发现已占用变量<br><span style="font-size:11px">点击右上角 ⟳ 手动扫描</span></div>
 
 <script nonce="${nonce}">
   const vscode = acquireVsCodeApi();
@@ -168,7 +168,7 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
 
   function render() {
     const r = state.result;
-    if (!r || !r.groups) { statsEl.textContent = '尚未扫描'; return; }
+    if (!r || !r.groups) { statsEl.textContent = '尚未扫描 · 点击 ⟳ 手动扫描'; return; }
     const groups = r.groups;
     const groupNames = Object.keys(groups).sort((a, b) => {
       const order = state.varTypes.map(v => v.prefix);

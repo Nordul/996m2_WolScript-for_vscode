@@ -79,7 +79,7 @@ async function findQuestDiaryRoot(docPath: string): Promise<string | undefined> 
   const fromDoc = ancestorQuestDiary(docPath);
   if (fromDoc) return fromDoc;
   // 兜底: 工作区内任意 QuestDiary 目录下的文件反推根目录
-  const any = await vscode.workspace.findFiles('**/QuestDiary/*.txt', null, 1);
+  const any = await vscode.workspace.findFiles('**/QuestDiary/*.txt', '{**/.*/**,**/.*}', 1);
   if (any.length) return ancestorQuestDiary(any[0].fsPath);
   return undefined;
 }

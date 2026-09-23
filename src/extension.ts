@@ -4,7 +4,7 @@ import { M2HoverProvider } from './providers/hover';
 import { M2DefinitionProvider } from './providers/definition';
 import { M2FoldingProvider } from './providers/folding';
 import { M2ColorProvider } from './providers/color';
-import { VarScanner, isEngineScriptPath } from './scanner/varScanner';
+import { VarScanner } from './scanner/varScanner';
 import { VarPanelProvider } from './views/varPanel';
 import { M2DebugConfigProvider, M2DebugAdapterFactory } from './debug/configProvider';
 
@@ -79,14 +79,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidOpenTextDocument((doc) => void sniffDocument(doc)),
   );
 
-  // 变量扫描: 激活时全量一次, 之后保存/关闭时防抖重扫
-  void scanner.scanWorkspace();
+  // 变量扫描: 不自动扫描, 由面板刷新按钮 / m2script.refreshVars 命令手动触发
   context.subscriptions.push(
-    vscode.workspace.onDidSaveTextDocument((doc) => {
-      if (doc.languageId === 'm2script' || isEngineScriptPath(doc.uri.fsPath)) scanner.scheduleScan();
-    }),
-    vscode.workspace.onDidCloseTextDocument(() => scanner.scheduleScan(1500)),
-    vscode.workspace.onDidChangeWorkspaceFolders(() => scanner.scheduleScan(100)),
     // 注释颜色装饰: 初始 + 切换编辑器 + 内容变更
     vscode.window.onDidChangeActiveTextEditor((editor) => updateCommentDecos(editor)),
     vscode.workspace.onDidChangeTextDocument((e) => {
