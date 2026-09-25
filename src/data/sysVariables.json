@@ -20,6 +20,12 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "ALLGUILDLIST",
+    "form": "ALLGUILDLIST(A).B",
+    "desc": "A = 编号 从 0 开始 不能大于等于行会总数 B = 属性值 与GUILDINFO 相同 B取值: 返回人物相应的行会参数 CHIEF 行会会长名字 NAME 行会名字 GUILDEXP 行会经验 MAXMEMBER 最大人员数 MEMBERCOUNT 当前人员数 MEMBERCOUNT 当前人员数 行会通灵塔五大资源变量，如下： ORE 矿石 GEM 宝石 WOOD 木材 BAR 金条 ROCK 灵石 行会通灵塔每日维护所需五大资源变量： OREMAX 矿石 GEMMAX 宝石 WOODMAX 木材 BARMAX 金条 ROCKMAX 灵石 返回人物相应的行会参数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "ALLGUILDNUM",
     "desc": "  返回当前游戏行会总数",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
@@ -32,6 +38,12 @@
   {
     "name": "ANSWER",
     "desc": "  返回人物当前题目的正确答案序号",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ANSWERTEXT",
+    "form": "ANSWERTEXT(A )",
+    "desc": "A=选择答案 取值1.....4 返回人物当前题目的第x项答案，x=1..4",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -215,6 +227,12 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/1509"
   },
   {
+    "name": "BuffInfo",
+    "form": "BuffInfo(BuffID).paramEx",
+    "desc": "  返回 addbuff 参数五 添加的属性",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1945"
+  },
+  {
     "name": "BUJUK",
     "desc": "  宝石名称",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
@@ -265,6 +283,18 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/702"
   },
   {
+    "name": "CHECKEXIST",
+    "form": "CHECKEXIST(A)",
+    "desc": "A=类型 参数A: 0=道符 1=绿毒药 2=红毒药 3=雄稻草人偶 4=雌稻草人偶 返回包裹或身上是否有道符、毒药、人偶",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "CLAN",
+    "form": "CLAN.A",
+    "desc": "A=参数类型 取值: KIND ; //宗族类型：0无，1神宗、2魔宗 NAME ; //宗族名字 CHIEF ; //宗族族长名字 MEMBERMAX ; //宗族成员数量上限 MEMBERCOUNT ; //宗族当前成员数量 GRADE ; //宗族等级 EXP ; //宗族经验 获取宗族相关信息",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "CLIENTDOWNLOAD",
     "desc": "客户端程序下载地址",
     "docUrl": "http://cshelp.996m2.com/web/#/17/963"
@@ -295,18 +325,31 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/963"
   },
   {
+    "name": "CUSTOMVALUE",
+    "form": "CUSTOMVALUE(A)",
+    "desc": "A=数值 取值范围0-99 提取指定需要变量的数值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "DAMREDUCE",
     "desc": "获取人物免伤属性百分比",
     "docUrl": "http://cshelp.996m2.com/web/#/17/963"
   },
   {
     "name": "DATE",
-    "desc": "  服务器的年月日",
+    "form": "DATE.A",
+    "desc": "A=参数类型 取值: YEAR 表示当前年(1980-?) MONTH 表示当前月(1-12) DAY 表示当前日(1-31) WEEK 表示当前的星期(1-7) 返回当前的年月日和星期",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
     "name": "DATETIME",
     "desc": "  服务器的年月日时分秒",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "DATETIMETOLONG",
+    "form": "DATETIMETOLONG(A)",
+    "desc": "A=yyyy-mm-dd-H:mm:ss 将一个时间转换为秒数，格式需正确",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -317,6 +360,12 @@
   {
     "name": "DEARNAME",
     "desc": "  夫妻名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "DEC",
+    "form": "DEC.A.B",
+    "desc": "A=数值或变量 B=数值或变量 减 支持A与B之间的运算,支持变量",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -338,6 +387,12 @@
     "name": "DIR",
     "desc": "人物面向的方向： 范围0-8",
     "docUrl": "http://cshelp.996m2.com/web/#/17/963"
+  },
+  {
+    "name": "DIV",
+    "form": "DIV.A.B",
+    "desc": "A=数值或变量 B=数值或变量 除 支持A与B之间的运算,支持变量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
     "name": "DRESS",
@@ -380,6 +435,12 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "FRIEND",
+    "form": "FRIEND(A)",
+    "desc": "A=数值 取值范围从0开始 返回好友列表中指定的好友名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "GAMEGOLD",
     "desc": "  元宝数量",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
@@ -407,6 +468,12 @@
   {
     "name": "GC",
     "desc": "  当前GC",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GEMCOUNT",
+    "form": "GEMCOUNT(A)",
+    "desc": "A=宝石类型 取值: 0 红宝石 1 绿宝石 2 蓝宝石 返回宝石类型的数量",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -440,6 +507,12 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "GROUPCOMMON",
+    "form": "GROUPCOMMON(A)",
+    "desc": "A=数值 取值范围0...9 返回队伍里公共变量相应的值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "GROUPCOUNT",
     "desc": "  返回本组队的成员数",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
@@ -447,6 +520,12 @@
   {
     "name": "GROUPMASTER",
     "desc": "  返回组队的队长名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GROUPMEMBER",
+    "form": "GROUPMEMBER(A)",
+    "desc": "A=数值 取值范围0-队员数-1 返回本编组中第X个队员的名字",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -472,6 +551,12 @@
   {
     "name": "GUILDGOLD",
     "desc": "  显示个人行会银两",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "GUILDINFO",
+    "form": "GUILDINFO(A).B",
+    "desc": "A=行会名字 B=参数类型 行会名字不存在返回???? B取值: 返回人物相应的行会参数 CHIEF 行会会长名字 NAME 行会名字 GUILDEXP 行会经验 MAXMEMBER 最大人员数 MEMBERCOUNT 当前人员数 MEMBERCOUNT 当前人员数 行会通灵塔五大资源变量，如下： ORE 矿石 GEM 宝石 WOOD 木材 BAR 金条 ROCK 灵石 行会通灵塔每日维护所需五大资源变量： OREMAX 矿石 GEMMAX 宝石 WOODMAX 木材 BARMAX 金条 ROCKMAX 灵石 返回人物相应的行会参数",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -530,6 +615,12 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "HUMANINFO",
+    "form": "HUMANINFO[A].B",
+    "desc": "A=人物名称,支持变量或者角色ID:\\<$USERID> B=变量 获取指定玩家的变量值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "HUMPRATEDAM",
     "desc": "增加暴击伤害",
     "docUrl": "http://cshelp.996m2.com/web/#/17/963"
@@ -540,8 +631,20 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "HUNPO",
+    "form": "HUNPO(A)",
+    "desc": "A=灵力石编号 取值范围1-10 返回当前人物包裹中的指定灵石的总灵力数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "HW",
     "desc": "  当前腕力",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "INC",
+    "form": "INC.A.B",
+    "desc": "A=数值或变量 B=数值或变量 加 支持A与B之间的运算,支持变量",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -572,6 +675,48 @@
   {
     "name": "IPLOCAL",
     "desc": "  玩家登陆地区(需加载IP查询插件)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ITEMCOUNT",
+    "form": "ITEMCOUNT[A]",
+    "desc": "A=物品名字  返回背包指定物品的数量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ITEMEXP",
+    "form": "ITEMEXP[A]",
+    "desc": "A=传承珠名字  获取传承珠当前的经验",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ITEMEXPTIME",
+    "form": "ITEMEXPTIME[A]",
+    "desc": "A=传承珠名字  获取最后一次提取传承珠经验的时间",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ITEMINFO",
+    "form": "ITEMINFO[A].B",
+    "desc": "A=物品的序列号 B=要返回属性变量 B参数如下: 返回指定序列号物品对应位置的属性值 B=要返回属性变量 STDNAME 物品在数据中的名字 NAME = 物品名字 B参数变量中 STDMODE NAME ;物品名称过滤数字 SHAPE STDNAME;物品在数据库中的名称 WEIGHT ANICOUNT SOURCE RESERVED Dura = 当前持久 DuraMax = 最大持久 LOOKS AC1 AC2 MAC1 MAC2 DC1 DC2 MC1 MC2 SC1 SC2 GC1 GC2 Need NeedLevel = 装备需要等级 NeedAmbit = 所需境界(NEED为7时才有效) GLOOMPOINT 黑暗魔力 LOGLOOM(n) 黑暗属性下限 n 取值：6..10 HIGLOOM(n) 黑暗属性上限 n 取值：6..10 EVILNAME ;心魔名称 EVILJOB ;心魔职业 EVILAMBIT ;心魔境界 EVILDC ;攻击下限 EVILDC2 ;攻击上限 EVILMC ;魔法下限 EVILMC2 ;魔法上限 EVILSC ;道术下限 EVILSC2 ;道术上限 EVILAC ;防御下限 EVILAC2 ;防御上限 EVILMAC ;魔防下限 EVILMAC2 ;魔防上限 ISOVERLAY ;是否叠加物品 ISBIND ;是否绑定 VALUE(A) ：获取A属性位置的值，取值范围UPGRADEUSERITEM命令，0~21属性位置; ITEMEXT(A) :获取A属性位置的值，取值范围UPGRADEUSERITEM命令，22以上属性位置; Valueex(A) ：获取A属性位置的值，取值范围UPGRADEUSERITEM命令，100以上属性位置; OVERLAP ;神秘符石重叠个数,属性位置71 ;装备自定义变量:DIYVALUE(装备变量) 返回指定序列号物品对应位置的属性值 B参数变量中 NAME ;物品名称过滤数字 STDNAME;物品在数据库中的名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ITEMMAKEINDEX",
+    "form": "ITEMMAKEINDEX[A]",
+    "desc": "A=物品名字  获取包裹中指定名字的物品序列号，如果有多个物品，则返回第一个",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ITEMSUMCOUNT",
+    "form": "ITEMSUMCOUNT(A).B.C",
+    "desc": "参数说明： A //物品名称，支持变量，支持嵌套一层括号 B //属性名称，同$ITEMINFO变量 C //比较数值(含)  获取包裹中指定物品的指定属性在一定数值以上的数量总和 例如： #IF LARGE $ITEMSUMCOUNT(麻痹戒指).DURA.3000 10 #SAY 包裹中麻痹戒指持久在3以上的数量大于10个！",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "ITEMVALSUM",
+    "form": "ITEMVALSUM(A).B",
+    "desc": "参数说明： A //物品名称，支持变量，支持嵌套一层括号 B //属性名称，同$ITEMINFO变量  获取包裹中指定物品指定属性的数值总和 例如： #IF LARGE $ITEMVALSUM(圣灵精华).DURA 200 #SAY 包裹中圣灵精华的持久数量在200以上！",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -640,6 +785,18 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "LASTHITER",
+    "form": "LASTHITER.A",
+    "desc": "A=属性类型 1.$LASTHITER.$TYPE 返回最后攻击你的类型，0=玩家 1=怪物 2.如果为玩家的时候，可调用所有玩家的个人变量信息 用法与<$HUMANINFO[A].B>一样 例如: $LASTHITER.$USERNAME $LASTHITER.$LEVEL $LASTHITER.$USERID 3.如果为怪物的时候 返回怪物信息，与<$monster[A].B>的B参数写法一致，第二个参数不需要加$符号 例如: $LASTHITER.NAME $LASTHITER.HP 返回最后攻击你角色或怪物信息",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "LENGTH",
+    "form": "LENGTH.A",
+    "desc": "A=变量 返回字符串的长度，空格、英文和数字占1个，中文占2个",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "LEVEL",
     "desc": " 角色等级 人物等级",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
@@ -665,6 +822,17 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/963"
   },
   {
+    "name": "LuckRandom",
+    "form": "LuckRandom(下限&#124;上限)",
+    "desc": "  由引擎计算角色当前的幸运/诅咒属性结合提供的下限-上限生成一个值，可用来模拟伤害",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "M",
+    "desc": "<$POSITION(A,B,C)> 说明：如果坐标上没有玩家，或者是怪物，则返回：无 获取指定地图，坐标上的人物名称(含元神);",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "MAC",
     "desc": "  当前MAC",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
@@ -680,8 +848,32 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "MAGIC",
+    "form": "MAGIC(A).B",
+    "desc": "A=F11面板里技能顺序,从0开始计算; B=属性类型 B取值: NAME 技能名字 LEVEL 技能等级 EXP 技能修炼点 KEY 返回技能快捷键编号 按玩家所学技能顺序,返回技能在数据库中的属性",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "MAGNICETY",
     "desc": "  魔法命中",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAPHUMCOUNT",
+    "form": "MAPHUMCOUNT(A).B",
+    "desc": "A=地图编号 B=参数类型 B参数类型取值: PLAYER 代表玩家 ALL 表示所有 获取指定地图玩家的数量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAPMIRROR",
+    "form": "MAPMIRROR(A).B",
+    "desc": "A=地图编号 B=类型 参数B: FREECOUNT=当前退出后未释放的副本数量 COUNT=正在进行的副本数量 返回副本地图信息",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MAPMONCOUNT",
+    "form": "MAPMONCOUNT[A].B",
+    "desc": "A=地图编号 B=参数类型 B参数取值: 怪物名字 怪物名字 RACE 怪物的RACE ALL 支持全部 显示A地图中的B怪物数量",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -780,8 +972,26 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "MONGEN",
+    "form": "MONGEN.A.B",
+    "desc": "A=地图号 B=怪物名字 1、该命令仅对开启了“是否死后过了间隔才刷”的怪物有效 2、该命令仅对地图中只刷新1个数量的怪物有效 返回值说明： 0 ;//该怪物没有死亡 -1 ;// 没有符合条件的刷怪信息 -2 ;//该怪物已刷新 显示地图某怪物的剩余刷新时间，单位：秒",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "monster",
+    "form": "monster[A].B",
+    "desc": "A=怪物ID B=属性类型 B参数取值: 部分数据库字段 NAME=怪物名字 STDNAME=怪物数据库名字 LVL=等级 HP=血量 AC=防御下限 AC2=防御上限 MAC=魔防下限 MAC2=魔防上限 DC=攻击下限 DC2=攻击下限 X=坐标x Y=坐标y STATUSTIME(B)=返回怪物B状态剩余时间 OBJVISIBLETYPE=怪物所处空间 返回目标怪物对应的属性",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "MP",
     "desc": "  当前MP",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "MULT",
+    "form": "MULT.A.B",
+    "desc": "A=数值或变量 B=数值或变量 乘 支持A与B之间的运算,支持变量",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -793,6 +1003,12 @@
     "name": "NECKLACE",
     "desc": "  项链名称",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "NEWABIL",
+    "form": "NEWABIL(X)",
+    "desc": "x=属性序号  返回属性增加值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1945"
   },
   {
     "name": "NIMBUSPOINT",
@@ -820,6 +1036,24 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "NPCINFO",
+    "form": "NPCINFO.A",
+    "desc": "A=参数类型 A参数取值 X 当前脚本NPC所在X坐标 Y 当前脚本NPC所在Y坐标 获取当前执行NPC的坐标信息",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "NPCNAME",
+    "form": "NPCNAME(A)",
+    "desc": "A=NPC索引  获得当前指定的NPC索引的名字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "NUMTOCHR",
+    "form": "NUMTOCHR(A)",
+    "desc": "A=数值或变量 将阿拉伯数字转换为中文数字",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "OBJVISIBLETYP",
     "desc": "  角色所处空间",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
@@ -835,8 +1069,26 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "PERCENT",
+    "form": "PERCENT.A.B",
+    "desc": "A=数值或变量 B=数值或变量 百分比 支持A与B之间的运算,支持变量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PERMILL",
+    "form": "PERMILL.A.B",
+    "desc": "A=数值或变量 B=数值或变量 千分比 支持A与B之间的运算,支持变量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "PETBAGSIZE",
     "desc": "  返回灵兽包裹大小",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PETMAKEINDEX",
+    "form": "PETMAKEINDEX(A)",
+    "desc": "A=参数类型 取值: 0-跟随 1-摆摊 2-骑乘 4-凤凰探宝 5- 魂佑灵兽 获取人物各状态的灵兽ID",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -875,6 +1127,12 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "POSITION",
+    "form": "POSITION(A,B,C)",
+    "desc": "A=<$M> B=<$X> C=<$Y> 说明：如果坐标上没有玩家，或者是怪物，则返回：无 获取指定地图，坐标上的人物名称(含元神);",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "POWERRATE",
     "desc": "  返回当前攻击力倍数",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
@@ -882,6 +1140,12 @@
   {
     "name": "PRENTICECOUNT",
     "desc": "  未出师徒弟数量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PRENTICENAME",
+    "form": "PRENTICENAME(A)",
+    "desc": "A=数值 取值范围1..3 获取指定徒弟的名字",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -895,6 +1159,36 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "PROVISIONALABIL",
+    "form": "PROVISIONALABIL(A)",
+    "desc": "A=属性位置 提取人物临时属性数值0-4套的属性，X=0..42 提取人物临时属性数值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PROVISIONALABIL1",
+    "form": "PROVISIONALABIL1(A)",
+    "desc": "A=属性位置 提取人物临时属性数值0-4套的属性，X=0..42 提取人物临时属性数值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PROVISIONALABIL2",
+    "form": "PROVISIONALABIL2(A)",
+    "desc": "A=属性位置 提取人物临时属性数值0-4套的属性，X=0..42 提取人物临时属性数值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PROVISIONALABIL3",
+    "form": "PROVISIONALABIL3(A)",
+    "desc": "A=属性位置 提取人物临时属性数值0-4套的属性，X=0..42 提取人物临时属性数值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "PROVISIONALABIL4",
+    "form": "PROVISIONALABIL4(A)",
+    "desc": "A=属性位置 提取人物临时属性数值0-4套的属性，X=0..42 提取人物临时属性数值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "QQ",
     "desc": "  联系QQ",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
@@ -902,6 +1196,18 @@
   {
     "name": "QUESTION",
     "desc": "  随机返回一个题目内容，并把这个题目设置为该人物的当前题目",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "RANDOM",
+    "form": "RANDOM(A)",
+    "desc": "A=数值 返回一个0~X-1的整数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "RANKLIST",
+    "form": "RANKLIST.A.B.C",
+    "desc": "  提取排行榜中的数据信息",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -1060,6 +1366,12 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "SCRIPTPARAM",
+    "form": "SCRIPTPARAM(A)",
+    "desc": "A=数值 取值范围1....9 获取传递标签相应的值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "SDKID",
     "desc": "  注册时的分包ID (后台分包对应ID)",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
@@ -1130,8 +1442,50 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "STATUSTIME",
+    "form": "STATUSTIME(类型)",
+    "desc": "0-32 0: 绿毒 1: 红毒 2：被魔法锁定 3：冰冻 4：被诅咒 5：麻痹 6：被诅咒 7：战争牢笼 8：隐身 9：神圣战甲术 10：幽灵盾 11：魔法盾 12：宝盒 13：灵魂墙 14：护身真气 15：风火轮 16：金刚护体 17：风影盾 18：真元决 19：潜行 20：灼烧 21：炎龙饮血 22：乾坤冰冻 23：火龙附体 24：沉默 25：重力 26：禁止移动 27：恐惧 28：火毒 29：战争旋风 30：骷髅囚笼 31：乾坤挪移咒 32：定身 返回状态剩于时间（秒） 如果类型异常 返回-1",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "StdMonster",
+    "form": "StdMonster(A).B",
+    "desc": "A=怪物名字 B=数据库字段  返回怪物在数据库对应字段的值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "STORAGESIZE",
     "desc": "  返回仓库大小",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "TABLE",
+    "form": "TABLE(A).B",
+    "desc": "A=数据表名称 获取自定义数据表中的变量值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "TASK",
+    "form": "TASK(A)",
+    "desc": "A=任务ID  返回当前人物执行任务ID的当前步骤号",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "TASKCFG",
+    "form": "TASKCFG(A).B",
+    "desc": "A=任务ID，B=title、stepDESC1、stepstitle1等  用来返回指定任务的参数设置",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "TASKSTEPCOUNT",
+    "form": "TASKSTEPCOUNT(A)",
+    "desc": "A=任务ID  返回当前人物执行任务ID的总步骤数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "TASKVAL",
+    "form": "TASKVAL(A).B",
+    "desc": "A=任务ID B=变量 B取值范围: I0....I9 整数型 S0...S9 文本型 任务专属变量",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -1140,8 +1494,20 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/963"
   },
   {
+    "name": "TENTHOUSANDTH",
+    "form": "TENTHOUSANDTH.A.B",
+    "desc": "A=数值或变量 B=数值或变量 万分比 支持A与B之间的运算,支持变量",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "THUMPRATE",
     "desc": "  返回暴击概率",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "TIME",
+    "form": "TIME.A",
+    "desc": "A=参数类型 取值： HOUR 表示当前时 MIN 表示当前分 SEC 表示当前秒 返回当前的时分秒",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -1165,8 +1531,26 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "TXTLINE",
+    "form": "TXTLINE(A)",
+    "desc": "A=文件路径 获取指定文本拥有多少行数，文本不存在则返回-1",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "UPGRADEWEAPONFEE",
     "desc": "  升级武器价格",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "USEITEMMAKEINDEX",
+    "form": "USEITEMMAKEINDEX(A)",
+    "desc": "A=装备位置 取值范围0....26 返回人物身上指定位置装备的序列号",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "USEITEMNAME",
+    "form": "USEITEMNAME(A)",
+    "desc": "A=装备位置 取值范围0....26 返回人物身上指定位置装备的名字",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -1177,6 +1561,12 @@
   {
     "name": "USERID",
     "desc": "<$HUMANINFO[A].B> 比如：<$HUMANINFO[$USERNAME].$X> 获取指定玩家的变量值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "USERMAGIC",
+    "form": "USERMAGIC(A).B",
+    "desc": "A=技能ID B=属性类型 B取值: NAME 技能名字 LEVEL 技能等级 EXP 技能修炼点 KEY 返回技能快捷键编号 返回玩家所练习技能的属性",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
@@ -1247,6 +1637,16 @@
   {
     "name": "WW",
     "desc": "  当前负重",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "X",
+    "desc": "<$POSITION(A,B,C)> 说明：如果坐标上没有玩家，或者是怪物，则返回：无 获取指定地图，坐标上的人物名称(含元神);",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
+    "name": "Y",
+    "desc": "<$POSITION(A,B,C)> 说明：如果坐标上没有玩家，或者是怪物，则返回：无 获取指定地图，坐标上的人物名称(含元神);",
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   }
 ]

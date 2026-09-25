@@ -8,7 +8,7 @@ import varTypesData from '../data/varTypes.json';
 import sendMsgTypesData from '../data/sendMsgTypes.json';
 
 export interface Cmd { name: string; signature: string; desc: string; kind: string; docUrl: string; }
-export interface SysVar { name: string; desc: string; docUrl: string; }
+export interface SysVar { name: string; form?: string; desc: string; docUrl: string; }
 export interface UiComp { name: string; params: { name: string; desc: string }[]; desc: string; docUrl: string; }
 export interface Trigger { name: string; desc: string; docUrl: string; }
 export interface VarType { prefix: string; min: number; max: number; valueType: string; scope: string; persist: string; desc: string; writable: boolean; }

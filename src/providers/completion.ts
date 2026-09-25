@@ -28,13 +28,29 @@ function commandItem(c: Cmd): vscode.CompletionItem {
   return item;
 }
 
-function sysVarItem(v: { name: string; desc: string; docUrl: string }): vscode.CompletionItem {
+function sysVarItem(v: { name: string; form?: string; desc: string; docUrl: string }): vscode.CompletionItem {
   const item = new vscode.CompletionItem(`$${v.name}`, vscode.CompletionItemKind.Variable);
   // 必须用 SnippetString 并转义 $, 否则 $USERNAME 会被当作 snippet 变量吃掉
-  item.insertText = new vscode.SnippetString(`\\$${v.name}>`);
+  // 带参数形态: <$CUSTOMVALUE(A)> / <$HUMANINFO[A].B> / <$GUILD.A> 给出占位符
+  let snip: string;
+  const form = v.form || v.name;
+  if (/\[/.test(form)) {
+    snip = `\\$${v.name}[\${1:A}]`;
+    if (/\]\s*\./.test(form)) snip += `.\${2:B}`;
+    snip += '>';
+  } else if (/\(/.test(form)) {
+    snip = `\\$${v.name}(\${1:A})`;
+    if (/\)\s*\./.test(form)) snip += `.\${2:B}`;
+    snip += '>';
+  } else if (/\./.test(form)) {
+    snip = `\\$${v.name}.\${1:A}>`;
+  } else {
+    snip = `\\$${v.name}>`;
+  }
+  item.insertText = new vscode.SnippetString(snip);
   item.detail = '系统变量';
   const md = new vscode.MarkdownString(undefined, true);
-  md.appendCodeblock(`<$${v.name}>`, 'plaintext');
+  md.appendCodeblock(`<$${form}>`, 'plaintext');
   md.appendMarkdown(`${v.desc || ''}\n\n[官方文档](${v.docUrl})`);
   item.documentation = md;
   return item;

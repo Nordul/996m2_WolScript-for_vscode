@@ -42,6 +42,7 @@ const grammar = {
     { include: '#caretFn' },
     { include: '#sysVarCall' },
     { include: '#cfgRef' },
+    { include: '#sysVarEx' },
     { include: '#sysVar' },
     { include: '#strCall' },
     { include: '#customVarDecl' },
@@ -120,6 +121,7 @@ const grammar = {
         { include: '#caretFn' },
         { include: '#cfgRef' },
         { include: '#sysVarCall' },
+        { include: '#sysVarEx' },
         { include: '#sysVar' },
         { include: '#strCall' },
         { include: '#typedVar' },
@@ -158,6 +160,11 @@ const grammar = {
     cfgRef: {
       name: 'support.variable.system.m2script',
       match: '<\\$[A-Za-z][A-Za-z0-9_一-鿿]*\\([^>]*\\)>',
+    },
+    // <$HUMANINFO[A].B> / <$GUILD.A> / <$TABLE(A).B> 等方括号/点形式
+    sysVarEx: {
+      name: 'support.variable.system.m2script',
+      match: '<\\$[A-Za-z][A-Za-z0-9_]*(?:\\[[^\\]]*\\]|\\([^>]*\\))?(?:\\.[A-Za-z0-9_$]+)+>?',
     },
     // <$USERNAME>: 整体统一变量色
     sysVar: {

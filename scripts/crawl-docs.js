@@ -123,7 +123,10 @@ function parseCommandTables(md) {
 const CMD_RE = /^[A-Za-z][A-Za-z0-9_]{1,29}$/;
 
 function sigToCommand(sigCell) {
-  const sig = sigCell.trim();
+  let sig = sigCell.trim();
+  // "| 脚本命令: SetStrValue | 是否可省略 | ... |" 表头格式: 取冒号后的命令名
+  const hdr = sig.match(/^(?:脚本)?命令\s*[:：]\s*([A-Za-z][A-Za-z0-9_]{1,29})\s*$/);
+  if (hdr) sig = hdr[1];
   const name = sig.split(/\s/)[0] || '';
   if (!CMD_RE.test(name)) return null;
   if (STOP_WORDS.has(name.toUpperCase())) return null;
@@ -150,23 +153,43 @@ function parseBoldSignatures(md) {
   return out;
 }
 
+// 提取标题签名: "### SetStrValue命令，..." / "### QueryMsg 弹出选择框"
+function parseHeaderSignatures(md) {
+  const out = [];
+  for (const line of md.split(/\r?\n/)) {
+    const h = line.match(/^#{2,5}\s*(.+)$/);
+    if (!h) continue;
+    const txt = stripHtml(h[1]);
+    const m = txt.match(/^([A-Za-z][A-Za-z0-9_]{1,29})(?=\s|命令|功能|，|,|：|:|\(|（|$)/);
+    if (!m) continue;
+    if (STOP_WORDS.has(m[1].toUpperCase())) continue;
+    out.push({ name: m[1], signature: m[1], desc: txt.slice(0, 120) });
+  }
+  return out;
+}
+
 // 提取系统变量 <$XXX>
 function parseSysVariables(md, pageId, title) {
   const out = [];
   const lines = md.split(/\r?\n/);
+  // 兼容全部形态: <$NAME> / <$NAME(A)> / <$NAME[A].B> / <$NAME(A).B> / <$NAME.A>
+  const varRe = /<\$([A-Za-z][A-Za-z0-9_]{0,39})((?:\([^>]{0,60}\)|\[[^\]]{0,60}\])?(?:\.[A-Za-z0-9_$.]{0,40})?)>/g;
   for (const line of lines) {
     const t = line.trim();
     if (!t.startsWith('|')) continue;
     if (/^\|[\s:|-]+\|$/.test(t)) continue;
     const cells = t.slice(1, -1).split('|').map((c) => stripHtml(c));
     const joined = cells.join(' ');
-    const m = joined.match(/<\$([A-Za-z][A-Za-z0-9_]{1,39})>/);
-    if (!m) continue;
-    const name = m[1];
-    // 排除取值函数
-    if (['STR', 'HUMAN', 'GUILD', 'GLOBAL', 'PARAM'].includes(name.toUpperCase())) continue;
-    const desc = cells.filter((c) => !c.includes(`<$${name}>`)).join(' ').replace(/^[-\s]+$/, '');
-    out.push({ name, desc: desc || title, docUrl: DOC_LINK(pageId) });
+    let m;
+    varRe.lastIndex = 0;
+    while ((m = varRe.exec(joined))) {
+      const name = m[1];
+      // 排除取值函数(有专用补全/高亮处理)
+      if (['STR', 'HUMAN', 'GUILD', 'GLOBAL', 'PARAM'].includes(name.toUpperCase())) continue;
+      const form = name + (m[2] || '');
+      const desc = cells.filter((c) => !c.includes(`<$${name}`)).join(' ').replace(/^[-\s]+$/, '');
+      out.push({ name, form, desc: desc || title, docUrl: DOC_LINK(pageId) });
+    }
   }
   return out;
 }
@@ -259,6 +282,10 @@ async function main() {
     };
     if (!old || item.desc.length > old.desc.length + 10
         || (kind === 'check' && !old.fromCheck && item.desc.length >= old.desc.length * 0.5)) {
+      // 裸名签名不覆盖已有的带参签名
+      const bareNew = item.signature.trim().toUpperCase() === key;
+      const bareOld = old ? old.signature.trim().toUpperCase() === key : true;
+      if (old && bareNew && !bareOld) item.signature = old.signature;
       item.checkVotes = checkVotes; item.actionVotes = actionVotes;
       item.fromCheck = kind === 'check';
       commands.set(key, item);
@@ -293,12 +320,17 @@ async function main() {
       for (const cells of parseCommandTables(md)) {
         const c = sigToCommand(cells[0]);
         if (!c) continue;
-        const desc = cells.slice(1).filter(Boolean).join(' | ');
+        let desc = cells.slice(1).filter(Boolean).join(' | ');
+        if (/是否可省略|值范围/.test(desc)) desc = ''; // 表头噪音, 回退用页面标题
         addCommand({ name: c.name, signature: c.signature, desc }, p.kind, p.pageId, p.title);
       }
       // 粗体签名
       for (const b of parseBoldSignatures(md)) {
         addCommand(b, p.kind, p.pageId, p.title);
+      }
+      // 标题签名( "### XX命令..." )
+      for (const h of parseHeaderSignatures(md)) {
+        addCommand(h, p.kind, p.pageId, p.title);
       }
       // 触发器(仅从引擎触发页收集)
       if (['858', '966', '742', '743', '737', '738', '797', '760', '723', '1430', '1498', '1542'].includes(String(p.pageId))) {
@@ -310,8 +342,11 @@ async function main() {
     if (p.kind === 'vars' || p.kind === 'action' || p.kind === 'check') {
       for (const v of parseSysVariables(md, p.pageId, p.title)) {
         const key = v.name.toUpperCase();
+        if (v.form === v.name) delete v.form; // 无参数形态不存 form
         const old = sysVars.get(key);
-        if (!old || v.desc.length > old.desc.length) sysVars.set(key, v);
+        // 优先保留: 带参数形态 > 描述更长
+        const score = (x) => x.desc.length + (x.form ? 50 : 0);
+        if (!old || score(v) > score(old)) sysVars.set(key, v);
       }
     }
     if (p.kind === 'ui') {

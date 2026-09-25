@@ -159,7 +159,7 @@ test('#SAY段补全', doc, 6, 0, true);
 // < 触发
 doc2Lines: {
 }
-const doc2 = makeDoc('[@main]\n#ACT\nMov s$Ui <\nMov A0 <\nMov A0 <$\nMov A0 $STR(\nGOTO @\n#\nMov A0 <$USER\nMO\nMov s$Ui <RT\nGOTO @ma\nMov s$Ui <RText|x=1|t\nSENDMSG \nSENDMSG 2\n#C\n');
+const doc2 = makeDoc('[@main]\n#ACT\nMov s$Ui <\nMov A0 <\nMov A0 <$\nMov A0 $STR(\nGOTO @\n#\nMov A0 <$USER\nMO\nMov s$Ui <RT\nGOTO @ma\nMov s$Ui <RText|x=1|t\nSENDMSG \nSENDMSG 2\n#C\nMov A0 <$CUST\nMov A0 <$HUM\nSETS\n');
 test('< 触发组件', doc2, 2, 10, true, (items) => items.some((i) => i.label === 'Button') ? '' : '缺Button');
 test('<$ 触发系统变量', doc2, 4, 10, true, (items) => {
   const u = items.find((i) => i.label === '$USERNAME');
@@ -191,6 +191,23 @@ test('组件参数前缀过滤', doc2, 12, 21, true, (items) => {
   const bad = items.filter((i) => !String(i.label).toLowerCase().startsWith('t'));
   return bad.length ? `含非t前缀参数:${bad[0].label}` : '';
 });
+
+// 带参变量形态: <$CUSTOMVALUE(A)> / <$HUMANINFO[A].B> 需给出参数占位符
+test('<$CUST 带参变量补全', doc2, 16, 13, true, (items) => {
+  const c = items.find((i) => i.label === '$CUSTOMVALUE');
+  if (!c) return '缺$CUSTOMVALUE';
+  const v = String(c.insertText && c.insertText.value);
+  return v === '\\$CUSTOMVALUE(${1:A})>' ? '' : 'insertText应为<$CUSTOMVALUE(A)>形态: ' + JSON.stringify(v);
+});
+test('<$HUM 方括号变量补全', doc2, 17, 12, true, (items) => {
+  const h = items.find((i) => i.label === '$HUMANINFO');
+  if (!h) return '缺$HUMANINFO';
+  const v = String(h.insertText && h.insertText.value);
+  return v === '\\$HUMANINFO[${1:A}].${2:B}>' ? '' : 'insertText应为<$HUMANINFO[A].B>形态: ' + JSON.stringify(v);
+});
+// 标题签名命令: SetStrValue 需在 #ACT 段命令补全中出现
+test('SETS 命令前缀过滤', doc2, 18, 4, true, (items) =>
+  items.some((i) => i.label.toUpperCase() === 'SETSTRVALUE') ? '' : '缺SETSTRVALUE');
 
 // SENDMSG: A字段出编号选择, 选中后带B占位符且无多余Tab位, snippet 不含C/D占位符
 test('SENDMSG 类型编号全量', doc2, 13, 8, true, (items) => {

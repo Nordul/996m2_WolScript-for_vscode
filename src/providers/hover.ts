@@ -9,23 +9,23 @@ export class M2HoverProvider implements vscode.HoverProvider {
     const line = document.lineAt(position.line).text;
     const ch = position.character;
 
-    // 1. 系统变量 <$XXX> / <$STR(...)>
-    const sysRe = /<\$([A-Za-z][A-Za-z0-9_]*)(?:\([^>]*\))?>/g;
+    // 1. 系统变量 <$XXX> / <$STR(...)> / <$HUMANINFO[A].B> / <$GUILD.A>
+    const sysRe = /<\$([A-Za-z][A-Za-z0-9_]*)(?:\([^>]*\)|\[[^\]]*\])?(?:\.[A-Za-z0-9_$]+)*>?/g;
     for (const m of line.matchAll(sysRe)) {
       const start = m.index!, end = start + m[0].length;
       if (ch >= start && ch <= end) {
+        const v = lookupSysVar(m[1]);
+        if (v) {
+          const md = new vscode.MarkdownString(undefined, true);
+          md.appendCodeblock(`<$${v.form || v.name}>`, 'plaintext');
+          md.appendMarkdown(`${v.desc || '系统只读变量'}\n\n[官方文档](${v.docUrl})`);
+          return new vscode.Hover(md, new vscode.Range(position.line, start, position.line, end));
+        }
         const fnName = m[1].toUpperCase();
         if (['STR', 'HUMAN', 'GUILD', 'GLOBAL', 'MONEY', 'BINDMONEY', 'PARAM', 'CUSTOMVALUE'].includes(fnName)) {
           const md = new vscode.MarkdownString(undefined, true);
           md.appendMarkdown(`**<$${m[1]}(...)>** — 变量取值/显示语法\n\n`);
           md.appendMarkdown('[变量操作说明](http://cshelp.996m2.com/web/#/17/970)');
-          return new vscode.Hover(md, new vscode.Range(position.line, start, position.line, end));
-        }
-        const v = lookupSysVar(m[1]);
-        if (v) {
-          const md = new vscode.MarkdownString(undefined, true);
-          md.appendCodeblock(`<$${v.name}>`, 'plaintext');
-          md.appendMarkdown(`${v.desc || '系统只读变量'}\n\n[官方文档](${v.docUrl})`);
           return new vscode.Hover(md, new vscode.Range(position.line, start, position.line, end));
         }
         return undefined;

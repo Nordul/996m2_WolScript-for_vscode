@@ -42,6 +42,8 @@ const lines = [
   'INC S$魂珠打造_五行属性 <（火）/FCOLOR=95>\\<+<$INC^10^<$HUMAN(法宝五行水)>^10>/FCOLOR=97>',
   // 真实链接仍识别
   '\\<测试说明/@测试说明\\>',
+  // 带参变量形态: 方括号/点/圆括号参数整体着系统变量色
+  'SENDMSG 5 玩家:<$HUMANINFO[$USERNAME].$X> 行会:<$GUILDINFO(行会名).CHIEF> 排行:<$RANKLIST.A.B.C> 自定义:<$CUSTOMVALUE(3)>',
 ];
 
 async function main() {
@@ -104,6 +106,10 @@ async function main() {
     [31, '法宝五行水', 'entity.name.variable.custom'],
     [32, '@测试说明', 'entity.name.type.label'],
     [32, '测试说明', 'string.other.link'],
+    [33, '<$HUMANINFO[$USERNAME].$X>', 'support.variable.system'],
+    [33, '<$GUILDINFO(行会名).CHIEF>', 'support.variable.system'],
+    [33, '<$RANKLIST.A.B.C>', 'support.variable.system'],
+    [33, '<$CUSTOMVALUE(', 'support.variable.system'],
   ];
 
   let fail = 0;

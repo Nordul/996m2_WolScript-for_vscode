@@ -255,17 +255,7 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/858"
   },
   {
-    "name": "Fastuse",
-    "desc": "QFunction",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
-  },
-  {
     "name": "FastUse",
-    "desc": "QFunction",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
-  },
-  {
-    "name": "Fastuseclose",
     "desc": "QFunction",
     "docUrl": "http://cshelp.996m2.com/web/#/17/858"
   },
@@ -278,11 +268,6 @@
     "name": "FcCharge",
     "desc": "QFunction",
     "docUrl": "http://cshelp.996m2.com/web/#/17/858"
-  },
-  {
-    "name": "Getexpfucn",
-    "desc": "获得经验触发",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/738"
   },
   {
     "name": "GetExpFucn",
@@ -406,11 +391,6 @@
   },
   {
     "name": "NewStdModeFunc991",
-    "desc": "物品相关触发",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
-  },
-  {
-    "name": "NewStdModeFuncX",
     "desc": "物品相关触发",
     "docUrl": "http://cshelp.996m2.com/web/#/17/797"
   },
@@ -555,17 +535,7 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/797"
   },
   {
-    "name": "StdModeFuncX",
-    "desc": "物品相关触发",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/797"
-  },
-  {
     "name": "STDMODEFUNCX",
-    "desc": "QFunction",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
-  },
-  {
-    "name": "struck",
     "desc": "QFunction",
     "docUrl": "http://cshelp.996m2.com/web/#/17/858"
   },
@@ -590,11 +560,6 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/966"
   },
   {
-    "name": "TakeOff0",
-    "desc": "QFunction",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
-  },
-  {
     "name": "TAKEOFF0",
     "desc": "QFunction",
     "docUrl": "http://cshelp.996m2.com/web/#/17/858"
@@ -606,11 +571,6 @@
   },
   {
     "name": "TakeOffX",
-    "desc": "QFunction",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/858"
-  },
-  {
-    "name": "TakeOn0",
     "desc": "QFunction",
     "docUrl": "http://cshelp.996m2.com/web/#/17/858"
   },
