@@ -109,6 +109,8 @@ node scripts/daptest.js          # 调试适配器 DAP 消息流模拟测试
 - 版本发布：https://github.com/Nordul/996m2_WolScript-for_vscode/releases
 - 官方文档：http://cshelp.996m2.com/web/#/17/1210
 
+使用中遇到问题或有功能建议，欢迎到 [Issues](https://github.com/Nordul/996m2_WolScript-for_vscode/issues) 反馈。
+
 ## License
 
 [GPL-3.0](LICENSE)
