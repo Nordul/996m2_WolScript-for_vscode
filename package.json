@@ -1,10 +1,11 @@
 {
   "name": "m2script-tools",
-  "displayName": "996M2 传世脚本工具",
-  "description": "996M2传世引擎脚本语言支持：语法高亮、上下文感知代码补全、已占用变量查询",
-  "version": "0.1.5",
+  "displayName": "996传世脚本 (996WolScript)",
+  "description": "996WolScript 传世引擎脚本语言支持：语法高亮、上下文感知代码补全、已占用变量查询",
+  "version": "0.1.6",
   "publisher": "m2script",
   "license": "GPL-3.0-only",
+  "icon": "resources/icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
