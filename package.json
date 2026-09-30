@@ -6,6 +6,10 @@
   "publisher": "m2script",
   "license": "GPL-3.0-only",
   "icon": "resources/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nordul/996m2_WolScript-for_vscode.git"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
