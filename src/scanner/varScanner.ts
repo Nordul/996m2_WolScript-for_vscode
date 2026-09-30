@@ -8,9 +8,16 @@ export { ScanResult, VarRef, isEngineScriptPath, decodeScript } from './scanCore
 export class VarScanner {
   private result: ScanResult = { scannedAt: 0, fileCount: 0, groups: {} };
   private listeners: ((r: ScanResult) => void)[] = [];
+  private timer: ReturnType<typeof setTimeout> | undefined;
 
   onDidScan(listener: (r: ScanResult) => void) { this.listeners.push(listener); }
   getResult(): ScanResult { return this.result; }
+
+  /** 防抖触发全量重扫 */
+  scheduleScan(delayMs = 600) {
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(() => void this.scanWorkspace(), delayMs);
+  }
 
   async scanWorkspace(): Promise<ScanResult> {
     const groups: ScanResult['groups'] = {};
