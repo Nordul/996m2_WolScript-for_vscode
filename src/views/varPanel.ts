@@ -7,6 +7,7 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
 
   constructor(private readonly scanner: VarScanner) {
     scanner.onDidScan((r) => this.pushData(r));
+    scanner.onDidProgress((p) => this.pushProgress(p));
   }
 
   resolveWebviewView(view: vscode.WebviewView): void {
@@ -19,7 +20,7 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
           this.pushData(this.scanner.getResult());
           break;
         case 'refresh':
-          await this.scanner.scanWorkspace();
+          await this.refresh();
           break;
         case 'reveal': {
           const uri = vscode.Uri.file(msg.absPath);
@@ -35,12 +36,21 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
   }
 
   async refresh(): Promise<void> {
-    await this.scanner.scanWorkspace();
+    try {
+      await this.scanner.scanWorkspace();
+    } catch (e) {
+      if (this.view) this.view.webview.postMessage({ type: 'scanError', message: String(e) });
+    }
   }
 
   private pushData(result: ScanResult): void {
     if (!this.view) return;
     this.view.webview.postMessage({ type: 'data', result, varTypes });
+  }
+
+  private pushProgress(p: { done: number; total: number } | null): void {
+    if (!this.view) return;
+    this.view.webview.postMessage({ type: 'progress', progress: p });
   }
 
   private renderHtml(webview: vscode.Webview): string {
@@ -77,6 +87,9 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
   }
   .icon-btn:hover { background: var(--vscode-toolbar-hoverBackground); }
   .stats { font-size: 11px; opacity: .65; margin-bottom: 8px; }
+  .progress { display: none; height: 3px; border-radius: 2px; background: rgba(128,128,128,.2); margin-bottom: 8px; overflow: hidden; }
+  .progress.on { display: block; }
+  .progress > i { display: block; height: 100%; width: 0; background: var(--vscode-progressBar-background, #0e70c0); transition: width .15s; }
   .tabs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
   .tab {
     padding: 2px 8px; font-size: 11px; border-radius: 10px; cursor: pointer;
@@ -132,6 +145,7 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
     </div>
     <button class="icon-btn" id="refresh" title="重新扫描">⟳</button>
   </div>
+  <div class="progress" id="prog"><i id="progBar"></i></div>
   <div class="stats" id="stats">尚未扫描</div>
   <div class="tabs" id="tabs"></div>
   <div id="list"></div>
@@ -145,6 +159,8 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
   const listEl = document.getElementById('list');
   const statsEl = document.getElementById('stats');
   const emptyEl = document.getElementById('empty');
+  const progEl = document.getElementById('prog');
+  const progBar = document.getElementById('progBar');
 
   document.getElementById('q').addEventListener('input', (e) => { state.q = e.target.value.trim().toUpperCase(); render(); });
   document.getElementById('refresh').addEventListener('click', () => {
@@ -154,7 +170,20 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
 
   window.addEventListener('message', (e) => {
     if (e.data.type === 'data') { state.result = e.data.result; state.varTypes = e.data.varTypes; render(); }
+    else if (e.data.type === 'progress') showProgress(e.data.progress);
+    else if (e.data.type === 'scanError') {
+      progEl.classList.remove('on');
+      statsEl.textContent = '扫描失败: ' + e.data.message;
+    }
   });
+
+  function showProgress(p) {
+    if (!p) { progEl.classList.remove('on'); return; }
+    progEl.classList.add('on');
+    const pct = p.total ? Math.round(p.done / p.total * 100) : 0;
+    progBar.style.width = pct + '%';
+    statsEl.textContent = '正在扫描脚本文件 ' + p.done + '/' + p.total + (p.total ? ' (' + pct + '%)' : '...');
+  }
 
   function fmtTime(ts) {
     const d = new Date(ts);

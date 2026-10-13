@@ -2,7 +2,7 @@
   "name": "m2script-tools",
   "displayName": "996传世脚本 (996WolScript)",
   "description": "996WolScript 传世引擎脚本语言支持：语法高亮、上下文感知代码补全、已占用变量查询",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "publisher": "m2script",
   "license": "GPL-3.0-only",
   "icon": "resources/icon.png",
@@ -68,9 +68,6 @@
           "other": true,
           "comments": false,
           "strings": true
-        },
-        "editor.tokenColorCustomizations": {
-          "comments": "#6A737D"
         }
       }
     },
@@ -133,6 +130,21 @@
         "command": "m2script.markAsScript",
         "title": "996脚本: 将当前文件识别为996脚本",
         "icon": "$(file-code)"
+      },
+      {
+        "command": "m2script.openMapManager",
+        "title": "996脚本: 打开可视化管理器 (地图/刷怪)",
+        "icon": "$(map)"
+      },
+      {
+        "command": "m2script.openDropManager",
+        "title": "996脚本: 打开爆率管理",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "m2script.openMerchantManager",
+        "title": "996脚本: 打开NPC管理",
+        "icon": "$(person)"
       }
     ],
     "viewsContainers": {
@@ -150,6 +162,11 @@
           "type": "webview",
           "id": "m2script.varPanel",
           "name": "已占用变量查询"
+        },
+        {
+          "type": "webview",
+          "id": "m2script.dropEntry",
+          "name": "爆率管理"
         }
       ]
     },
@@ -166,6 +183,21 @@
           "command": "m2script.markAsScript",
           "when": "resourceExtname == .txt && resourceLangId != m2script",
           "group": "navigation"
+        },
+        {
+          "command": "m2script.openMapManager",
+          "when": "m2script.mapFile",
+          "group": "navigation"
+        },
+        {
+          "command": "m2script.openDropManager",
+          "when": "m2script.monItemFile",
+          "group": "navigation"
+        },
+        {
+          "command": "m2script.openMerchantManager",
+          "when": "m2script.merchantFile",
+          "group": "navigation"
         }
       ]
     }
@@ -177,5 +209,8 @@
     "typescript": "^5.9.3",
     "vscode-oniguruma": "^2.0.1",
     "vscode-textmate": "^9.3.2"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.6.3"
   }
 }

@@ -4,9 +4,17 @@ import { M2HoverProvider } from './providers/hover';
 import { M2DefinitionProvider } from './providers/definition';
 import { M2FoldingProvider } from './providers/folding';
 import { M2ColorProvider } from './providers/color';
+import { M2ReferenceProvider, M2LabelCodeLensProvider } from './providers/references';
+import { RandomStrCodeLensProvider } from './providers/randomStrLens';
+import { RandomStrPanel } from './views/randomStrPanel';
 import { VarScanner, isEngineScriptPath } from './scanner/varScanner';
 import { VarPanelProvider } from './views/varPanel';
 import { M2DebugConfigProvider, M2DebugAdapterFactory } from './debug/configProvider';
+import { MapManagerPanel, isMapConfigFile, isMonGenFile, isMonItemFile, isMerchantFile } from './mapeditor/mapManagerPanel';
+import { MonGenPanel } from './mapeditor/monGenPanel';
+import { MerchantPanel } from './mapeditor/merchantPanel';
+import { DropPanel } from './mapeditor/dropPanel';
+import { DropEntryProvider } from './views/dropEntry';
 
 /** 内容嗅探: 普通 txt 若含 996 脚本特征则切换语言 */
 const SCRIPT_FEATURE_RE = /^\s*(\[@[^\]]+\]|#(IF|ACT|SAY|ELSEACT|ELSESAY)\b)/im;
@@ -58,12 +66,40 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerCompletionItemProvider(selector, new M2CompletionProvider(), '<', '$', '@', '#', '!', '(', '|', ...letterTriggers),
     vscode.languages.registerHoverProvider(selector, new M2HoverProvider()),
     vscode.languages.registerDefinitionProvider(selector, new M2DefinitionProvider()),
+    vscode.languages.registerReferenceProvider(selector, new M2ReferenceProvider()),
+    vscode.languages.registerCodeLensProvider(selector, new M2LabelCodeLensProvider()),
+    vscode.languages.registerCodeLensProvider(selector, new RandomStrCodeLensProvider()),
     vscode.languages.registerFoldingRangeProvider(selector, new M2FoldingProvider()),
     vscode.languages.registerColorProvider(selector, new M2ColorProvider()),
     vscode.window.registerWebviewViewProvider('m2script.varPanel', panel),
+    vscode.window.registerWebviewViewProvider('m2script.dropEntry', new DropEntryProvider()),
     vscode.debug.registerDebugConfigurationProvider('m2script', new M2DebugConfigProvider()),
     vscode.debug.registerDebugAdapterDescriptorFactory('m2script', new M2DebugAdapterFactory()),
     vscode.commands.registerCommand('m2script.refreshVars', () => panel.refresh()),
+    vscode.commands.registerCommand('m2script.simRandomStr', (listRaw: string) => RandomStrPanel.show(context, listRaw)),
+    vscode.commands.registerCommand('m2script.openMapManager', () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor || editor.document.uri.scheme !== 'file' || !isMapConfigFile(editor.document.uri.fsPath)) {
+        void vscode.window.showInformationMessage('请先打开 MapInfo.txt、MiniMap.txt 或 MonGen.txt 文件');
+        return;
+      }
+      const uri = editor.document.uri;
+      if (isMonGenFile(uri.fsPath)) MonGenPanel.show(context, uri);
+      else MapManagerPanel.show(context, uri);
+    }),
+    vscode.commands.registerCommand('m2script.openDropManager', () => {
+      const editor = vscode.window.activeTextEditor;
+      const fsPath = editor && editor.document.uri.scheme === 'file' ? editor.document.uri.fsPath : undefined;
+      DropPanel.show(context, fsPath && isMonItemFile(fsPath) ? fsPath : undefined);
+    }),
+    vscode.commands.registerCommand('m2script.openMerchantManager', () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor || editor.document.uri.scheme !== 'file' || !isMerchantFile(editor.document.uri.fsPath)) {
+        void vscode.window.showInformationMessage('请先打开 Merchant.txt 文件');
+        return;
+      }
+      MerchantPanel.show(context, editor.document.uri);
+    }),
     vscode.commands.registerCommand('m2script.markAsScript', async () => {
       const editor = vscode.window.activeTextEditor;
       if (editor) {
@@ -79,44 +115,43 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidOpenTextDocument((doc) => void sniffDocument(doc)),
   );
 
-  // 变量扫描: 激活时全量一次, 之后保存/关闭时防抖重扫
-  void scanner.scanWorkspace();
+  // 地图配置文件: 激活编辑器是 MapInfo.txt / MiniMap.txt 时显示「地图管理」按钮
+  const updateMapFileContext = () => {
+    const editor = vscode.window.activeTextEditor;
+    const fsPath = editor && editor.document.uri.scheme === 'file' ? editor.document.uri.fsPath : undefined;
+    void vscode.commands.executeCommand('setContext', 'm2script.mapFile', !!fsPath && isMapConfigFile(fsPath));
+    void vscode.commands.executeCommand('setContext', 'm2script.monItemFile', !!fsPath && isMonItemFile(fsPath));
+    void vscode.commands.executeCommand('setContext', 'm2script.merchantFile', !!fsPath && isMerchantFile(fsPath));
+  };
+  updateMapFileContext();
+  context.subscriptions.push(
+    vscode.window.onDidChangeActiveTextEditor(updateMapFileContext),
+  );
+
+  // 变量扫描: 激活时全量一次(首次带进度提示), 之后保存/关闭时防抖重扫
+  void vscode.window.withProgress(
+    { location: vscode.ProgressLocation.Notification, title: 'M2Script: 首次扫描已占用变量', cancellable: false },
+    (progress) => {
+      let prev = 0;
+      const disp = scanner.onDidProgress((p) => {
+        if (!p || !p.total) return;
+        const pct = p.done / p.total * 100;
+        progress.report({ message: p.done + '/' + p.total + ' 个文件', increment: pct - prev });
+        prev = pct;
+      });
+      return scanner.scanWorkspace().catch((e) => {
+        console.error('[M2Script] 首次变量扫描失败:', e);
+      }).finally(() => disp.dispose());
+    },
+  );
   context.subscriptions.push(
     vscode.workspace.onDidSaveTextDocument((doc) => {
       if (doc.languageId === 'm2script' || isEngineScriptPath(doc.uri.fsPath)) scanner.scheduleScan();
     }),
     vscode.workspace.onDidCloseTextDocument(() => scanner.scheduleScan(1500)),
     vscode.workspace.onDidChangeWorkspaceFolders(() => scanner.scheduleScan(100)),
-    // 注释颜色装饰: 初始 + 切换编辑器 + 内容变更
-    vscode.window.onDidChangeActiveTextEditor((editor) => updateCommentDecos(editor)),
-    vscode.workspace.onDidChangeTextDocument((e) => {
-      const editor = vscode.window.activeTextEditor;
-      if (editor && e.document === editor.document) updateCommentDecos(editor);
-    }),
   );
-  updateCommentDecos(vscode.window.activeTextEditor);
 }
 
 export function deactivate() {}
 
-/** 注释装饰: 主题对 comment 着色不可控(且语言级 tokenColorCustomizations 不支持 textMateRules),
- *  用装饰器强制 ; 与 // 注释为暗灰色, 与语法高亮的注释范围保持一致 */
-const SEMI_COMMENT_RE = /(^|\s);/;
-const SLASH_COMMENT_RE = /\s(\/\/)/;
-
-const commentDeco = vscode.window.createTextEditorDecorationType({ color: '#6A737D' });
-
-function updateCommentDecos(editor?: vscode.TextEditor): void {
-  if (!editor || editor.document.languageId !== 'm2script') return;
-  const ranges: vscode.Range[] = [];
-  for (let i = 0; i < editor.document.lineCount; i++) {
-    const raw = editor.document.lineAt(i).text;
-    let start = -1;
-    const sm = raw.match(SEMI_COMMENT_RE);
-    if (sm) start = sm.index! + sm[1].length;
-    const dm = raw.match(SLASH_COMMENT_RE);
-    if (dm && (start < 0 || dm.index! + 1 < start)) start = dm.index! + 1;
-    if (start >= 0) ranges.push(new vscode.Range(i, start, i, raw.length));
-  }
-  editor.setDecorations(commentDeco, ranges);
-}

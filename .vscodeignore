@@ -1,7 +1,11 @@
 node_modules/**
+!node_modules/iconv-lite/**
+!node_modules/safer-buffer/**
 docs_raw/**
 scripts/**
 src/**
 *.map
 tsconfig.json
 .vscode/**
+dap_demo.txt
+example/**

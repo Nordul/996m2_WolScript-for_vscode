@@ -34,11 +34,14 @@ class ColorInformation {
 class Location {
   constructor(uri, rangeOrPosition) { this.uri = uri; this.range = rangeOrPosition; }
 }
+class CodeLens {
+  constructor(range, command) { this.range = range; this.command = command; }
+}
 class ColorPresentation {
   constructor(label) { this.label = label; }
 }
 const vscodeMock = {
-  Position, Range, Selection, SnippetString, MarkdownString, CompletionItem, FoldingRange, Location,
+  Position, Range, Selection, SnippetString, MarkdownString, CompletionItem, FoldingRange, Location, CodeLens,
   Color, ColorInformation, ColorPresentation,
   FoldingRangeKind: { Region: 3 },
   CompletionItemKind: {
@@ -46,6 +49,7 @@ const vscodeMock = {
     Reference: 17, Operator: 11, Event: 22, EnumMember: 19,
   },
   TextEditorRevealType: { InCenter: 1 },
+  ProgressLocation: { SourceControl: 1, Window: 10, Notification: 15 },
   Uri: { file: (f) => ({ fsPath: f, scheme: 'file' }) },
   languages: {
     registerCompletionItemProvider: () => ({ dispose() {} }),
@@ -53,6 +57,8 @@ const vscodeMock = {
     registerDefinitionProvider: () => ({ dispose() {} }),
     registerFoldingRangeProvider: () => ({ dispose() {} }),
     registerColorProvider: () => ({ dispose() {} }),
+    registerReferenceProvider: () => ({ dispose() {} }),
+    registerCodeLensProvider: () => ({ dispose() {} }),
     setTextDocumentLanguage: async () => undefined,
   },
   window: {
@@ -61,12 +67,15 @@ const vscodeMock = {
     activeTextEditor: undefined,
     createTextEditorDecorationType: () => ({ dispose() {} }),
     onDidChangeActiveTextEditor: () => ({ dispose() {} }),
+    onDidChangeTextEditorSelection: () => ({ dispose() {} }),
+    withProgress: async (opts, task) => task({ report() {} }, {}),
   },
   workspace: {
     textDocuments: [],
     workspaceFolders: [{ uri: { fsPath: 'D:\\test' } }],
     asRelativePath: (u) => u.fsPath,
     findFiles: async () => [],
+    openTextDocument: async (u) => { const d = makeDoc(require('fs').readFileSync(u.fsPath, 'utf8')); d.uri = u; return d; },
     fs: { readFile: async () => new Uint8Array() },
     onDidOpenTextDocument: () => ({ dispose() {} }),
     onDidSaveTextDocument: () => ({ dispose() {} }),
@@ -74,7 +83,7 @@ const vscodeMock = {
     onDidChangeWorkspaceFolders: () => ({ dispose() {} }),
     onDidChangeTextDocument: () => ({ dispose() {} }),
   },
-  commands: { registerCommand: () => ({ dispose() {} }) },
+  commands: { registerCommand: () => ({ dispose() {} }), executeCommand: async () => undefined },
   debug: {
     registerDebugConfigurationProvider: () => ({ dispose() {} }),
     registerDebugAdapterDescriptorFactory: () => ({ dispose() {} }),
@@ -238,6 +247,34 @@ test('link=@ 内标签补全', makeDoc('[@main]\n#ACT\nMov s$Ui <Button|x=1|link
 test('含-标签连续输入', makeDoc('[@技能-修炼]\n#ACT\nGOTO @技能-\n'), 2, 10, true, (items) =>
   items.some((i) => i.label === '技能-修炼') ? '' : '缺标签"技能-修炼"');
 
+// 标签引用统计 / 引用跳转 / CodeLens
+try {
+  const { collectReferences, M2ReferenceProvider, M2LabelCodeLensProvider } = require('../out/providers/references');
+  const rdoc = makeDoc('[@main]\n#ACT\nGOTO @战斗\nQueryMsg 继续吗 @确认\n\n[@战斗]\n#ACT\nMov s$Ui <Button|link=@战斗>\n\n[@确认1]\n#ACT\nBREAK');
+  const refs = collectReferences(rdoc);
+  let ok = refs.get('战斗').length === 2          // GOTO + link=
+    && refs.get('确认1').length === 1            // QueryMsg @确认 -> [@确认1]
+    && !refs.has('确认') && !refs.has('main');   // QueryMsg 原名/定义行不计
+  console.log(`${ok ? 'PASS' : 'FAIL'} 标签引用统计: 战斗=${(refs.get('战斗') || []).length} 确认1=${(refs.get('确认1') || []).length}`);
+  if (!ok) fail++;
+  // ReferenceProvider: 光标在定义行 [@战斗] 上 -> 2 处引用
+  const rp = new M2ReferenceProvider();
+  const locs = rp.provideReferences(rdoc, new Position(5, 2));
+  ok = locs.length === 2 && locs[0].range.start.line === 2;
+  console.log(`${ok ? 'PASS' : 'FAIL'} 标签引用跳转: ${locs.length} 处`);
+  if (!ok) fail++;
+  // CodeLens: 3 个标签各一个, [@战斗] 显示 2 处调用且可点击
+  const lenses = new M2LabelCodeLensProvider().provideCodeLenses(rdoc);
+  const lensBattle = lenses.find((l) => l.range.start.line === 5);
+  ok = lenses.length === 3 && lensBattle && lensBattle.command.title.includes('2 处调用')
+    && lensBattle.command.command === 'editor.action.showReferences';
+  console.log(`${ok ? 'PASS' : 'FAIL'} 标签CodeLens: ${lenses.length} 个`);
+  if (!ok) fail++;
+} catch (e) {
+  fail++;
+  console.log('FAIL 标签引用功能: ' + e.message);
+}
+
 // SENDMSG: A字段出编号选择, 选中后带B占位符且无多余Tab位, snippet 不含C/D占位符
 test('SENDMSG 类型编号全量', doc2, 13, 8, true, (items) => {
   const n5 = items.find((i) => String(i.label).startsWith('5 '));
@@ -337,6 +374,26 @@ try {
   console.log('FAIL 标签折叠: ' + e.message);
 }
 
+// RandomStr 权重解析与 CodeLens
+try {
+  const { RandomStrCodeLensProvider, parseRandomStrList } = require('../out/providers/randomStrLens');
+  const items = parseRandomStrList('裁决,10|骨玉,30|龙纹,50');
+  let ok = items.length === 3 && items[0].name === '裁决' && items[0].weight === 10 && items[2].weight === 50;
+  // 权重为变量时 weight 为 undefined; 名字含逗号时按最后逗号切分
+  const v = parseRandomStrList('幸运项链,一,20|宝箱,<$STR(S1)>|空组');
+  ok = ok && v.length === 3 && v[0].name === '幸运项链,一' && v[0].weight === 20
+    && v[1].name === '宝箱' && v[1].weight === undefined && v[2].weightRaw === '';
+  const lenses = new RandomStrCodeLensProvider().provideCodeLenses(makeDoc('[@main]\n#ACT\nRandomStr 裁决,10|骨玉,30|龙纹,50 S1\nMOV S0 1\n'));
+  ok = ok && lenses.length === 1 && lenses[0].range.start.line === 2
+    && lenses[0].command.command === 'm2script.simRandomStr'
+    && lenses[0].command.arguments[0] === '裁决,10|骨玉,30|龙纹,50';
+  console.log(`${ok ? 'PASS' : 'FAIL'} RandomStr权重解析与CodeLens`);
+  if (!ok) fail++;
+} catch (e) {
+  fail++;
+  console.log('FAIL RandomStr: ' + e.message);
+}
+
 // 激活测试
 try {
   const ext = require('../out/extension');
@@ -371,6 +428,37 @@ try {
     ok = ok && !!r3 && r3.range.line === 8;
     console.log(`${ok ? 'PASS' : 'FAIL'} QueryMsg标签跳转: [@标签1]=${r1 && r1.range.line} 回退=${r2 && r2.range.line} GOTO=${r3 && r3.range.line}`);
     if (!ok) fail++;
+
+    // 文件路径跳转: PosInlist 的 ..\QuestDiary\... 与 #CALL 的 [文件] @标签
+    const fsx = require('fs'), osx = require('os'), pathx = require('path');
+    const tmp = fsx.mkdtempSync(pathx.join(osx.tmpdir(), 'm2def-'));
+    fsx.mkdirSync(pathx.join(tmp, 'QuestDiary', '数据文件'), { recursive: true });
+    fsx.writeFileSync(pathx.join(tmp, 'QuestDiary', '数据文件', '权限账号.txt'), '; 数据\n');
+    fsx.mkdirSync(pathx.join(tmp, 'QuestDiary', '游戏功能', '临时属性'), { recursive: true });
+    fsx.writeFileSync(pathx.join(tmp, 'QuestDiary', '游戏功能', '临时属性', '变量属性.txt'), '[@变量属性]\n#ACT\nBREAK\n');
+    const pdoc = makeDoc('[@main]\n#ACT\nPosInlist <$STR(S$权限临时)> ..\\QuestDiary\\数据文件\\权限账号.txt\n#CALL [\\游戏功能\\临时属性\\变量属性.txt] @变量属性\n');
+    pdoc.uri = { fsPath: pathx.join(tmp, 'QuestDiary', 'demo.txt'), scheme: 'file' };
+    // PosInlist 路径上
+    const pl = pdoc.lineAt(2).text;
+    const rp1 = await dp.provideDefinition(pdoc, new Position(2, pl.indexOf('..\\') + 5));
+    let ok2 = !!rp1 && /权限账号\.txt$/.test(rp1.uri.fsPath);
+    // #CALL 文件部分 -> 打开文件第0行; @标签部分 -> 定位到标签行
+    const cl = pdoc.lineAt(3).text;
+    const rp2 = await dp.provideDefinition(pdoc, new Position(3, cl.indexOf('[') + 3));
+    const rp3 = await dp.provideDefinition(pdoc, new Position(3, cl.indexOf('@变量属性') + 2));
+    ok2 = ok2 && !!rp2 && /变量属性\.txt$/.test(rp2.uri.fsPath) && rp2.range.line === 0;
+    ok2 = ok2 && !!rp3 && /变量属性\.txt$/.test(rp3.uri.fsPath) && rp3.range.line === 0;
+    console.log(`${ok2 ? 'PASS' : 'FAIL'} 文件路径跳转: PosInlist=${rp1 && rp1.uri.fsPath} #CALL=${rp2 && rp2.uri.fsPath}:${rp2 && rp2.range.line} @标签=${rp3 && rp3.range.line}`);
+    if (!ok2) fail++;
+
+    // 当前文件在 Funtion_def 等 QuestDiary 同级目录时, #CALL 也要能跳转
+    const fdoc = makeDoc('[@main]\n#ACT\n#CALL [\\游戏功能\\临时属性\\变量属性.txt] @变量属性\n');
+    fdoc.uri = { fsPath: pathx.join(tmp, 'Funtion_def', 'EquipWndNpc-0.txt'), scheme: 'file' };
+    const fl = fdoc.lineAt(2).text;
+    const rf = await dp.provideDefinition(fdoc, new Position(2, fl.indexOf('@变量属性') + 2));
+    const ok3 = !!rf && /变量属性\.txt$/.test(rf.uri.fsPath) && rf.range.line === 0;
+    console.log(`${ok3 ? 'PASS' : 'FAIL'} Funtion_def内#CALL跳转: ${rf && rf.uri.fsPath}:${rf && rf.range.line}`);
+    if (!ok3) fail++;
   } catch (e) {
     fail++;
     console.log('FAIL QueryMsg标签跳转: ' + e.message);

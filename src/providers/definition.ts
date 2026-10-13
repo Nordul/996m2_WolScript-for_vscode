@@ -1,5 +1,10 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import * as fs from 'fs';
+import { IGNORE_GLOB } from '../scanner/scanCore';
+
+// 命令参数中的脚本/数据文件路径: ..\QuestDiary\数据文件\权限账号.txt / QuestDiary\xxx.txt 等
+const PATH_TOKEN_RE = /[^\s;[\]<>|()]*[\\/][^\s;[\]<>|()]*?\.(?:txt|csv)\b/gi;
 
 // #CALL [\子目录\文件.txt] @标签
 const CALL_RE = /^\s*#CALL\s+\[([^\]]+)\](?:\s+@([^\s;]+))?/i;
@@ -78,8 +83,18 @@ function ancestorQuestDiary(fsPath: string): string | undefined {
 async function findQuestDiaryRoot(docPath: string): Promise<string | undefined> {
   const fromDoc = ancestorQuestDiary(docPath);
   if (fromDoc) return fromDoc;
-  // 兜底: 工作区内任意 QuestDiary 目录下的文件反推根目录
-  const any = await vscode.workspace.findFiles('**/QuestDiary/*.txt', '{**/.*/**,**/.*}', 1);
+  // 当前文件不在 QuestDiary 内(如 Funtion_def/Market_def 等同级目录):
+  // 沿祖先目录找包含 QuestDiary 子目录的那一级(引擎 Envir 根)
+  let dir = path.dirname(docPath);
+  while (true) {
+    const cand = path.join(dir, 'QuestDiary');
+    if (fs.existsSync(cand)) return cand;
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+  // 兜底: 工作区内任意 QuestDiary 目录下的文件反推根目录 (含多级子目录)
+  const any = await vscode.workspace.findFiles('**/QuestDiary/**/*.txt', IGNORE_GLOB, 1);
   if (any.length) return ancestorQuestDiary(any[0].fsPath);
   return undefined;
 }
@@ -90,6 +105,24 @@ function labelPosition(doc: vscode.TextDocument, label: string): vscode.Position
     const text = doc.lineAt(i).text;
     const m = text.match(re);
     if (m) return new vscode.Position(i, m[0].indexOf('['));
+  }
+  return undefined;
+}
+
+/**
+ * 解析命令参数中的文件路径为磁盘绝对路径
+ * 依次尝试: 当前文件目录 / 工作区根 / 引擎根(QuestDiary父目录), 原始与去掉前导 ..\ 两种形态
+ */
+export function resolveScriptPath(docPath: string, raw: string): string | undefined {
+  const rel = raw.replace(/^(?:\.{1,2}[\\/])+/, '');
+  const bases: string[] = [path.dirname(docPath)];
+  for (const f of vscode.workspace.workspaceFolders || []) bases.push(f.uri.fsPath);
+  const qd = ancestorQuestDiary(docPath);
+  if (qd) bases.push(path.dirname(qd), qd);
+  for (const base of bases) {
+    for (const cand of [path.resolve(base, raw), path.resolve(base, rel)]) {
+      if (fs.existsSync(cand)) return cand;
+    }
   }
   return undefined;
 }
@@ -136,6 +169,15 @@ export class M2DefinitionProvider implements vscode.DefinitionProvider {
       const row = Math.min(ref.row ?? 0, doc.lineCount - 1);
       const charPos = ref.col === undefined ? 0 : csvFieldOffset(doc.lineAt(row).text, ref.col);
       return new vscode.Location(doc.uri, new vscode.Position(row, charPos));
+    }
+
+    // 1.6 命令参数中的文件路径 -> 跳转到对应文件 (PosInlist / MonItems 等)
+    for (const m of line.matchAll(PATH_TOKEN_RE)) {
+      const start = m.index!, end = start + m[0].length;
+      if (position.character < start || position.character > end) continue;
+      const target = resolveScriptPath(document.uri.fsPath, m[0]);
+      if (target) return new vscode.Location(vscode.Uri.file(target), new vscode.Position(0, 0));
+      return undefined;
     }
 
     // 2. 同文件 @标签 跳转 (GOTO @xxx 等)

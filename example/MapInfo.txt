@@ -1,0 +1,6 @@
+; 地图配置文件
+[0 中州] SAFE CANRIDE
+[<0>new0 新中州]
+[0|new1 独立新中州] SAFE
+[F001 禁地] FIGHT EXPRATE(200) CANMIRROR(3) MIRRORTIME(60)
+[M100 密室] DARK NORECONNECT(0)

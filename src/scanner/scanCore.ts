@@ -17,6 +17,14 @@ export interface ScanResult {
 
 export type ScanGroups = Record<string, Record<string, VarRef[]>>;
 
+/** 全功能统一忽略: .开头的文件/文件夹、node_modules 等 (glob 不允许嵌套花括号) */
+export const IGNORE_GLOB = '{**/.*/**,**/.*,**/node_modules/**,**/out/**,**/dist/**}';
+
+/** 路径任意一段以 . 开头 (如 .history/.git 缓存), 作为 glob 之外的兜底过滤 */
+export function hasHiddenSegment(fsPath: string): boolean {
+  return /(^|[\\/])\.[^\\/]/.test(fsPath);
+}
+
 const varTypes = (varTypesData as { varTypes: { prefix: string; min: number; max: number }[] }).varTypes;
 
 /** 这些命令的第一个变量参数为"写"操作 */
