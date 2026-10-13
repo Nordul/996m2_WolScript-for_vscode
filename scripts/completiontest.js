@@ -197,17 +197,46 @@ test('<$CUST 带参变量补全', doc2, 16, 13, true, (items) => {
   const c = items.find((i) => i.label === '$CUSTOMVALUE');
   if (!c) return '缺$CUSTOMVALUE';
   const v = String(c.insertText && c.insertText.value);
-  return v === '\\$CUSTOMVALUE(${1:A})>' ? '' : 'insertText应为<$CUSTOMVALUE(A)>形态: ' + JSON.stringify(v);
+  return v === '\\$CUSTOMVALUE(${1:A}$0)>' ? '' : 'insertText应为<$CUSTOMVALUE(A)>形态: ' + JSON.stringify(v);
 });
 test('<$HUM 方括号变量补全', doc2, 17, 12, true, (items) => {
   const h = items.find((i) => i.label === '$HUMANINFO');
   if (!h) return '缺$HUMANINFO';
   const v = String(h.insertText && h.insertText.value);
-  return v === '\\$HUMANINFO[${1:A}].${2:B}>' ? '' : 'insertText应为<$HUMANINFO[A].B>形态: ' + JSON.stringify(v);
+  return v === '\\$HUMANINFO[${1:A}].${2:B}$0>' ? '' : 'insertText应为<$HUMANINFO[A].B>形态: ' + JSON.stringify(v);
 });
 // 标题签名命令: SetStrValue 需在 #ACT 段命令补全中出现
 test('SETS 命令前缀过滤', doc2, 18, 4, true, (items) =>
   items.some((i) => i.label.toUpperCase() === 'SETSTRVALUE') ? '' : '缺SETSTRVALUE');
+
+// 已有闭合符时不重复插入: range 应吞掉旧的 > / (参数)> / [参数].B>
+const doc3 = makeDoc('[@main]\n#ACT\nMov A0 <$USEITEMMAKEINDEX(1)>\nMov A0 <$USER>\nMov A0 <$HUMANINFO[$USERNAME].$X>\nMov s$Ui <Tex>\n');
+test('补全吞掉已有(参数)>', doc3, 2, 25, true, (items) => {
+  const c = items.find((i) => i.label === '$USEITEMMAKEINDEX');
+  if (!c) return '缺$USEITEMMAKEINDEX';
+  return c.range && c.range.end.character === 29 ? '' : 'range.end应为29, 实际 ' + (c.range && c.range.end.character);
+});
+test('补全吞掉已有>', doc3, 3, 13, true, (items) => {
+  const u = items.find((i) => i.label === '$USERNAME');
+  if (!u) return '缺$USERNAME';
+  return u.range && u.range.end.character === 14 ? '' : 'range.end应为14, 实际 ' + (u.range && u.range.end.character);
+});
+test('补全吞掉已有[参数].B>', doc3, 4, 18, true, (items) => {
+  const h = items.find((i) => i.label === '$HUMANINFO');
+  if (!h) return '缺$HUMANINFO';
+  return h.range && h.range.end.character === 33 ? '' : 'range.end应为33, 实际 ' + (h.range && h.range.end.character);
+});
+test('组件补全吞掉已有>', doc3, 5, 13, true, (items) => {
+  const t = items.find((i) => i.label === 'Text');
+  if (!t) return '缺Text';
+  return t.range && t.range.end.character === 14 ? '' : 'range.end应为14, 实际 ' + (t.range && t.range.end.character);
+});
+
+// @ 标签补全: UI 组件属性值内(link=@)也要提示标签; 含 - 的标签名可连续输入
+test('link=@ 内标签补全', makeDoc('[@main]\n#ACT\nMov s$Ui <Button|x=1|link=@\n'), 2, 27, true, (items) =>
+  items.some((i) => i.label === 'main') ? '' : '缺标签main');
+test('含-标签连续输入', makeDoc('[@技能-修炼]\n#ACT\nGOTO @技能-\n'), 2, 10, true, (items) =>
+  items.some((i) => i.label === '技能-修炼') ? '' : '缺标签"技能-修炼"');
 
 // SENDMSG: A字段出编号选择, 选中后带B占位符且无多余Tab位, snippet 不含C/D占位符
 test('SENDMSG 类型编号全量', doc2, 13, 8, true, (items) => {

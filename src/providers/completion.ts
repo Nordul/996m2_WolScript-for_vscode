@@ -36,14 +36,14 @@ function sysVarItem(v: { name: string; form?: string; desc: string; docUrl: stri
   const form = v.form || v.name;
   if (/\[/.test(form)) {
     snip = `\\$${v.name}[\${1:A}]`;
-    if (/\]\s*\./.test(form)) snip += `.\${2:B}`;
-    snip += '>';
+    if (/\]\s*\./.test(form)) snip += `.\${2:B}$0>`;
+    else snip += '$0>';
   } else if (/\(/.test(form)) {
-    snip = `\\$${v.name}(\${1:A})`;
-    if (/\)\s*\./.test(form)) snip += `.\${2:B}`;
-    snip += '>';
+    snip = /\)\s*\./.test(form)
+      ? `\\$${v.name}(\${1:A}).\${2:B}$0>`
+      : `\\$${v.name}(\${1:A}$0)>`;
   } else if (/\./.test(form)) {
-    snip = `\\$${v.name}.\${1:A}>`;
+    snip = `\\$${v.name}.\${1:A}$0>`;
   } else {
     snip = `\\$${v.name}>`;
   }
@@ -64,7 +64,8 @@ function uiCompItem(c: typeof uiComponents[number]): vscode.CompletionItem {
   const ordered = [...preferred, ...rest].slice(0, 5);
   let snip = `${c.name}`;
   ordered.forEach((p, i) => { snip += `|${p}=\${${i + 1}:}`; });
-  item.insertText = new vscode.SnippetString(snip + '>$0');
+  // $0 放在最后一个参数值末尾(在 > 之前): 填完最后参数原地结束, 无多余 Tab 位
+  item.insertText = new vscode.SnippetString(snip + (ordered.length ? '$0>' : '>$0'));
   item.detail = `UI组件 - ${c.desc}`;
   const md = new vscode.MarkdownString(undefined, true);
   md.appendCodeblock(`<${c.name}|x=|y=|...>`, 'plaintext');
@@ -93,38 +94,76 @@ export class M2CompletionProvider implements vscode.CompletionItemProvider {
     const ltMatch = before.match(/<{1,2}(\$?[A-Za-z0-9_]*)$/);
     if (ltMatch) {
       const typed = ltMatch[1];
+      // 光标后已存在闭合符/参数组时纳入替换范围, 避免出现 <$USEITEMMAKEINDEX(1)>> 这种重复闭合
+      const afterCursor = lineText.slice(position.character);
+      const rangeSwallow = (insertText: string): vscode.Range => {
+        const tail = insertText.replace(/\$0$/, '');
+        let extra = 0;
+        if (tail.endsWith('>')) {
+          const re = tail.includes(']') ? /^(?:\[[^\]]*\](?:\.[A-Za-z0-9_$]+)?)>/
+            : tail.includes(')') ? /^(?:\([^)]*\))?>/
+            : /^>/;
+          const m = afterCursor.match(re);
+          if (m) extra = m[0].length;
+        }
+        return new vscode.Range(position.line, position.character - typed.length, position.line, position.character + extra);
+      };
       if (typed.startsWith('$')) {
         return filterByPrefix(sysVariables, typed.slice(1), (v) => v.name).map((v) => {
           const item = sysVarItem(v);
-          item.range = rangeFrom(typed.length);
+          item.range = rangeSwallow(String((item.insertText as vscode.SnippetString).value));
           return item;
         });
       }
       const items: vscode.CompletionItem[] = [];
       const dollar = new vscode.CompletionItem('$变量', vscode.CompletionItemKind.Snippet);
-      dollar.insertText = new vscode.SnippetString('\\$${1:USERNAME}>');
+      dollar.insertText = new vscode.SnippetString('\\$${1:USERNAME}$0>');
       dollar.detail = '系统变量 <$...>';
       dollar.sortText = '0';
-      dollar.range = rangeFrom(typed.length);
+      dollar.range = rangeSwallow(String(dollar.insertText.value));
       items.push(dollar);
       const strCall = new vscode.CompletionItem('$STR(变量)', vscode.CompletionItemKind.Snippet);
-      strCall.insertText = new vscode.SnippetString('\\$STR(${1:S0})>');
+      strCall.insertText = new vscode.SnippetString('\\$STR(${1:S0}$0)>');
       strCall.detail = '变量取值 <$STR(...)>';
       strCall.sortText = '01';
-      strCall.range = rangeFrom(typed.length);
+      strCall.range = rangeSwallow(String(strCall.insertText.value));
       items.push(strCall);
       const bindMoney = new vscode.CompletionItem('$BINDMONEY(货币)', vscode.CompletionItemKind.Snippet);
-      bindMoney.insertText = new vscode.SnippetString('\\$BINDMONEY(${1:元宝})>');
+      bindMoney.insertText = new vscode.SnippetString('\\$BINDMONEY(${1:元宝}$0)>');
       bindMoney.detail = '组合货币数量 <$BINDMONEY(货币ID/名称/分组名)>';
       bindMoney.sortText = '02';
-      bindMoney.range = rangeFrom(typed.length);
+      bindMoney.range = rangeSwallow(String(bindMoney.insertText.value));
       items.push(bindMoney);
       for (const c of filterByPrefix(uiComponents, typed, (x) => x.name)) {
         const item = uiCompItem(c);
-        item.range = rangeFrom(typed.length);
+        item.range = rangeSwallow(String((item.insertText as vscode.SnippetString).value));
         items.push(item);
       }
       return items;
+    }
+
+    // @ 之后: 当前文档标签 + 触发器 (先于 UI 组件参数判断, 否则 <Button|link=@ 内不提示标签)
+    const atMatch = before.match(/@([A-Za-z0-9_\-一-鿿]*)$/);
+    if (atMatch) {
+      const typed = atMatch[1];
+      const items: vscode.CompletionItem[] = [];
+      const atLineStart = /^\s*\[?@[A-Za-z0-9_\-一-鿿]*$/.test(before);
+      if (atLineStart) {
+        for (const t of filterByPrefix(triggers, typed, (x) => x.name)) {
+          const item = new vscode.CompletionItem(t.name, vscode.CompletionItemKind.Event);
+          item.detail = '引擎触发器';
+          item.documentation = `${t.desc} — [官方文档](${t.docUrl})`;
+          item.range = rangeFrom(typed.length);
+          items.push(item);
+        }
+      }
+      for (const label of filterByPrefix(getDocumentLabels(document), typed, (x) => x)) {
+        const item = new vscode.CompletionItem(label, vscode.CompletionItemKind.Reference);
+        item.detail = '本文档标签';
+        item.range = rangeFrom(typed.length);
+        items.push(item);
+      }
+      return items.length ? items : undefined;
     }
 
     // 2. UI 组件内部: 补全参数名 (光标处于参数值内则不提示)
@@ -173,33 +212,9 @@ export class M2CompletionProvider implements vscode.CompletionItemProvider {
         return item;
       };
       return [
-        fn('STR(变量)', 'STR(${1:S0})', '显示/读取变量值, 如 $STR(S0)'),
-        fn('PARAM(n)', 'PARAM(${1:0})', '触发参数变量, 如 $PARAM(0)'),
+        fn('STR(变量)', 'STR(${1:S0}$0)', '显示/读取变量值, 如 $STR(S0)'),
+        fn('PARAM(n)', 'PARAM(${1:0}$0)', '触发参数变量, 如 $PARAM(0)'),
       ];
-    }
-
-    // 5. @ 之后: 当前文档标签 + 触发器
-    const atMatch = before.match(/@([A-Za-z0-9_一-龥]*)$/);
-    if (atMatch) {
-      const typed = atMatch[1];
-      const items: vscode.CompletionItem[] = [];
-      const atLineStart = /^\s*\[?@[A-Za-z0-9_]*$/.test(before);
-      if (atLineStart) {
-        for (const t of filterByPrefix(triggers, typed, (x) => x.name)) {
-          const item = new vscode.CompletionItem(t.name, vscode.CompletionItemKind.Event);
-          item.detail = '引擎触发器';
-          item.documentation = `${t.desc} — [官方文档](${t.docUrl})`;
-          item.range = rangeFrom(typed.length);
-          items.push(item);
-        }
-      }
-      for (const label of filterByPrefix(getDocumentLabels(document), typed, (x) => x)) {
-        const item = new vscode.CompletionItem(label, vscode.CompletionItemKind.Reference);
-        item.detail = '本文档标签';
-        item.range = rangeFrom(typed.length);
-        items.push(item);
-      }
-      return items.length ? items : undefined;
     }
 
     // 6. # 之后: 段关键字 + #CALL
