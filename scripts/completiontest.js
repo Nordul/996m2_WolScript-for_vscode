@@ -331,6 +331,13 @@ try {
   const pok = p1[0].label === '224' && p2[0].label === '#0xffffa500' && p3[0].label === 'ffa500';
   console.log(`${pok ? 'PASS' : 'FAIL'} 颜色回写: ${p1[0].label} | ${p2[0].label} | ${p3[0].label}`);
   if (!pok) fail++;
+  // 调色板颜色的颜色卡应只含 0-255 编号(最近编号置顶); 16进制只回写16进制格式
+  const labels = new Set(p1.map((x) => x.label));
+  let allIdx = p1.length === 256;
+  for (let i = 0; i <= 255; i++) allIdx = allIdx && labels.has(String(i));
+  const hexOnly = p2.length === 1 && p3.length === 1;
+  console.log(`${allIdx && hexOnly ? 'PASS' : 'FAIL'} 颜色卡分类: 调色板${p1.length}项 16进制各${p2.length}/${p3.length}项`);
+  if (!(allIdx && hexOnly)) fail++;
   // 最近调色板编号
   const ni = nearestPaletteIndex(new Color(0, 0.98, 0, 1));
   const nok = ni === 224;

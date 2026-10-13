@@ -79,9 +79,14 @@ export class M2ColorProvider implements vscode.DocumentColorProvider {
     const oldText = context.document.lineAt(context.range.start.line).text
       .slice(context.range.start.character, context.range.end.character);
 
-    // color=224 调色板编号: 选中的颜色映射回最近的 0-255 编号
+    // color=224 调色板编号: 颜色卡只提供 0-255 调色板, 当前色最近编号置顶(拖动取色时实时映射回编号)
     if (/^\d{1,3}$/.test(oldText)) {
-      return [new vscode.ColorPresentation(String(nearestPaletteIndex(color)))];
+      const nearest = nearestPaletteIndex(color);
+      const out = [new vscode.ColorPresentation(String(nearest))];
+      for (let i = 0; i < PALETTE.length && i <= 255; i++) {
+        if (i !== nearest) out.push(new vscode.ColorPresentation(String(i)));
+      }
+      return out;
     }
     // #0xAARRGGBB
     if (/^#0x/i.test(oldText)) {
