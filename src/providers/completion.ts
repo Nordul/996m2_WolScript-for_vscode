@@ -3,6 +3,23 @@ import {
   actionCommands, checkCommands, sysVariables, uiComponents, triggers, varTypes, sendMsgTypes,
   Cmd, getSectionAt, getDocumentLabels, cmdDocMarkdown, signatureToSnippet,
 } from './data';
+import { getDbNames } from '../db/gameLoadDb';
+import type { NameKind } from '../db/dbQueries';
+
+/** 第一个参数为数据库名称的命令 (来源: data/commands.json / checkCommands.json 签名) */
+const DB_NAME_COMMANDS = new Map<string, NameKind>([
+  // 物品名 (StdItems.Name)
+  ['GIVE', 'item'], ['GIVEB', 'item'], ['TAKE', 'item'], ['TAKEW', 'item'],
+  ['TAKEDUREITEM', 'item'], ['CLEARARROW', 'item'], ['DROPITEMDOWN', 'item'], ['CHECKITEM', 'item'],
+  // 怪物名 (Monster.Name)
+  ['MOBNPC', 'monster'], ['RECALLMOB', 'monster'], ['OPENITEMBOX', 'monster'],
+  ['LOLMOB', 'monster'], ['SETBONENAME', 'monster'], ['AUTORIDEPET', 'monster'],
+  // 技能名 (Magic.MagName)
+  ['ADDSKILL', 'skill'], ['DELSKILL', 'skill'], ['CHECKSKILL', 'skill'],
+  ['CHANGESKILLEXP', 'skill'], ['SKILLLEVEL', 'skill'],
+]);
+
+const DB_KIND_LABEL: Record<NameKind, string> = { item: '物品库', monster: '怪物库', skill: '技能库' };
 
 /** 按已输入字符过滤: 前缀优先, 退化为包含, 都没有则返回全部(不区分大小写) */
 function filterByPrefix<T>(items: readonly T[], typed: string, name: (t: T) => string): T[] {
@@ -81,10 +98,12 @@ function uiCompItem(c: typeof uiComponents[number]): vscode.CompletionItem {
 }
 
 export class M2CompletionProvider implements vscode.CompletionItemProvider {
-  provideCompletionItems(
+  constructor(private readonly context?: vscode.ExtensionContext) {}
+
+  async provideCompletionItems(
     document: vscode.TextDocument,
     position: vscode.Position,
-  ): vscode.CompletionItem[] | undefined {
+  ): Promise<vscode.CompletionItem[] | undefined> {
     const lineText = document.lineAt(position.line).text;
     const before = lineText.slice(0, position.character);
     // 已输入字符的替换范围: 让 VSCode 过滤/插入与已输入部分精确对齐
@@ -261,7 +280,28 @@ export class M2CompletionProvider implements vscode.CompletionItemProvider {
         });
     }
 
-    // 8. 行首命令补全: 按段落上下文过滤
+    // 8. GIVE/TAKE/ADDSKILL 等命令的第一个参数: 从 GameLoad.DB 补全物品/怪物/技能名
+    const firstArgMatch = before.match(/^\s*(!?)([A-Za-z][A-Za-z0-9_]*)\s+(\S*)$/);
+    if (firstArgMatch) {
+      const kind = DB_NAME_COMMANDS.get(firstArgMatch[2].toUpperCase());
+      if (kind && this.context) {
+        const typed = firstArgMatch[3];
+        // DB 未加载完成时先触发加载, 本次无结果; DB 不存在时静默不补全
+        const names = await getDbNames(this.context, kind);
+        if (!names) return undefined;
+        const kindEnum = kind === 'item'
+          ? vscode.CompletionItemKind.Value
+          : kind === 'monster' ? vscode.CompletionItemKind.Class : vscode.CompletionItemKind.Method;
+        return filterByPrefix(names, typed, (x) => x).map((name) => {
+          const item = new vscode.CompletionItem(name, kindEnum);
+          item.detail = `GameLoad.DB ${DB_KIND_LABEL[kind]}`;
+          item.range = rangeFrom(typed.length);
+          return item;
+        });
+      }
+    }
+
+    // 9. 行首命令补全: 按段落上下文过滤
     const lineStartMatch = before.match(/^(\s*)(!?)([A-Za-z0-9_]*)$/);
     if (lineStartMatch) {
       const negated = lineStartMatch[2] === '!';

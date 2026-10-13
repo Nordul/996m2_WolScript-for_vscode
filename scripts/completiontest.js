@@ -132,23 +132,27 @@ const doc = makeDoc(`[@main]
 const provider = new (require('../out/providers/completion').M2CompletionProvider)();
 
 let fail = 0;
+const testQueue = [];
+// provideCompletionItems 现为 async: 测试入队后由末尾统一顺序 await, 保持原有输出顺序
 function test(name, target, line, ch, expectSome, sampleCheck) {
-  try {
-    const items = provider.provideCompletionItems(target, new Position(line, ch));
-    const n = items ? items.length : 0;
-    let ok = expectSome ? n > 0 : true;
-    let extra = '';
-    if (ok && sampleCheck && items) {
-      extra = sampleCheck(items);
-      if (extra) ok = false;
+  testQueue.push((async () => {
+    try {
+      const items = await provider.provideCompletionItems(target, new Position(line, ch));
+      const n = items ? items.length : 0;
+      let ok = expectSome ? n > 0 : true;
+      let extra = '';
+      if (ok && sampleCheck && items) {
+        extra = sampleCheck(items);
+        if (extra) ok = false;
+      }
+      if (!ok) fail++;
+      console.log(`${ok ? 'PASS' : 'FAIL'} ${name}: ${n} 项 ${extra}`);
+      if (items && n) console.log('   前3项:', items.slice(0, 3).map((i) => `${i.label} => ${JSON.stringify(i.insertText && i.insertText.value !== undefined ? i.insertText.value : i.insertText)}`).join(' | '));
+    } catch (e) {
+      fail++;
+      console.log(`FAIL ${name}: 异常 ${e.message}`);
     }
-    if (!ok) fail++;
-    console.log(`${ok ? 'PASS' : 'FAIL'} ${name}: ${n} 项 ${extra}`);
-    if (items && n) console.log('   前3项:', items.slice(0, 3).map((i) => `${i.label} => ${JSON.stringify(i.insertText && i.insertText.value !== undefined ? i.insertText.value : i.insertText)}`).join(' | '));
-  } catch (e) {
-    fail++;
-    console.log(`FAIL ${name}: 异常 ${e.message}`);
-  }
+  })());
 }
 
 // #IF 段空行(行2): 应只出检测命令
@@ -414,6 +418,24 @@ try {
 
 // QueryMsg 的 @标签 -> 引擎实际执行 [@标签1], 跳转需优先命中带后缀的标签
 (async () => {
+  // 先跑完上面入队的补全测试 (provider 已是 async)
+  for (const p of testQueue) await p;
+
+  // GIVE 等命令首参的 DB 补全: mock 中 findFiles 返回空, DB 加载静默失败不炸、返回空
+  try {
+    const ProviderWithCtx = require('../out/providers/completion').M2CompletionProvider;
+    const p2 = new ProviderWithCtx({ subscriptions: [] });
+    const giveDoc = makeDoc('[@main]\n#ACT\nGIVE \nADDSKILL \n');
+    const r1 = await p2.provideCompletionItems(giveDoc, new Position(2, 5));
+    const r2 = await p2.provideCompletionItems(giveDoc, new Position(3, 9));
+    const ok = !r1 && !r2;
+    console.log(`${ok ? 'PASS' : 'FAIL'} DB缺失时首参补全静默: GIVE=${r1 ? r1.length : 'null'} ADDSKILL=${r2 ? r2.length : 'null'}`);
+    if (!ok) fail++;
+  } catch (e) {
+    fail++;
+    console.log('FAIL DB缺失时首参补全静默: ' + e.message);
+  }
+
   try {
     const { M2DefinitionProvider } = require('../out/providers/definition');
     const dp = new M2DefinitionProvider();

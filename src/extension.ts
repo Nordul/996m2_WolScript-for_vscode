@@ -15,6 +15,8 @@ import { MonGenPanel } from './mapeditor/monGenPanel';
 import { MerchantPanel } from './mapeditor/merchantPanel';
 import { DropPanel } from './mapeditor/dropPanel';
 import { DropEntryProvider } from './views/dropEntry';
+import { DbViewerPanel } from './views/dbViewerPanel';
+import { DbEntryProvider } from './views/dbEntry';
 
 /** 内容嗅探: 普通 txt 若含 996 脚本特征则切换语言 */
 const SCRIPT_FEATURE_RE = /^\s*(\[@[^\]]+\]|#(IF|ACT|SAY|ELSEACT|ELSESAY)\b)/im;
@@ -63,7 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
   // 字母也作为触发字符: 即使用户关闭了 quickSuggestions, 输入命令字母也能弹出补全
   const letterTriggers = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   context.subscriptions.push(
-    vscode.languages.registerCompletionItemProvider(selector, new M2CompletionProvider(), '<', '$', '@', '#', '!', '(', '|', ...letterTriggers),
+    vscode.languages.registerCompletionItemProvider(selector, new M2CompletionProvider(context), '<', '$', '@', '#', '!', '(', '|', ' ', ...letterTriggers),
     vscode.languages.registerHoverProvider(selector, new M2HoverProvider()),
     vscode.languages.registerDefinitionProvider(selector, new M2DefinitionProvider()),
     vscode.languages.registerReferenceProvider(selector, new M2ReferenceProvider()),
@@ -73,6 +75,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerColorProvider(selector, new M2ColorProvider()),
     vscode.window.registerWebviewViewProvider('m2script.varPanel', panel),
     vscode.window.registerWebviewViewProvider('m2script.dropEntry', new DropEntryProvider()),
+    vscode.window.registerWebviewViewProvider('m2script.dbEntry', new DbEntryProvider()),
     vscode.debug.registerDebugConfigurationProvider('m2script', new M2DebugConfigProvider()),
     vscode.debug.registerDebugAdapterDescriptorFactory('m2script', new M2DebugAdapterFactory()),
     vscode.commands.registerCommand('m2script.refreshVars', () => panel.refresh()),
@@ -92,6 +95,7 @@ export function activate(context: vscode.ExtensionContext) {
       const fsPath = editor && editor.document.uri.scheme === 'file' ? editor.document.uri.fsPath : undefined;
       DropPanel.show(context, fsPath && isMonItemFile(fsPath) ? fsPath : undefined);
     }),
+    vscode.commands.registerCommand('m2script.openDbViewer', () => DbViewerPanel.show(context)),
     vscode.commands.registerCommand('m2script.openMerchantManager', () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor || editor.document.uri.scheme !== 'file' || !isMerchantFile(editor.document.uri.fsPath)) {
