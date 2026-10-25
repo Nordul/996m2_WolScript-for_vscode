@@ -12,7 +12,8 @@
   ],
   "surroundingPairs": [
     { "open": "[", "close": "]" },
-    { "open": "(", "close": ")" }
+    { "open": "(", "close": ")" },
+    { "open": "<", "close": ">" }
   ],
   "wordPattern": "(-?\\d*\\.\\d\\w*)|([^`~!@#$%^&*()=+[{]}\\\\|;:'\",.<>/?\\s]+)"
 }
