@@ -28,7 +28,7 @@
     "vscode:prepublish": "npm run compile",
     "crawl": "node scripts/crawl-docs.js && node scripts/build-grammar.js",
     "build:grammar": "node scripts/build-grammar.js",
-    "selftest": "node scripts/selftest.js && node scripts/grammartest.js && node scripts/interpretertest.js"
+    "selftest": "node scripts/selftest.js && node scripts/grammartest.js && node scripts/interpretertest.js && node scripts/highlighttest.js"
   },
   "contributes": {
     "languages": [
