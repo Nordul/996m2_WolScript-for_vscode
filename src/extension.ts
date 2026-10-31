@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
-import { M2CompletionProvider } from './providers/completion';
+import { M2CompletionProvider, parseDbNameFirstArg } from './providers/completion';
 import { M2HoverProvider } from './providers/hover';
 import { M2DefinitionProvider } from './providers/definition';
 import { M2FoldingProvider } from './providers/folding';
-import { M2ColorProvider } from './providers/color';
+import { M2ColorProvider, M2ColorLinkProvider } from './providers/color';
 import { M2ReferenceProvider, M2LabelCodeLensProvider } from './providers/references';
 import { M2DocumentHighlightProvider, M2CrossFileHighlighter } from './providers/highlight';
 import { RandomStrCodeLensProvider } from './providers/randomStrLens';
@@ -16,6 +16,9 @@ import { MonGenPanel } from './mapeditor/monGenPanel';
 import { MerchantPanel } from './mapeditor/merchantPanel';
 import { DropPanel } from './mapeditor/dropPanel';
 import { DropEntryProvider } from './views/dropEntry';
+import { DbViewerPanel } from './views/dbViewerPanel';
+import { DbEntryProvider } from './views/dbEntry';
+import { ColorPickerProvider } from './views/colorPickerPanel';
 
 /** 内容嗅探: 普通 txt 若含 996 脚本特征则切换语言 */
 const SCRIPT_FEATURE_RE = /^\s*(\[@[^\]]+\]|#(IF|ACT|SAY|ELSEACT|ELSESAY)\b)/im;
@@ -59,12 +62,13 @@ async function sniffDocument(doc: vscode.TextDocument) {
 export function activate(context: vscode.ExtensionContext) {
   const scanner = new VarScanner();
   const panel = new VarPanelProvider(scanner);
+  let skipNextDbSelection = false;
 
   const selector: vscode.DocumentSelector = { language: 'm2script', scheme: 'file' };
   // 字母也作为触发字符: 即使用户关闭了 quickSuggestions, 输入命令字母也能弹出补全
   const letterTriggers = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   context.subscriptions.push(
-    vscode.languages.registerCompletionItemProvider(selector, new M2CompletionProvider(), '<', '$', '@', '#', '!', '(', '|', ...letterTriggers),
+    vscode.languages.registerCompletionItemProvider(selector, new M2CompletionProvider(context), '<', '$', '@', '#', '!', '(', '|', ' ', ...letterTriggers),
     vscode.languages.registerHoverProvider(selector, new M2HoverProvider()),
     vscode.languages.registerDefinitionProvider(selector, new M2DefinitionProvider()),
     vscode.languages.registerReferenceProvider(selector, new M2ReferenceProvider()),
@@ -73,11 +77,27 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerCodeLensProvider(selector, new RandomStrCodeLensProvider()),
     vscode.languages.registerFoldingRangeProvider(selector, new M2FoldingProvider()),
     vscode.languages.registerColorProvider(selector, new M2ColorProvider()),
+    vscode.languages.registerDocumentLinkProvider(selector, new M2ColorLinkProvider()),
     vscode.window.registerWebviewViewProvider('m2script.varPanel', panel),
     vscode.window.registerWebviewViewProvider('m2script.dropEntry', new DropEntryProvider()),
+    vscode.window.registerWebviewViewProvider('m2script.colorPicker', new ColorPickerProvider(context)),
+    vscode.window.registerWebviewViewProvider('m2script.dbEntry', new DbEntryProvider()),
     vscode.debug.registerDebugConfigurationProvider('m2script', new M2DebugConfigProvider()),
     vscode.debug.registerDebugAdapterDescriptorFactory('m2script', new M2DebugAdapterFactory()),
     vscode.commands.registerCommand('m2script.refreshVars', () => panel.refresh()),
+    vscode.commands.registerCommand('m2script.openColorPicker', async (line?: number, character?: number) => {
+      const editor = vscode.window.activeTextEditor;
+      if (editor && line !== undefined && character !== undefined) {
+        editor.selection = new vscode.Selection(line, character, line, character);
+      }
+      await vscode.commands.executeCommand('m2script.colorPicker.focus');
+    }),
+    vscode.commands.registerCommand('m2script.triggerDbSuggest', () => {
+      setTimeout(() => {
+        skipNextDbSelection = true;
+        void vscode.commands.executeCommand('editor.action.triggerSuggest');
+      }, 50);
+    }),
     vscode.commands.registerCommand('m2script.simRandomStr', (listRaw: string) => RandomStrPanel.show(context, listRaw)),
     vscode.commands.registerCommand('m2script.openMapManager', () => {
       const editor = vscode.window.activeTextEditor;
@@ -94,6 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
       const fsPath = editor && editor.document.uri.scheme === 'file' ? editor.document.uri.fsPath : undefined;
       DropPanel.show(context, fsPath && isMonItemFile(fsPath) ? fsPath : undefined);
     }),
+    vscode.commands.registerCommand('m2script.openDbViewer', () => DbViewerPanel.show(context)),
     vscode.commands.registerCommand('m2script.openMerchantManager', () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor || editor.document.uri.scheme !== 'file' || !isMerchantFile(editor.document.uri.fsPath)) {
@@ -117,6 +138,30 @@ export function activate(context: vscode.ExtensionContext) {
   for (const doc of vscode.workspace.textDocuments) void sniffDocument(doc);
   context.subscriptions.push(
     vscode.workspace.onDidOpenTextDocument((doc) => void sniffDocument(doc)),
+  );
+
+  // 命令片段占位符及手动输入的数据库名称均主动唤醒建议(含中文/数字/符号)
+  let dbNameSuggestTimer: ReturnType<typeof setTimeout> | undefined;
+  context.subscriptions.push(
+    { dispose: () => { if (dbNameSuggestTimer) clearTimeout(dbNameSuggestTimer); } },
+    vscode.window.onDidChangeTextEditorSelection((e) => {
+      const editor = e.textEditor;
+      const doc = editor.document;
+      if (doc.languageId !== 'm2script' || doc.uri.scheme !== 'file') return;
+      if (skipNextDbSelection) {
+        skipNextDbSelection = false;
+        return;
+      }
+      if (dbNameSuggestTimer) clearTimeout(dbNameSuggestTimer);
+      dbNameSuggestTimer = setTimeout(() => {
+        dbNameSuggestTimer = undefined;
+        if (vscode.window.activeTextEditor !== editor) return;
+        const position = editor.selection.end;
+        const before = doc.lineAt(position.line).text.slice(0, position.character);
+        if (!parseDbNameFirstArg(before)) return;
+        void vscode.commands.executeCommand('m2script.triggerDbSuggest');
+      }, 50);
+    }),
   );
 
   // 地图配置文件: 激活编辑器是 MapInfo.txt / MiniMap.txt 时显示「地图管理」按钮

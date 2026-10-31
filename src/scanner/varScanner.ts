@@ -56,11 +56,11 @@ export class VarScanner {
       fileCount++;
     }
 
-    // 2. 磁盘上的引擎脚本文件 (排除 .开头的文件/文件夹, 如 .history/.git 缓存)
+    // 2. 磁盘上的引擎脚本/CSV文件 (排除 .开头的文件/文件夹, 如 .history/.git 缓存)
     if (folders) {
       try {
         // 注意: glob 不允许嵌套花括号, 排除模式必须平铺
-        const found = await vscode.workspace.findFiles('**/*.txt', IGNORE_GLOB, 5000);
+        const found = await vscode.workspace.findFiles('**/*.{txt,csv}', IGNORE_GLOB, 5000);
         // 兜底: 路径任意一段以 . 开头都跳过
         const files = found.filter(uri => isEngineScriptPath(uri.fsPath) && !openScanned.has(uri.fsPath) && !hasHiddenSegment(uri.fsPath));
         let done = 0;

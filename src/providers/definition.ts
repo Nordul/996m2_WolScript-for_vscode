@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
-import { IGNORE_GLOB } from '../scanner/scanCore';
+import { IGNORE_GLOB, decodeScript, hasHiddenSegment, isEngineScriptPath } from '../scanner/scanCore';
+import { findLabelReferences } from './references';
 
 // 命令参数中的脚本/数据文件路径: ..\QuestDiary\数据文件\权限账号.txt / QuestDiary\xxx.txt 等
 const PATH_TOKEN_RE = /[^\s;[\]<>|()]*[\\/][^\s;[\]<>|()]*?\.(?:txt|csv)\b/gi;
@@ -99,14 +100,49 @@ async function findQuestDiaryRoot(docPath: string): Promise<string | undefined> 
   return undefined;
 }
 
-function labelPosition(doc: vscode.TextDocument, label: string): vscode.Position | undefined {
+function labelPositionInLines(lines: string[], label: string): vscode.Position | undefined {
   const re = new RegExp(`^\\s*\\[@${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\]`, 'i');
-  for (let i = 0; i < doc.lineCount; i++) {
-    const text = doc.lineAt(i).text;
-    const m = text.match(re);
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(re);
     if (m) return new vscode.Position(i, m[0].indexOf('['));
   }
   return undefined;
+}
+
+function labelPosition(doc: vscode.TextDocument, label: string): vscode.Position | undefined {
+  return labelPositionInLines(Array.from({ length: doc.lineCount }, (_, i) => doc.lineAt(i).text), label);
+}
+
+async function crossFileLabelDefinitions(document: vscode.TextDocument, label: string): Promise<vscode.Location[]> {
+  let files: vscode.Uri[];
+  try {
+    files = await vscode.workspace.findFiles('**/*.txt', IGNORE_GLOB, 5000);
+  } catch {
+    return [];
+  }
+
+  const pathKey = (fsPath: string) => path.normalize(fsPath).toLowerCase();
+  const currentPath = pathKey(document.uri.fsPath);
+  const openDocs = new Map<string, vscode.TextDocument>();
+  for (const doc of vscode.workspace.textDocuments) {
+    if (doc.uri.scheme === 'file') openDocs.set(pathKey(doc.uri.fsPath), doc);
+  }
+
+  const locations: vscode.Location[] = [];
+  for (const uri of files) {
+    const key = pathKey(uri.fsPath);
+    if (key === currentPath || !isEngineScriptPath(uri.fsPath) || hasHiddenSegment(uri.fsPath)) continue;
+    try {
+      const openDoc = openDocs.get(key);
+      const pos = openDoc
+        ? labelPosition(openDoc, label)
+        : labelPositionInLines(decodeScript(await vscode.workspace.fs.readFile(uri)).split(/\r?\n/), label);
+      if (pos) locations.push(new vscode.Location(uri, pos));
+    } catch {
+      // 单个文件读取失败不影响其它候选
+    }
+  }
+  return locations;
 }
 
 /**
@@ -131,7 +167,7 @@ export class M2DefinitionProvider implements vscode.DefinitionProvider {
   async provideDefinition(
     document: vscode.TextDocument,
     position: vscode.Position,
-  ): Promise<vscode.Location | undefined> {
+  ): Promise<vscode.Location | vscode.Location[] | undefined> {
     const line = document.lineAt(position.line).text;
 
     // 1. #CALL [文件] @标签 -> 跨文件跳转
@@ -180,21 +216,32 @@ export class M2DefinitionProvider implements vscode.DefinitionProvider {
       return undefined;
     }
 
-    // 2. 同文件 @标签 跳转 (GOTO @xxx 等)
+    // 2. @标签跳转: 当前文件优先, 未命中再搜索其它引擎脚本
     // QueryMsg 的标签参数由引擎追加按钮编号后缀: 点"确定"实际执行 [@标签1]
     const isQueryMsg = /^\s*QueryMsg\s+/i.test(line);
     const atRe = /@([A-Za-z0-9_\-一-鿿]+)/g;
     for (const m of line.matchAll(atRe)) {
       const start = m.index!, end = start + m[0].length;
       if (position.character >= start && position.character <= end) {
-        // 标签定义行本身不跳转
-        if (/^\s*\[@[^\]]+\]/.test(line)) return undefined;
+        if (/^\s*\[@[^\]]+\]/.test(line)) {
+          const refs = await findLabelReferences(document, m[1]);
+          if (refs.length === 1) return refs[0];
+          if (refs.length > 1) return refs;
+          return undefined;
+        }
         if (isQueryMsg) {
           const pos1 = labelPosition(document, m[1] + '1');
           if (pos1) return new vscode.Location(document.uri, pos1);
         }
         const pos = labelPosition(document, m[1]);
         if (pos) return new vscode.Location(document.uri, pos);
+
+        const labels = isQueryMsg ? [m[1] + '1', m[1]] : [m[1]];
+        for (const label of labels) {
+          const locations = await crossFileLabelDefinitions(document, label);
+          if (locations.length === 1) return locations[0];
+          if (locations.length > 1) return locations;
+        }
         return undefined;
       }
     }

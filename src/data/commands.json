@@ -2121,6 +2121,27 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
   },
   {
+    "name": "NEWDQCSV",
+    "signature": "NEWDQCSV A B C D",
+    "desc": "A=csv文件路径 B=行数 C=列数 D=存入变量 | 读取表内指定行列的内容，行列默认从0开始",
+    "kind": "action",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
+  },
+  {
+    "name": "GETHLCSV",
+    "signature": "GETHLCSV A B C",
+    "desc": "A=csv文件路径 B=0或1(0=行数 1=列数) C=存入变量名 | 获取当前表格最大行数或最大列数",
+    "kind": "action",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
+  },
+  {
+    "name": "GETGJCSV",
+    "signature": "GETGJCSV A B C D E F",
+    "desc": "A=csv文件路径 B=字符串 C=开始行号~结束行号 D=查找列 E=0或1(0=从上往下 1=从下往上) F=存入变量名 | 取字符串在csv表格中的行号",
+    "kind": "action",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
+  },
+  {
     "name": "NextSkillTime",
     "signature": "NextSkillTime A B",
     "desc": "A=技能id B=时间(毫秒) | 重设技能下次CD时间",

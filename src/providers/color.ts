@@ -10,6 +10,7 @@ const PALETTE_RE = /\bcolor=(\d{1,3})(?!\d)/gi;
 const HEXA_RE = /#0x([0-9a-fA-F]{8})(?![0-9a-fA-F])/g;
 // ffa500  (等号后的6位16进制, 且至少含一个a-f字母以免误伤纯数字)
 const HEX_RE = /(?<==)(?=[0-9a-fA-F]*[a-fA-F])([0-9a-fA-F]{6})(?![0-9a-fA-F])/g;
+const BARE_COLOR_RE = /\bcolor=([0-9a-fA-F]{6})(?![0-9a-fA-F])/gi;
 
 function rgb(hex: string): { r: number; g: number; b: number } {
   return {
@@ -95,5 +96,30 @@ export class M2ColorProvider implements vscode.DocumentColorProvider {
     }
     // RRGGBB
     return [new vscode.ColorPresentation(`${toHex2(color.red)}${toHex2(color.green)}${toHex2(color.blue)}`)];
+  }
+}
+
+export class M2ColorLinkProvider implements vscode.DocumentLinkProvider {
+  provideDocumentLinks(document: vscode.TextDocument): vscode.DocumentLink[] {
+    const links: vscode.DocumentLink[] = [];
+    for (let i = 0; i < document.lineCount; i++) {
+      const line = document.lineAt(i).text;
+      const addLinks = (re: RegExp) => {
+        for (const m of line.matchAll(re)) {
+          const start = m.index!;
+          const args = encodeURIComponent(JSON.stringify([i, start]));
+          const link = new vscode.DocumentLink(
+            new vscode.Range(i, start, i, start + m[0].length),
+            vscode.Uri.parse(`command:m2script.openColorPicker?${args}`),
+          );
+          link.tooltip = '打开颜色选择';
+          links.push(link);
+        }
+      };
+      addLinks(PALETTE_RE);
+      addLinks(HEXA_RE);
+      addLinks(BARE_COLOR_RE);
+    }
+    return links;
   }
 }

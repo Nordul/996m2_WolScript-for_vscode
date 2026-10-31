@@ -1,8 +1,32 @@
 import * as vscode from 'vscode';
 import {
   actionCommands, checkCommands, sysVariables, uiComponents, triggers, varTypes, sendMsgTypes,
-  Cmd, getSectionAt, getDocumentLabels, cmdDocMarkdown, signatureToSnippet,
+  Cmd, getSectionAt, getDocumentLabels, getDocumentNamedVariables, cmdDocMarkdown, signatureToSnippet,
 } from './data';
+import { getDbNames } from '../db/gameLoadDb';
+import type { NameKind } from '../db/dbQueries';
+
+/** 第一个参数为数据库名称的命令 (来源: data/commands.json / checkCommands.json 签名) */
+const DB_NAME_COMMANDS = new Map<string, NameKind>([
+  // 物品名 (StdItems.Name)
+  ['GIVE', 'item'], ['GIVEB', 'item'], ['TAKE', 'item'], ['TAKEW', 'item'],
+  ['TAKEDUREITEM', 'item'], ['CLEARARROW', 'item'], ['DROPITEMDOWN', 'item'], ['CHECKITEM', 'item'],
+  // 怪物名 (Monster.Name)
+  ['MOBNPC', 'monster'], ['RECALLMOB', 'monster'], ['OPENITEMBOX', 'monster'],
+  ['LOLMOB', 'monster'], ['SETBONENAME', 'monster'], ['AUTORIDEPET', 'monster'],
+  // 技能名 (Magic.MagName)
+  ['ADDSKILL', 'skill'], ['DELSKILL', 'skill'], ['CHECKSKILL', 'skill'],
+  ['CHANGESKILLEXP', 'skill'], ['SKILLLEVEL', 'skill'],
+]);
+
+const DB_KIND_LABEL: Record<NameKind, string> = { item: '物品库', monster: '怪物库', skill: '技能库' };
+
+export function parseDbNameFirstArg(before: string): { kind: NameKind; typed: string } | undefined {
+  const m = before.match(/^\s*!?([A-Za-z][A-Za-z0-9_]*)\s+(\S*)$/);
+  if (!m) return undefined;
+  const kind = DB_NAME_COMMANDS.get(m[1].toUpperCase());
+  return kind ? { kind, typed: m[2] } : undefined;
+}
 
 /** 按已输入字符过滤: 前缀优先, 退化为包含, 都没有则返回全部(不区分大小写) */
 function filterByPrefix<T>(items: readonly T[], typed: string, name: (t: T) => string): T[] {
@@ -18,11 +42,13 @@ function commandItem(c: Cmd): vscode.CompletionItem {
   const item = new vscode.CompletionItem(c.name, c.kind === 'check' ? vscode.CompletionItemKind.Operator : vscode.CompletionItemKind.Function);
   item.detail = c.signature !== c.name ? c.signature : undefined;
   item.documentation = cmdDocMarkdown(c);
-  item.insertText = signatureToSnippet(c.signature, c.name);
+  const name = c.name.toUpperCase();
+  const snippet = signatureToSnippet(c.signature, c.name);
+  if (DB_NAME_COMMANDS.has(name)) snippet.value = snippet.value.replace(/\$\{1:[^}]*\}/, '${1:}');
+  item.insertText = snippet;
   // 检测命令排在执行命令前(同字母时)
   item.sortText = (c.kind === 'check' ? '0' : '1') + c.name.toUpperCase();
-  // SENDMSG 插入后立即弹出信息类型编号列表(带说明)
-  if (c.name.toUpperCase() === 'SENDMSG') {
+  if (name === 'SENDMSG') {
     item.command = { command: 'editor.action.triggerSuggest', title: '选择信息类型' };
   }
   return item;
@@ -81,10 +107,12 @@ function uiCompItem(c: typeof uiComponents[number]): vscode.CompletionItem {
 }
 
 export class M2CompletionProvider implements vscode.CompletionItemProvider {
-  provideCompletionItems(
+  constructor(private readonly context?: vscode.ExtensionContext) {}
+
+  async provideCompletionItems(
     document: vscode.TextDocument,
     position: vscode.Position,
-  ): vscode.CompletionItem[] | undefined {
+  ): Promise<vscode.CompletionItem[] | undefined> {
     const lineText = document.lineAt(position.line).text;
     const before = lineText.slice(0, position.character);
     // 已输入字符的替换范围: 让 VSCode 过滤/插入与已输入部分精确对齐
@@ -109,11 +137,28 @@ export class M2CompletionProvider implements vscode.CompletionItemProvider {
         return new vscode.Range(position.line, position.character - typed.length, position.line, position.character + extra);
       };
       if (typed.startsWith('$')) {
-        return filterByPrefix(sysVariables, typed.slice(1), (v) => v.name).map((v) => {
+        const items = filterByPrefix(sysVariables, typed.slice(1), (v) => v.name).map((v) => {
           const item = sysVarItem(v);
           item.range = rangeSwallow(String((item.insertText as vscode.SnippetString).value));
           return item;
         });
+        const special = [
+          { name: 'STR', label: '$STR(变量)', snippet: '\\$STR(${1:S0}$0)>', detail: '变量取值 <$STR(...)>' },
+          { name: 'BINDMONEY', label: '$BINDMONEY(货币)', snippet: '\\$BINDMONEY(${1:元宝}$0)>', detail: '组合货币数量 <$BINDMONEY(货币ID/名称/分组名)>' },
+        ];
+        const specialTyped = typed.slice(1).toUpperCase();
+        const specialPrefix = special.filter((s) => s.name.startsWith(specialTyped));
+        const specialMatches = specialPrefix.length ? specialPrefix : special.filter((s) => s.name.includes(specialTyped));
+        for (const s of specialMatches) {
+          const item = new vscode.CompletionItem(s.label, vscode.CompletionItemKind.Snippet);
+          item.insertText = new vscode.SnippetString(s.snippet);
+          item.filterText = s.name;
+          item.sortText = '0' + s.name;
+          item.detail = s.detail;
+          item.range = rangeSwallow(s.snippet);
+          items.push(item);
+        }
+        return items;
       }
       const items: vscode.CompletionItem[] = [];
       const dollar = new vscode.CompletionItem('$变量', vscode.CompletionItemKind.Snippet);
@@ -184,23 +229,37 @@ export class M2CompletionProvider implements vscode.CompletionItemProvider {
       }
     }
 
-    // 3. $STR( / <$STR( 内: 变量类型引导
-    const strMatch = before.match(/\$[A-Za-z]*\(([A-Za-z0-9_]*)$/);
+    // 3. $STR( / <$STR( 内: 类型变量与当前文档命名变量
+    const strMatch = before.match(/\$[A-Za-z]*\(([A-Za-z0-9_$一-鿿]*)$/);
     if (strMatch) {
       const typed = strMatch[1];
-      return filterByPrefix(
-        varTypes.filter((v) => !['MARK', 'CUSTOM', 'CV'].includes(v.prefix)),
-        typed,
-        (v) => v.prefix,
-      ).map((v) => {
-        const item = new vscode.CompletionItem(`${v.prefix} (${v.prefix}${v.min}-${v.prefix}${v.max})`, vscode.CompletionItemKind.Variable);
-        item.insertText = v.prefix;
-        item.filterText = v.prefix;
-        item.detail = `${v.valueType} ${v.scope} ${v.persist}`;
-        item.documentation = v.desc;
-        item.range = rangeFrom(typed.length);
-        return item;
-      });
+      const items: vscode.CompletionItem[] = [];
+      if (/^[A-Za-z]*$/.test(typed)) {
+        items.push(...filterByPrefix(
+          varTypes.filter((v) => !['MARK', 'CUSTOM', 'CV'].includes(v.prefix)),
+          typed,
+          (v) => v.prefix,
+        ).map((v) => {
+          const item = new vscode.CompletionItem(`${v.prefix} (${v.prefix}${v.min}-${v.prefix}${v.max})`, vscode.CompletionItemKind.Variable);
+          item.insertText = v.prefix;
+          item.filterText = v.prefix;
+          item.detail = `${v.valueType} ${v.scope} ${v.persist}`;
+          item.documentation = v.desc;
+          item.range = rangeFrom(typed.length);
+          return item;
+        }));
+      }
+      if (typed) {
+        items.push(...filterByPrefix(getDocumentNamedVariables(document), typed, (x) => x).map((name) => {
+          const item = new vscode.CompletionItem(name, vscode.CompletionItemKind.Variable);
+          item.insertText = name;
+          item.filterText = name;
+          item.detail = '本文档命名变量';
+          item.range = rangeFrom(typed.length);
+          return item;
+        }));
+      }
+      return items.length ? items : undefined;
     }
 
     // 4. $ 开头: 取值函数
@@ -261,7 +320,25 @@ export class M2CompletionProvider implements vscode.CompletionItemProvider {
         });
     }
 
-    // 8. 行首命令补全: 按段落上下文过滤
+    // 8. GIVE/TAKE/ADDSKILL 等命令的第一个参数: 从 GameLoad.DB 补全物品/怪物/技能名
+    const dbArg = parseDbNameFirstArg(before);
+    if (dbArg && this.context) {
+      const { kind, typed } = dbArg;
+      // DB 未加载完成时先触发加载, 本次无结果; DB 不存在时静默不补全
+      const names = await getDbNames(this.context, kind);
+      if (!names) return undefined;
+      const kindEnum = kind === 'item'
+        ? vscode.CompletionItemKind.Value
+        : kind === 'monster' ? vscode.CompletionItemKind.Class : vscode.CompletionItemKind.Method;
+      return filterByPrefix(names, typed, (x) => x).map((name) => {
+        const item = new vscode.CompletionItem(name, kindEnum);
+        item.detail = `GameLoad.DB ${DB_KIND_LABEL[kind]}`;
+        item.range = rangeFrom(typed.length);
+        return item;
+      });
+    }
+
+    // 9. 行首命令补全: 按段落上下文过滤
     const lineStartMatch = before.match(/^(\s*)(!?)([A-Za-z0-9_]*)$/);
     if (lineStartMatch) {
       const negated = lineStartMatch[2] === '!';

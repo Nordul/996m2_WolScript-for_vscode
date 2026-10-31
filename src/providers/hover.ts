@@ -22,6 +22,35 @@ export class M2HoverProvider implements vscode.HoverProvider {
           return new vscode.Hover(md, new vscode.Range(position.line, start, position.line, end));
         }
         const fnName = m[1].toUpperCase();
+        if (fnName.startsWith('CFG_')) {
+          const md = new vscode.MarkdownString(undefined, true);
+          md.appendCodeblock(`<$${m[1]}(行_列)>`, 'plaintext');
+          md.appendMarkdown('**读取内存中的 CSV 表格常量值**\n\n');
+          md.appendMarkdown('读取指定行列的内容，行列可套用任意变量，**行列默认从 0 开始**。\n\n');
+          md.appendMarkdown('**参数**：`行`（行号）、`列`（列号）。\n\n');
+          md.appendMarkdown('[官方文档](http://cshelp.996m2.com/web/#/17/1029)');
+          return new vscode.Hover(md, new vscode.Range(position.line, start, position.line, end));
+        }
+        if (fnName === 'GETTYPEBROW' || fnName === 'GETTYPEEROW') {
+          const begin = fnName === 'GETTYPEBROW';
+          const md = new vscode.MarkdownString(undefined, true);
+          md.appendCodeblock(`<$${begin ? 'GetTypeBRow' : 'GetTypeERow'}(cfg_文件名,列号,关键字)>`, 'plaintext');
+          md.appendMarkdown(begin ? '**检测关键字所在的起始行**\n\n' : '**检测关键字所在的结束行**\n\n');
+          md.appendMarkdown(`取指定列中关键字所在的${begin ? '初始行' : '最后一行'}，**行列默认从 0 开始**。\n\n`);
+          md.appendMarkdown('**参数**：`cfg_文件名`（String，目标文件名）、`列号`（查找列）、`关键字`（查找内容）。\n\n');
+          md.appendMarkdown('[官方文档](http://cshelp.996m2.com/web/#/17/1029)');
+          return new vscode.Hover(md, new vscode.Range(position.line, start, position.line, end));
+        }
+        if (fnName === 'GETCSV') {
+          const md = new vscode.MarkdownString(undefined, true);
+          md.appendCodeblock('<$Getcsv(cfg_文件名,Row|Col)>', 'plaintext');
+          md.appendMarkdown('**CSV 行数 / 列数获取**\n\n');
+          md.appendMarkdown('- **Row（行数）**：获取最大行数，建议启动获取，保存为变量（行数默认从 1 开始）。\n');
+          md.appendMarkdown('- **Col（列数）**：获取最大列数，按照第 1 行计算，同上（默认从 1 开始）。\n\n');
+          md.appendMarkdown('**参数**：`cfg_文件名`（String，目标文件名）、`Row`（行数）、`Col`（列数）。\n\n');
+          md.appendMarkdown('[官方文档](http://cshelp.996m2.com/web/#/17/1029)');
+          return new vscode.Hover(md, new vscode.Range(position.line, start, position.line, end));
+        }
         if (['STR', 'HUMAN', 'GUILD', 'GLOBAL', 'MONEY', 'BINDMONEY', 'PARAM', 'CUSTOMVALUE'].includes(fnName)) {
           const md = new vscode.MarkdownString(undefined, true);
           md.appendMarkdown(`**<$${m[1]}(...)>** — 变量取值/显示语法\n\n`);

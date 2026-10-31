@@ -2,7 +2,7 @@
   "name": "m2script-tools",
   "displayName": "996传世脚本 (996WolScript)",
   "description": "996WolScript 传世引擎脚本语言支持：语法高亮、上下文感知代码补全、已占用变量查询",
-  "version": "0.1.11",
+  "version": "0.2.27",
   "publisher": "m2script",
   "license": "GPL-3.0-only",
   "icon": "resources/icon.png",
@@ -145,6 +145,11 @@
         "command": "m2script.openMerchantManager",
         "title": "996脚本: 打开NPC管理",
         "icon": "$(person)"
+      },
+      {
+        "command": "m2script.openDbViewer",
+        "title": "996脚本: 打开数据库查看器",
+        "icon": "$(database)"
       }
     ],
     "viewsContainers": {
@@ -167,6 +172,16 @@
           "type": "webview",
           "id": "m2script.dropEntry",
           "name": "爆率管理"
+        },
+        {
+          "type": "webview",
+          "id": "m2script.colorPicker",
+          "name": "颜色选择"
+        },
+        {
+          "type": "webview",
+          "id": "m2script.dbEntry",
+          "name": "数据库查看器"
         }
       ]
     },
@@ -204,6 +219,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.6.2",
+    "@types/sql.js": "^1.4.11",
     "@types/vscode": "^1.85.0",
     "@vscode/vsce": "^4.0.0",
     "typescript": "^5.9.3",
@@ -211,6 +227,7 @@
     "vscode-textmate": "^9.3.2"
   },
   "dependencies": {
-    "iconv-lite": "^0.6.3"
+    "iconv-lite": "^0.6.3",
+    "sql.js": "^1.14.2"
   }
 }

@@ -9,20 +9,30 @@ function walk(dir, out = []) {
     if (e.name.startsWith('.')) continue;
     const p = path.join(dir, e.name);
     if (e.isDirectory()) walk(p, out);
-    else if (e.name.toLowerCase().endsWith('.txt')) out.push(p);
+    else if (/\.(?:txt|csv)$/i.test(e.name)) out.push(p);
   }
   return out;
 }
 const files = walk(root);
+const csvVirtual = path.join(root, 'QuestDiary', 'cfg_变量扫描测试.csv');
+files.push(csvVirtual);
 console.log('磁盘文件数:', files.length);
 
+let includeGlob = '';
 const vscodeMock = {
   workspace: {
     textDocuments: [],
     workspaceFolders: [{ uri: { fsPath: root } }],
     asRelativePath: (u) => path.relative(root, u.fsPath),
-    findFiles: async () => files.map((f) => ({ fsPath: f, scheme: 'file' })),
-    fs: { readFile: async (u) => fs.readFileSync(u.fsPath) },
+    findFiles: async (include) => {
+      includeGlob = include;
+      return files.map((f) => ({ fsPath: f, scheme: 'file' }));
+    },
+    fs: {
+      readFile: async (u) => u.fsPath === csvVirtual
+        ? require('iconv-lite').encode('名称,<$STR(S77)>,<$STR(P88)>,[66],<$HUMAN(CsvPlayer)>\n', 'gbk')
+        : fs.readFileSync(u.fsPath),
+    },
   },
 };
 const origLoad = Module._load;
@@ -42,5 +52,9 @@ Module._load = function (request, ...args) {
   let vars = 0;
   for (const g of groups) vars += Object.keys(result.groups[g]).length;
   console.log(`完成: ${result.fileCount} 文件, ${vars} 变量, 分组[${groups.join(',')}], 耗时 ${Date.now() - t0}ms, 最后进度 ${JSON.stringify(lastP)}, 收到结束信号 ${nullGot}`);
-  process.exit(result.fileCount > 0 && nullGot ? 0 : 1);
+
+  const csvRefs = [result.groups.S?.S77, result.groups.P?.P88, result.groups.MARK?.['[66]'], result.groups.CUSTOM?.CsvPlayer];
+  const csvOk = includeGlob === '**/*.{txt,csv}' && csvRefs.every((refs) => refs?.some((r) => r.absPath === csvVirtual));
+  console.log(`${csvOk ? 'PASS' : 'FAIL'} CSV变量扫描: glob=${includeGlob} S77/P88/[66]/CsvPlayer`);
+  process.exit(result.fileCount > 0 && nullGot && csvOk ? 0 : 1);
 })().catch((e) => { console.error('FAIL 异常:', e); process.exit(1); });

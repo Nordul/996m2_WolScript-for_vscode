@@ -1365,6 +1365,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/1034"
   },
   {
+    "name": "TRUE",
+    "signature": "TRUE",
+    "desc": "无条件成立，始终通过检测",
+    "kind": "check",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+  },
+  {
     "name": "Year",
     "signature": "Year",
     "desc": "年份",

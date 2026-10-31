@@ -5,3 +5,4 @@ docs_raw/
 *.log
 .vscode/
 .history/
+AGENTS.md
