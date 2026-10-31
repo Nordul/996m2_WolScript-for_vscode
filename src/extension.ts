@@ -3,7 +3,7 @@ import { M2CompletionProvider, parseDbNameFirstArg } from './providers/completio
 import { M2HoverProvider } from './providers/hover';
 import { M2DefinitionProvider } from './providers/definition';
 import { M2FoldingProvider } from './providers/folding';
-import { M2ColorProvider } from './providers/color';
+import { M2ColorProvider, M2ColorLinkProvider } from './providers/color';
 import { M2ReferenceProvider, M2LabelCodeLensProvider } from './providers/references';
 import { M2DocumentHighlightProvider, M2CrossFileHighlighter } from './providers/highlight';
 import { RandomStrCodeLensProvider } from './providers/randomStrLens';
@@ -18,6 +18,7 @@ import { DropPanel } from './mapeditor/dropPanel';
 import { DropEntryProvider } from './views/dropEntry';
 import { DbViewerPanel } from './views/dbViewerPanel';
 import { DbEntryProvider } from './views/dbEntry';
+import { ColorPickerProvider } from './views/colorPickerPanel';
 
 /** 内容嗅探: 普通 txt 若含 996 脚本特征则切换语言 */
 const SCRIPT_FEATURE_RE = /^\s*(\[@[^\]]+\]|#(IF|ACT|SAY|ELSEACT|ELSESAY)\b)/im;
@@ -76,12 +77,21 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerCodeLensProvider(selector, new RandomStrCodeLensProvider()),
     vscode.languages.registerFoldingRangeProvider(selector, new M2FoldingProvider()),
     vscode.languages.registerColorProvider(selector, new M2ColorProvider()),
+    vscode.languages.registerDocumentLinkProvider(selector, new M2ColorLinkProvider()),
     vscode.window.registerWebviewViewProvider('m2script.varPanel', panel),
     vscode.window.registerWebviewViewProvider('m2script.dropEntry', new DropEntryProvider()),
+    vscode.window.registerWebviewViewProvider('m2script.colorPicker', new ColorPickerProvider(context)),
     vscode.window.registerWebviewViewProvider('m2script.dbEntry', new DbEntryProvider()),
     vscode.debug.registerDebugConfigurationProvider('m2script', new M2DebugConfigProvider()),
     vscode.debug.registerDebugAdapterDescriptorFactory('m2script', new M2DebugAdapterFactory()),
     vscode.commands.registerCommand('m2script.refreshVars', () => panel.refresh()),
+    vscode.commands.registerCommand('m2script.openColorPicker', async (line?: number, character?: number) => {
+      const editor = vscode.window.activeTextEditor;
+      if (editor && line !== undefined && character !== undefined) {
+        editor.selection = new vscode.Selection(line, character, line, character);
+      }
+      await vscode.commands.executeCommand('m2script.colorPicker.focus');
+    }),
     vscode.commands.registerCommand('m2script.triggerDbSuggest', () => {
       setTimeout(() => {
         skipNextDbSelection = true;

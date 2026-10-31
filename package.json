@@ -2,7 +2,7 @@
   "name": "m2script-tools",
   "displayName": "996传世脚本 (996WolScript)",
   "description": "996WolScript 传世引擎脚本语言支持：语法高亮、上下文感知代码补全、已占用变量查询",
-  "version": "0.2.19",
+  "version": "0.2.27",
   "publisher": "m2script",
   "license": "GPL-3.0-only",
   "icon": "resources/icon.png",
@@ -172,6 +172,11 @@
           "type": "webview",
           "id": "m2script.dropEntry",
           "name": "爆率管理"
+        },
+        {
+          "type": "webview",
+          "id": "m2script.colorPicker",
+          "name": "颜色选择"
         },
         {
           "type": "webview",

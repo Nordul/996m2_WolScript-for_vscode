@@ -40,14 +40,20 @@ class CodeLens {
 class ColorPresentation {
   constructor(label) { this.label = label; }
 }
+class DocumentLink {
+  constructor(range, target) { this.range = range; this.target = target; }
+}
 class ThemeColor {
   constructor(id) { this.id = id; }
+}
+class Hover {
+  constructor(contents, range) { this.contents = contents; this.range = range; }
 }
 const selectionChangeHandlers = [];
 const commandHandlers = new Map();
 const vscodeMock = {
-  Position, Range, Selection, SnippetString, MarkdownString, CompletionItem, FoldingRange, Location, CodeLens,
-  Color, ColorInformation, ColorPresentation, ThemeColor,
+  Position, Range, Selection, SnippetString, MarkdownString, CompletionItem, FoldingRange, Location, CodeLens, Hover,
+  Color, ColorInformation, ColorPresentation, DocumentLink, ThemeColor,
   FoldingRangeKind: { Region: 3 },
   CompletionItemKind: {
     Function: 2, Variable: 4, Class: 5, Property: 9, Keyword: 13, Snippet: 14,
@@ -55,7 +61,10 @@ const vscodeMock = {
   },
   TextEditorRevealType: { InCenter: 1 },
   ProgressLocation: { SourceControl: 1, Window: 10, Notification: 15 },
-  Uri: { file: (f) => ({ fsPath: f, scheme: 'file' }) },
+  Uri: {
+    file: (f) => ({ fsPath: f, scheme: 'file' }),
+    parse: (value) => ({ scheme: value.split(':')[0], value, toString: () => value }),
+  },
   languages: {
     registerCompletionItemProvider: () => ({ dispose() {} }),
     registerHoverProvider: () => ({ dispose() {} }),
@@ -63,6 +72,7 @@ const vscodeMock = {
     registerDocumentHighlightProvider: () => ({ dispose() {} }),
     registerFoldingRangeProvider: () => ({ dispose() {} }),
     registerColorProvider: () => ({ dispose() {} }),
+    registerDocumentLinkProvider: () => ({ dispose() {} }),
     registerReferenceProvider: () => ({ dispose() {} }),
     registerCodeLensProvider: () => ({ dispose() {} }),
     setTextDocumentLanguage: async () => undefined,
@@ -417,6 +427,72 @@ try {
   console.log('FAIL 颜色功能: ' + e.message);
 }
 
+// 颜色 Ctrl+点击链接
+try {
+  const { M2ColorLinkProvider } = require('../out/providers/color');
+  const links = new M2ColorLinkProvider().provideDocumentLinks(makeDoc('color=224\nbgcolor=#0xffffa500\ncolor=cccc99'));
+  const args = links.map((link) => JSON.parse(decodeURIComponent(link.target.value.split('?')[1])));
+  const ok = links.length === 3
+    && links.every((link) => link.target.value.startsWith('command:m2script.openColorPicker?') && link.tooltip === '打开颜色选择')
+    && JSON.stringify(args) === JSON.stringify([[0, 0], [1, 8], [2, 0]])
+    && links[0].range.end.character === 9 && links[1].range.end.character === 19 && links[2].range.end.character === 12;
+  console.log(`${ok ? 'PASS' : 'FAIL'} 颜色Ctrl+点击链接: ${links.length} 处`);
+  if (!ok) fail++;
+} catch (e) {
+  fail++;
+  console.log('FAIL 颜色Ctrl+点击链接: ' + e.message);
+}
+
+// 颜色选择面板: 检测、格式输出、插入替换与加载
+try {
+  const { colorCodeAtCursor, colorText, colorEditAtCursor, hexColorText, hexColorEditAtCursor, colorPickerFormat, ColorPickerProvider } = require('../out/views/colorPickerPanel');
+  const line = 'MOV S0 <Text|color=224|text=hi>';
+  const match = colorCodeAtCursor(line, line.indexOf('224') + 1);
+  const hexMatch = colorCodeAtCursor('bgcolor=#0xffffa500', 12);
+  const bareMatch = colorCodeAtCursor('color=ffa500', 2);
+  const paletteEdit = colorEditAtCursor(line, line.indexOf('224') + 1, 0, 'hex');
+  const hexEdit = colorEditAtCursor('bgcolor=#0xffffa500', 12, 224, 'palette');
+  const barePaletteEdit = colorEditAtCursor('color=ffa500', 2, 224, 'palette');
+  const bareHexEdit = colorEditAtCursor('color=ffa500', 2, 0, 'hex');
+  const insert = colorEditAtCursor('MOV S0 ', 7, 224, 'palette');
+  const customHexEdit = hexColorEditAtCursor('bgcolor=#0xffffa500', 12, '#A1B2C3', 'hex');
+  const customBareHexEdit = hexColorEditAtCursor('color=ffa500', 2, 'a1b2c3', 'hex');
+  const customHexInsert = hexColorEditAtCursor('MOV S0 ', 7, 'a1b2c3', 'hex');
+  const ok = match?.kind === 'palette' && match.index === 224 && match.text === 'color=224'
+    && hexMatch?.kind === 'hex' && hexMatch.text === '#0xffffa500'
+    && bareMatch?.kind === 'bareHex' && bareMatch.text === 'color=ffa500'
+    && paletteEdit?.newText === '#0xff000000' && paletteEdit.start === match.start && paletteEdit.end === match.end
+    && hexEdit?.newText === 'color=224' && hexEdit.start === 8 && hexEdit.end === 19
+    && barePaletteEdit?.newText === 'color=00fb00' && barePaletteEdit.start === 0 && barePaletteEdit.end === 12
+    && bareHexEdit?.newText === 'color=000000'
+    && insert?.newText === 'color=224' && insert.start === 7 && insert.end === 7
+    && colorText(224, 'hex') === '#0xff00fb00'
+    && colorText(0, 'bareHex') === 'color=000000'
+    && hexColorText('#A1B2C3', 'hex') === '#0xffa1b2c3'
+    && hexColorText('invalid', 'hex') === undefined
+    && customHexEdit?.newText === '#0xffa1b2c3' && customHexEdit.start === 8 && customHexEdit.end === 19
+    && customBareHexEdit?.newText === 'color=a1b2c3'
+    && customHexInsert?.newText === '#0xffa1b2c3'
+    && colorPickerFormat(match, 'hex') === 'palette'
+    && colorPickerFormat(hexMatch, 'palette') === 'hex'
+    && colorPickerFormat(bareMatch, 'palette') === 'hex'
+    && colorPickerFormat(undefined, 'hex') === 'hex';
+  let stateMsg;
+  const view = { webview: { options: {}, html: '', onDidReceiveMessage: () => undefined, postMessage: async (msg) => { stateMsg = msg; } } };
+  vscodeMock.window.activeTextEditor = { document: makeDoc('color=cccc99'), selection: { active: new Position(0, 3) } };
+  new ColorPickerProvider({ subscriptions: [] }).resolveWebviewView(view);
+  vscodeMock.window.activeTextEditor = undefined;
+  const loaded = view.webview.html.includes('formatEl.hidden = !!state.currentKind') && view.webview.html.includes('type: \'pick\'')
+    && view.webview.html.includes('type="color"') && view.webview.html.includes('type: \'pickHex\'')
+    && view.webview.html.includes('hexTools.hidden = state.format !== \'hex\'')
+    && stateMsg?.currentHex === 'cccc99' && stateMsg?.currentKind === 'bareHex' && stateMsg?.format === 'hex';
+  console.log(`${ok && loaded ? 'PASS' : 'FAIL'} 颜色选择面板与插入替换`);
+  if (!ok || !loaded) fail++;
+} catch (e) {
+  fail++;
+  console.log('FAIL 颜色选择面板: ' + e.message);
+}
+
 // <$cfg_名称(行_列)> 解析与csv列偏移
 try {
   const { parseCfgRef, csvFieldOffset } = require('../out/providers/definition');
@@ -434,6 +510,57 @@ try {
 } catch (e) {
   fail++;
   console.log('FAIL cfg引用解析: ' + e.message);
+}
+
+// Getcsv 悬停: Row/Col 参数说明、大小写与表达式范围
+try {
+  const { M2HoverProvider } = require('../out/providers/hover');
+  const text = 'SENDMSG 5 行数:<$Getcsv(cfg_物品价格,Row)> 列数:<$GetCsv(cfg_物品价格,Col)>';
+  const doc = makeDoc(text);
+  const provider = new M2HoverProvider();
+  const rowStart = text.indexOf('<$Getcsv');
+  const rowEnd = rowStart + '<$Getcsv(cfg_物品价格,Row)>'.length;
+  const colStart = text.indexOf('<$GetCsv');
+  const rowHover = provider.provideHover(doc, new Position(0, rowStart + 5));
+  const colHover = provider.provideHover(doc, new Position(0, colStart + 5));
+  const rowText = rowHover?.contents.value || '';
+  const colText = colHover?.contents.value || '';
+  const ok = rowText.includes('Row（行数）') && rowText.includes('Col（列数）')
+    && rowText.includes('cfg_文件名') && rowText.includes('/17/1029')
+    && rowHover.range.start.character === rowStart && rowHover.range.end.character === rowEnd
+    && colText.includes('获取最大列数');
+  console.log(`${ok ? 'PASS' : 'FAIL'} Getcsv悬停: Row/Col说明与范围`);
+  if (!ok) fail++;
+} catch (e) {
+  fail++;
+  console.log('FAIL Getcsv悬停: ' + e.message);
+}
+
+// 其余 CSV 宏与命令悬停
+try {
+  const { M2HoverProvider } = require('../out/providers/hover');
+  const provider = new M2HoverProvider();
+  const hoverAt = (text, token) => {
+    const doc = makeDoc(text);
+    return provider.provideHover(doc, new Position(0, text.indexOf(token) + 1))?.contents.value || '';
+  };
+  const cfgText = hoverAt('SENDMSG 5 <$cfg_guanzhi(1_2)>', 'cfg_guanzhi');
+  const beginText = hoverAt('SENDMSG 5 <$GetTypeBRow(cfg_guanzhi,4,GUANJIAN)>', 'GetTypeBRow');
+  const endText = hoverAt('SENDMSG 5 <$GetTypeERow(cfg_guanzhi,5,GUANJIAN)>', 'GetTypeERow');
+  const readText = hoverAt('NEWREADCSV ..\\Data\\cfg_guanzhi.csv', 'NEWREADCSV');
+  const dqText = hoverAt('NEWDQCSV ..\\QuestDiary\\test.csv 2 2 S0', 'NEWDQCSV');
+  const hlText = hoverAt('GETHLCSV ..\\QuestDiary\\test.csv 0 N0', 'GETHLCSV');
+  const gjText = hoverAt('GETGJCSV ..\\QuestDiary\\test.csv abc 0~10 4 0 S0', 'GETGJCSV');
+  const ok = cfgText.includes('行列默认从 0 开始')
+    && beginText.includes('起始行') && beginText.includes('列号')
+    && endText.includes('结束行') && endText.includes('关键字')
+    && readText.includes('加载csv表格') && dqText.includes('指定行列')
+    && hlText.includes('最大行数或最大列数') && gjText.includes('行号');
+  console.log(`${ok ? 'PASS' : 'FAIL'} 全部CSV宏与命令悬停`);
+  if (!ok) fail++;
+} catch (e) {
+  fail++;
+  console.log('FAIL 全部CSV宏与命令悬停: ' + e.message);
 }
 
 // [@标签] 折叠范围
@@ -485,6 +612,23 @@ try {
 (async () => {
   // 先跑完上面入队的补全测试 (provider 已是 async)
   for (const p of testQueue) await p;
+
+  try {
+    let focused = false;
+    commandHandlers.set('m2script.colorPicker.focus', () => { focused = true; });
+    vscodeMock.window.activeTextEditor = { document: makeDoc('color=cccc99'), selection: null };
+    await commandHandlers.get('m2script.openColorPicker')(0, 3);
+    const selection = vscodeMock.window.activeTextEditor.selection;
+    const ok = focused && selection.start.line === 0 && selection.start.character === 3
+      && selection.end.line === 0 && selection.end.character === 3;
+    console.log(`${ok ? 'PASS' : 'FAIL'} 颜色点击后定位光标并聚焦面板`);
+    if (!ok) fail++;
+  } catch (e) {
+    fail++;
+    console.log('FAIL 颜色面板聚焦命令: ' + e.message);
+  } finally {
+    vscodeMock.window.activeTextEditor = undefined;
+  }
 
   // 命令选择后的数据库触发需等待片段插入, 避免立即重开命令列表
   try {
