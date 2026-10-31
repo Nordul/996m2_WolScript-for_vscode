@@ -40,11 +40,14 @@ class CodeLens {
 class ColorPresentation {
   constructor(label) { this.label = label; }
 }
-let selectionChangeHandler;
+class ThemeColor {
+  constructor(id) { this.id = id; }
+}
+const selectionChangeHandlers = [];
 const commandHandlers = new Map();
 const vscodeMock = {
   Position, Range, Selection, SnippetString, MarkdownString, CompletionItem, FoldingRange, Location, CodeLens,
-  Color, ColorInformation, ColorPresentation,
+  Color, ColorInformation, ColorPresentation, ThemeColor,
   FoldingRangeKind: { Region: 3 },
   CompletionItemKind: {
     Function: 2, Variable: 4, Class: 5, Property: 9, Keyword: 13, Snippet: 14,
@@ -57,6 +60,7 @@ const vscodeMock = {
     registerCompletionItemProvider: () => ({ dispose() {} }),
     registerHoverProvider: () => ({ dispose() {} }),
     registerDefinitionProvider: () => ({ dispose() {} }),
+    registerDocumentHighlightProvider: () => ({ dispose() {} }),
     registerFoldingRangeProvider: () => ({ dispose() {} }),
     registerColorProvider: () => ({ dispose() {} }),
     registerReferenceProvider: () => ({ dispose() {} }),
@@ -67,9 +71,11 @@ const vscodeMock = {
     registerWebviewViewProvider: () => ({ dispose() {} }),
     showTextDocument: async () => ({ selection: null, revealRange() {} }),
     activeTextEditor: undefined,
+    visibleTextEditors: [],
     createTextEditorDecorationType: () => ({ dispose() {} }),
     onDidChangeActiveTextEditor: () => ({ dispose() {} }),
-    onDidChangeTextEditorSelection: (fn) => { selectionChangeHandler = fn; return { dispose() {} }; },
+    onDidChangeTextEditorSelection: (fn) => { selectionChangeHandlers.push(fn); return { dispose() {} }; },
+    onDidChangeVisibleTextEditors: () => ({ dispose() {} }),
     withProgress: async (opts, task) => task({ report() {} }, {}),
   },
   workspace: {
@@ -122,6 +128,23 @@ function makeDoc(text) {
     lineCount: lines.length,
     lineAt: (i) => ({ text: lines[i] }),
     getText: () => text,
+    getWordRangeAtPosition: (position) => {
+      const pattern = new RegExp(require('../out/providers/highlightCore').WORD_PATTERN_SOURCE, 'g');
+      for (const m of lines[position.line].matchAll(pattern)) {
+        if (position.character >= m.index && position.character <= m.index + m[0].length) {
+          return new Range(position.line, m.index, position.line, m.index + m[0].length);
+        }
+      }
+      return undefined;
+    },
+    positionAt: (offset) => {
+      let remaining = offset;
+      for (let i = 0; i < lines.length; i++) {
+        if (remaining <= lines[i].length) return new Position(i, remaining);
+        remaining -= lines[i].length + 1;
+      }
+      return new Position(lines.length - 1, lines[lines.length - 1].length);
+    },
   };
 }
 
@@ -499,7 +522,7 @@ try {
         selection: { active, end, isEmpty: false },
       };
       vscodeMock.window.activeTextEditor = editor;
-      await selectionChangeHandler({ textEditor: editor });
+      for (const fn of selectionChangeHandlers) await fn({ textEditor: editor });
       await new Promise((resolve) => setTimeout(resolve, 70));
     };
     await fireChange('MOV S0');

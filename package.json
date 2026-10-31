@@ -2,7 +2,7 @@
   "name": "m2script-tools",
   "displayName": "996传世脚本 (996WolScript)",
   "description": "996WolScript 传世引擎脚本语言支持：语法高亮、上下文感知代码补全、已占用变量查询",
-  "version": "0.2.18",
+  "version": "0.2.19",
   "publisher": "m2script",
   "license": "GPL-3.0-only",
   "icon": "resources/icon.png",
@@ -28,7 +28,7 @@
     "vscode:prepublish": "npm run compile",
     "crawl": "node scripts/crawl-docs.js && node scripts/build-grammar.js",
     "build:grammar": "node scripts/build-grammar.js",
-    "selftest": "node scripts/selftest.js && node scripts/grammartest.js && node scripts/interpretertest.js"
+    "selftest": "node scripts/selftest.js && node scripts/grammartest.js && node scripts/interpretertest.js && node scripts/highlighttest.js"
   },
   "contributes": {
     "languages": [
