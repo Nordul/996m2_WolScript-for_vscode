@@ -5,6 +5,7 @@ import { M2DefinitionProvider } from './providers/definition';
 import { M2FoldingProvider } from './providers/folding';
 import { M2ColorProvider } from './providers/color';
 import { M2ReferenceProvider, M2LabelCodeLensProvider } from './providers/references';
+import { M2DocumentHighlightProvider, M2CrossFileHighlighter } from './providers/highlight';
 import { RandomStrCodeLensProvider } from './providers/randomStrLens';
 import { RandomStrPanel } from './views/randomStrPanel';
 import { VarScanner, isEngineScriptPath } from './scanner/varScanner';
@@ -67,6 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerHoverProvider(selector, new M2HoverProvider()),
     vscode.languages.registerDefinitionProvider(selector, new M2DefinitionProvider()),
     vscode.languages.registerReferenceProvider(selector, new M2ReferenceProvider()),
+    vscode.languages.registerDocumentHighlightProvider(selector, new M2DocumentHighlightProvider()),
     vscode.languages.registerCodeLensProvider(selector, new M2LabelCodeLensProvider()),
     vscode.languages.registerCodeLensProvider(selector, new RandomStrCodeLensProvider()),
     vscode.languages.registerFoldingRangeProvider(selector, new M2FoldingProvider()),
@@ -108,6 +110,8 @@ export function activate(context: vscode.ExtensionContext) {
       }
     }),
   );
+
+  context.subscriptions.push(new M2CrossFileHighlighter());
 
   // 内容嗅探: 已打开 + 新打开的 txt
   for (const doc of vscode.workspace.textDocuments) void sniffDocument(doc);
