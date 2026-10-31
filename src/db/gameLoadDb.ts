@@ -41,9 +41,9 @@ async function locateDbBytes(): Promise<Uint8Array | null> {
   return null;
 }
 
-/** 定位并打开 GameLoad.DB (懒加载 + 缓存); 找不到或读取失败时返回 null, 不抛错 */
-export function loadGameLoadDb(context: vscode.ExtensionContext): Promise<Database | null> {
-  dbPromise ??= (async () => {
+/** 定位并打开 GameLoad.DB (懒加载 + 缓存); 失败结果不缓存, 下次调用时重试 */
+export async function loadGameLoadDb(context: vscode.ExtensionContext): Promise<Database | null> {
+  const pending = dbPromise ??= (async () => {
     try {
       const bytes = await locateDbBytes();
       if (!bytes) return null;
@@ -54,7 +54,9 @@ export function loadGameLoadDb(context: vscode.ExtensionContext): Promise<Databa
       return null;
     }
   })();
-  return dbPromise;
+  const db = await pending;
+  if (!db && dbPromise === pending) dbPromise = undefined;
+  return db;
 }
 
 /** 重新定位 DB (数据库查看器「刷新」用; 名称缓存一并清空) */

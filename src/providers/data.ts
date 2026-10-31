@@ -72,6 +72,15 @@ export function getDocumentLabels(document: vscode.TextDocument): string[] {
   return labels;
 }
 
+export function getDocumentNamedVariables(document: vscode.TextDocument): string[] {
+  const names = new Set<string>();
+  const re = /\b[ASPDGIMUTJZ]\$[A-Za-z0-9_一-鿿]+/gi;
+  for (let i = 0; i < document.lineCount; i++) {
+    for (const m of document.lineAt(i).text.matchAll(re)) names.add(m[0]);
+  }
+  return [...names];
+}
+
 export function cmdDocMarkdown(c: Cmd): vscode.MarkdownString {
   const md = new vscode.MarkdownString(undefined, true);
   md.appendCodeblock(c.signature || c.name, 'plaintext');

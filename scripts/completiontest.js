@@ -40,6 +40,8 @@ class CodeLens {
 class ColorPresentation {
   constructor(label) { this.label = label; }
 }
+let selectionChangeHandler;
+const commandHandlers = new Map();
 const vscodeMock = {
   Position, Range, Selection, SnippetString, MarkdownString, CompletionItem, FoldingRange, Location, CodeLens,
   Color, ColorInformation, ColorPresentation,
@@ -67,7 +69,7 @@ const vscodeMock = {
     activeTextEditor: undefined,
     createTextEditorDecorationType: () => ({ dispose() {} }),
     onDidChangeActiveTextEditor: () => ({ dispose() {} }),
-    onDidChangeTextEditorSelection: () => ({ dispose() {} }),
+    onDidChangeTextEditorSelection: (fn) => { selectionChangeHandler = fn; return { dispose() {} }; },
     withProgress: async (opts, task) => task({ report() {} }, {}),
   },
   workspace: {
@@ -81,9 +83,12 @@ const vscodeMock = {
     onDidSaveTextDocument: () => ({ dispose() {} }),
     onDidCloseTextDocument: () => ({ dispose() {} }),
     onDidChangeWorkspaceFolders: () => ({ dispose() {} }),
-    onDidChangeTextDocument: () => ({ dispose() {} }),
+    onDidChangeTextDocument: (fn) => { documentChangeHandler = fn; return { dispose() {} }; },
   },
-  commands: { registerCommand: () => ({ dispose() {} }), executeCommand: async () => undefined },
+  commands: {
+    registerCommand: (name, fn) => { commandHandlers.set(name, fn); return { dispose() {} }; },
+    executeCommand: async (command, ...args) => commandHandlers.get(command)?.(...args),
+  },
   debug: {
     registerDebugConfigurationProvider: () => ({ dispose() {} }),
     registerDebugAdapterDescriptorFactory: () => ({ dispose() {} }),
@@ -161,11 +166,26 @@ test('#IF段命令补全', doc, 2, 0, true, (items) => {
   const hasAction = items.some((i) => i.label === 'MOV');
   return !hasCheck ? '缺CHECKITEM' : (hasAction ? '不应含MOV' : '');
 });
+test('#IF段TRUE补全', makeDoc('[@main]\n#IF\nTRU\n'), 2, 3, true, (items) => {
+  const item = items.find((i) => i.label === 'TRUE');
+  if (!item) return '缺TRUE';
+  return String(item.insertText && item.insertText.value) === 'TRUE' ? '' : 'TRUE插入文本错误';
+});
 // #ACT 段空行(行4): 应只出执行命令
 test('#ACT段命令补全', doc, 4, 0, true, (items) => {
   const hasAction = items.some((i) => i.label === 'MOV');
   const hasCheck = items.some((i) => i.label === 'CHECKITEM');
   return !hasAction ? '缺MOV' : (hasCheck ? '不应含CHECKITEM' : '');
+});
+test('数据库命令不立即重开命令列表', makeDoc('[@main]\n#ACT\nGI\n'), 2, 2, true, (items) => {
+  const give = items.find((i) => i.label === 'GIVE');
+  const giveb = items.find((i) => i.label === 'GIVEB');
+  return !give?.command && !giveb?.command && String(give.insertText?.value) === 'GIVE ${1:} ${2:B} ${3:C} ${4:D}$0'
+    ? '' : 'GIVE/GIVEB应立即触发或占位符错误';
+});
+test('检测数据库命令不立即重开命令列表', makeDoc('[@main]\n#IF\nCHECKI\n'), 2, 6, true, (items) => {
+  const check = items.find((i) => i.label === 'CHECKITEM');
+  return !check?.command ? '' : 'CHECKITEM不应立即重开命令列表';
 });
 // #SAY 段(行6)
 test('#SAY段补全', doc, 6, 0, true);
@@ -178,7 +198,27 @@ test('<$ 触发系统变量', doc2, 4, 10, true, (items) => {
   const u = items.find((i) => i.label === '$USERNAME');
   return !u ? '缺$USERNAME' : (u.insertText && String(u.insertText.value).endsWith('>') ? '' : 'insertText未带>');
 });
+const strShortcutDoc = makeDoc('GIVE <$STR> B C D\nGIVE <$BINDMONEY> B C D\n');
+const strShortcutPos = strShortcutDoc.lineAt(0).text.indexOf('>');
+test('输入STR显示变量取值快捷项', strShortcutDoc, 0, strShortcutPos, true, (items) => {
+  const item = items.find((i) => i.label === '$STR(变量)');
+  if (!item) return '缺$STR(变量)';
+  return String(item.insertText?.value) === '\\$STR(${1:S0}$0)>' && item.range.end.character === strShortcutPos + 1
+    ? '' : 'STR插入文本或闭合符吞并错误';
+});
+test('输入BINDMONEY显示组合货币快捷项', strShortcutDoc, 1, strShortcutDoc.lineAt(1).text.indexOf('>'), true, (items) => {
+  const item = items.find((i) => i.label === '$BINDMONEY(货币)');
+  if (!item) return '缺$BINDMONEY(货币)';
+  return String(item.insertText?.value) === '\\$BINDMONEY(${1:元宝}$0)>' ? '' : 'BINDMONEY插入文本错误';
+});
 test('$STR( 内变量类型', doc2, 5, 12, true);
+const namedVarDoc = makeDoc('[@main]\n#ACT\nMOV S$测试 1\nGIVE <$STR(S$测)> B C D\n');
+const namedVarPos = namedVarDoc.lineAt(3).text.indexOf('测') + 1;
+test('$STR中文命名变量及自动闭合', namedVarDoc, 3, namedVarPos, true, (items) => {
+  const item = items.find((i) => i.label === 'S$测试');
+  if (!item) return '缺S$测试';
+  return item.range.start.character === namedVarPos - 3 && item.range.end.character === namedVarPos ? '' : '命名变量替换范围错误';
+});
 test('@ 触发标签', doc2, 6, 6, true, (items) => items.some((i) => i.label === 'main') ? '' : '缺标签main');
 test('# 触发段标记', doc2, 7, 1, true);
 
@@ -263,10 +303,12 @@ try {
   if (!ok) fail++;
   // ReferenceProvider: 光标在定义行 [@战斗] 上 -> 2 处引用
   const rp = new M2ReferenceProvider();
-  const locs = rp.provideReferences(rdoc, new Position(5, 2));
-  ok = locs.length === 2 && locs[0].range.start.line === 2;
-  console.log(`${ok ? 'PASS' : 'FAIL'} 标签引用跳转: ${locs.length} 处`);
-  if (!ok) fail++;
+  testQueue.push((async () => {
+    const locs = await rp.provideReferences(rdoc, new Position(5, 2));
+    const refOk = locs.length === 2 && locs[0].range.start.line === 2;
+    console.log(`${refOk ? 'PASS' : 'FAIL'} 标签引用跳转: ${locs.length} 处`);
+    if (!refOk) fail++;
+  })());
   // CodeLens: 3 个标签各一个, [@战斗] 显示 2 处调用且可点击
   const lenses = new M2LabelCodeLensProvider().provideCodeLenses(rdoc);
   const lensBattle = lenses.find((l) => l.range.start.line === 5);
@@ -421,6 +463,60 @@ try {
   // 先跑完上面入队的补全测试 (provider 已是 async)
   for (const p of testQueue) await p;
 
+  // 命令选择后的数据库触发需等待片段插入, 避免立即重开命令列表
+  try {
+    let triggerCount = 0;
+    vscodeMock.commands.executeCommand = async (command, ...args) => {
+      if (command === 'editor.action.triggerSuggest') triggerCount++;
+      return commandHandlers.get(command)?.(...args);
+    };
+    commandHandlers.get('m2script.triggerDbSuggest')();
+    const immediateCount = triggerCount;
+    await new Promise((resolve) => setTimeout(resolve, 70));
+    const ok = immediateCount === 0 && triggerCount === 1;
+    console.log(`${ok ? 'PASS' : 'FAIL'} 数据库触发等待片段插入: 立即=${immediateCount} 延迟=${triggerCount}`);
+    if (!ok) fail++;
+  } catch (e) {
+    fail++;
+    console.log('FAIL 数据库触发等待片段插入: ' + e.message);
+  } finally {
+    vscodeMock.commands.executeCommand = async (command, ...args) => commandHandlers.get(command)?.(...args);
+  }
+
+  // 命令片段占位符选区及手动中文名称均主动触发; 普通命令参数不误触发
+  try {
+    let triggerCount = 0;
+    vscodeMock.commands.executeCommand = async (command, ...args) => {
+      if (command === 'm2script.triggerDbSuggest') triggerCount++;
+      return commandHandlers.get(command)?.(...args);
+    };
+    const fireChange = async (text) => {
+      const changeDoc = makeDoc(text);
+      const end = new Position(0, text.length);
+      const active = text === 'GIVE A' ? new Position(0, text.length - 1) : end;
+      const editor = {
+        document: changeDoc,
+        selection: { active, end, isEmpty: false },
+      };
+      vscodeMock.window.activeTextEditor = editor;
+      await selectionChangeHandler({ textEditor: editor });
+      await new Promise((resolve) => setTimeout(resolve, 70));
+    };
+    await fireChange('MOV S0');
+    await fireChange('CHECKITEM ');
+    await fireChange('GIVE 金币');
+    await fireChange('ADDSKILL 刺');
+    const ok = triggerCount === 2;
+    console.log(`${ok ? 'PASS' : 'FAIL'} 占位符与手动名称自动触发: 建议=${triggerCount} 次(回车选择不重复)`);
+    if (!ok) fail++;
+  } catch (e) {
+    fail++;
+    console.log('FAIL 占位符与手动名称自动触发: ' + e.message);
+  } finally {
+    vscodeMock.window.activeTextEditor = undefined;
+    vscodeMock.commands.executeCommand = async (command, ...args) => commandHandlers.get(command)?.(...args);
+  }
+
   // GIVE 等命令首参的 DB 补全: mock 中 findFiles 返回空, DB 加载静默失败不炸、返回空
   try {
     const ProviderWithCtx = require('../out/providers/completion').M2CompletionProvider;
@@ -434,6 +530,31 @@ try {
   } catch (e) {
     fail++;
     console.log('FAIL DB缺失时首参补全静默: ' + e.message);
+  }
+
+  // 首次 DB 缺失后文件变为可用: 不应永久缓存 null, 真实 DB 三类名称应可补全
+  try {
+    const root = path.join(__dirname, '..');
+    const dbPath = path.join(root, 'example', 'DB', 'GameLoad.DB');
+    vscodeMock.workspace.findFiles = async () => [{ fsPath: dbPath, scheme: 'file' }];
+    vscodeMock.workspace.fs.readFile = async () => require('fs').readFileSync(dbPath);
+    const ProviderWithCtx = require('../out/providers/completion').M2CompletionProvider;
+    const p3 = new ProviderWithCtx({ extensionPath: root, subscriptions: [] });
+    const dbDoc = makeDoc('[@main]\n#ACT\nGIVE 金\nADDSKILL 刺\nMOBNPC 铜\n');
+    const itemResults = await p3.provideCompletionItems(dbDoc, new Position(2, 6));
+    const skillResults = await p3.provideCompletionItems(dbDoc, new Position(3, 10));
+    const monsterResults = await p3.provideCompletionItems(dbDoc, new Position(4, 8));
+    const ok = !!itemResults?.some((i) => i.label === '金币' && i.detail === 'GameLoad.DB 物品库')
+      && !!skillResults?.some((i) => i.label === '刺杀剑术' && i.detail === 'GameLoad.DB 技能库')
+      && !!monsterResults?.some((i) => i.label === '铜人' && i.detail === 'GameLoad.DB 怪物库');
+    console.log(`${ok ? 'PASS' : 'FAIL'} DB缺失后自动重试与真实补全: 物品=${itemResults?.length || 0} 技能=${skillResults?.length || 0} 怪物=${monsterResults?.length || 0}`);
+    if (!ok) fail++;
+  } catch (e) {
+    fail++;
+    console.log('FAIL DB缺失后自动重试与真实补全: ' + e.message);
+  } finally {
+    vscodeMock.workspace.findFiles = async () => [];
+    vscodeMock.workspace.fs.readFile = async () => new Uint8Array();
   }
 
   try {
@@ -488,6 +609,66 @@ try {
     const ok3 = !!rf && /变量属性\.txt$/.test(rf.uri.fsPath) && rf.range.line === 0;
     console.log(`${ok3 ? 'PASS' : 'FAIL'} Funtion_def内#CALL跳转: ${rf && rf.uri.fsPath}:${rf && rf.range.line}`);
     if (!ok3) fail++;
+
+    // 普通 @标签: 当前文件未命中时跨文件搜索, GBK 文件按原始字节解码
+    const gbkTarget = pathx.join(tmp, 'QuestDiary', '游戏功能', '跨文件.txt');
+    fsx.writeFileSync(gbkTarget, require('iconv-lite').encode('[@跨文件标签]\n#ACT\nBREAK\n', 'gbk'));
+    vscodeMock.workspace.findFiles = async () => [{ fsPath: gbkTarget, scheme: 'file' }];
+    vscodeMock.workspace.fs.readFile = async (u) => fsx.readFileSync(u.fsPath);
+    const crossDoc = makeDoc('[@main]\n#ACT\nGOTO @跨文件标签\n');
+    crossDoc.uri = { fsPath: pathx.join(tmp, 'QuestDiary', 'cross.txt'), scheme: 'file' };
+    const crossLine = crossDoc.lineAt(2).text;
+    const rc = await dp.provideDefinition(crossDoc, new Position(2, crossLine.indexOf('@') + 2));
+    const ok4 = !!rc && !Array.isArray(rc) && rc.uri.fsPath === gbkTarget && rc.range.line === 0;
+    console.log(`${ok4 ? 'PASS' : 'FAIL'} GBK跨文件标签跳转: ${rc && rc.uri && rc.uri.fsPath}:${rc && rc.range && rc.range.line}`);
+    if (!ok4) fail++;
+
+    // 当前文件定义优先于其它文件; 多个跨文件同名定义全部作为候选返回
+    const secondTarget = pathx.join(tmp, 'QuestDiary', '游戏功能', '第二定义.txt');
+    fsx.writeFileSync(secondTarget, '[@main]\n\n  [@变量属性]\n');
+    vscodeMock.workspace.findFiles = async () => [gbkTarget, secondTarget].map((fsPath) => ({ fsPath, scheme: 'file' }));
+    const localDoc = makeDoc('[@main]\nGOTO @变量属性\n[@变量属性]\n');
+    localDoc.uri = crossDoc.uri;
+    const localLine = localDoc.lineAt(1).text;
+    const rl = await dp.provideDefinition(localDoc, new Position(1, localLine.indexOf('@') + 2));
+    const ok5 = !!rl && !Array.isArray(rl) && rl.uri.fsPath === crossDoc.uri.fsPath && rl.range.line === 2;
+    const multiDoc = makeDoc('[@main]\nGOTO @变量属性\n');
+    multiDoc.uri = crossDoc.uri;
+    const multiLine = multiDoc.lineAt(1).text;
+    const rm = await dp.provideDefinition(multiDoc, new Position(1, multiLine.indexOf('@') + 2));
+    const ok6 = !!rm && !Array.isArray(rm) && rm.uri.fsPath === secondTarget && rm.range.line === 2;
+    console.log(`${ok5 ? 'PASS' : 'FAIL'} 当前文件标签优先: ${rl && rl.range && rl.range.line}`);
+    console.log(`${ok6 ? 'PASS' : 'FAIL'} 跨文件标签定位: ${Array.isArray(rm) ? rm.map((r) => `${r.uri.fsPath}:${r.range.line}`).join(',') : rm}`);
+    if (!ok5) fail++;
+    if (!ok6) fail++;
+
+    // 真正存在多个同名定义时返回全部候选
+    const variableTarget = pathx.join(tmp, 'QuestDiary', '游戏功能', '临时属性', '变量属性.txt');
+    vscodeMock.workspace.findFiles = async () => [variableTarget, secondTarget].map((fsPath) => ({ fsPath, scheme: 'file' }));
+    const rma = await dp.provideDefinition(multiDoc, new Position(1, multiLine.indexOf('@') + 2));
+    const ok7 = Array.isArray(rma) && rma.length === 2 && rma.every((r) => r.range.line === 0 || r.range.line === 2);
+    console.log(`${ok7 ? 'PASS' : 'FAIL'} 多个同名标签候选: ${Array.isArray(rma) ? rma.length : rma}`);
+    if (!ok7) fail++;
+
+    // 从 [@标签] 反查调用: 合并当前文件与跨文件 GOTO/#CALL 引用
+    const callerTarget = pathx.join(tmp, 'QuestDiary', '游戏功能', '调用方.txt');
+    fsx.writeFileSync(callerTarget, require('iconv-lite').encode('[@main]\n#ACT\nGOTO @变量属性\n#CALL [\\游戏功能\\临时属性\\变量属性.txt] @变量属性\n', 'gbk'));
+    vscodeMock.workspace.findFiles = async () => [{ fsPath: callerTarget, scheme: 'file' }];
+    const reverseDoc = makeDoc('[@变量属性]\n#ACT\nGOTO @变量属性\n');
+    reverseDoc.uri = { fsPath: variableTarget, scheme: 'file' };
+    const { M2ReferenceProvider } = require('../out/providers/references');
+    const reverseRefs = await new M2ReferenceProvider().provideReferences(reverseDoc, new Position(0, 2));
+    const reverseDefs = await dp.provideDefinition(reverseDoc, new Position(0, 2));
+    const validReverse = (items) => Array.isArray(items) && items.length === 3
+      && items[0].uri.fsPath === variableTarget && items[0].range.start.line === 2
+      && items[1].uri.fsPath === callerTarget && items[1].range.start.line === 2
+      && items[2].uri.fsPath === callerTarget && items[2].range.start.line === 3;
+    const ok8 = validReverse(reverseRefs) && validReverse(reverseDefs);
+    console.log(`${ok8 ? 'PASS' : 'FAIL'} 跨文件反查标签调用: Shift+F12=${Array.isArray(reverseRefs) ? reverseRefs.length : reverseRefs} Ctrl+点击=${Array.isArray(reverseDefs) ? reverseDefs.length : reverseDefs}`);
+    if (!ok8) fail++;
+
+    vscodeMock.workspace.findFiles = async () => [];
+    fsx.rmSync(tmp, { recursive: true, force: true });
   } catch (e) {
     fail++;
     console.log('FAIL QueryMsg标签跳转: ' + e.message);

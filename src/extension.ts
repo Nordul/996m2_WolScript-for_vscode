@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { M2CompletionProvider } from './providers/completion';
+import { M2CompletionProvider, parseDbNameFirstArg } from './providers/completion';
 import { M2HoverProvider } from './providers/hover';
 import { M2DefinitionProvider } from './providers/definition';
 import { M2FoldingProvider } from './providers/folding';
@@ -60,6 +60,7 @@ async function sniffDocument(doc: vscode.TextDocument) {
 export function activate(context: vscode.ExtensionContext) {
   const scanner = new VarScanner();
   const panel = new VarPanelProvider(scanner);
+  let skipNextDbSelection = false;
 
   const selector: vscode.DocumentSelector = { language: 'm2script', scheme: 'file' };
   // 字母也作为触发字符: 即使用户关闭了 quickSuggestions, 输入命令字母也能弹出补全
@@ -79,6 +80,12 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.debug.registerDebugConfigurationProvider('m2script', new M2DebugConfigProvider()),
     vscode.debug.registerDebugAdapterDescriptorFactory('m2script', new M2DebugAdapterFactory()),
     vscode.commands.registerCommand('m2script.refreshVars', () => panel.refresh()),
+    vscode.commands.registerCommand('m2script.triggerDbSuggest', () => {
+      setTimeout(() => {
+        skipNextDbSelection = true;
+        void vscode.commands.executeCommand('editor.action.triggerSuggest');
+      }, 50);
+    }),
     vscode.commands.registerCommand('m2script.simRandomStr', (listRaw: string) => RandomStrPanel.show(context, listRaw)),
     vscode.commands.registerCommand('m2script.openMapManager', () => {
       const editor = vscode.window.activeTextEditor;
@@ -117,6 +124,30 @@ export function activate(context: vscode.ExtensionContext) {
   for (const doc of vscode.workspace.textDocuments) void sniffDocument(doc);
   context.subscriptions.push(
     vscode.workspace.onDidOpenTextDocument((doc) => void sniffDocument(doc)),
+  );
+
+  // 命令片段占位符及手动输入的数据库名称均主动唤醒建议(含中文/数字/符号)
+  let dbNameSuggestTimer: ReturnType<typeof setTimeout> | undefined;
+  context.subscriptions.push(
+    { dispose: () => { if (dbNameSuggestTimer) clearTimeout(dbNameSuggestTimer); } },
+    vscode.window.onDidChangeTextEditorSelection((e) => {
+      const editor = e.textEditor;
+      const doc = editor.document;
+      if (doc.languageId !== 'm2script' || doc.uri.scheme !== 'file') return;
+      if (skipNextDbSelection) {
+        skipNextDbSelection = false;
+        return;
+      }
+      if (dbNameSuggestTimer) clearTimeout(dbNameSuggestTimer);
+      dbNameSuggestTimer = setTimeout(() => {
+        dbNameSuggestTimer = undefined;
+        if (vscode.window.activeTextEditor !== editor) return;
+        const position = editor.selection.end;
+        const before = doc.lineAt(position.line).text.slice(0, position.character);
+        if (!parseDbNameFirstArg(before)) return;
+        void vscode.commands.executeCommand('m2script.triggerDbSuggest');
+      }, 50);
+    }),
   );
 
   // 地图配置文件: 激活编辑器是 MapInfo.txt / MiniMap.txt 时显示「地图管理」按钮
