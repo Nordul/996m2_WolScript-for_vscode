@@ -237,13 +237,13 @@ test('SETPLAYCFG与SetMiniMapCfg补全', makeDoc('[@main]\n#ACT\nSET\n'), 2, 3, 
 test('补录检测命令补全', makeDoc('[@main]\n#IF\nCHECKLE\n'), 2, 7, true, (items) => {
   return items.some((i) => i.label === 'CHECKLEVEL') ? '' : '缺CHECKLEVEL';
 });
-test('数据库命令不立即重开命令列表', makeDoc('[@main]\n#ACT\nGI\n'), 2, 2, true, (items) => {
+test('GIVE命令不立即重开命令列表', makeDoc('[@main]\n#ACT\nGI\n'), 2, 2, true, (items) => {
   const give = items.find((i) => i.label === 'GIVE');
   const giveb = items.find((i) => i.label === 'GIVEB');
-  return !give?.command && !giveb?.command && String(give.insertText?.value) === 'GIVE ${1:} ${2:B} ${3:C} ${4:D}$0'
+  return !give?.command && !giveb?.command && String(give.insertText?.value) === 'GIVE ${1:A} ${2:B} ${3:C} ${4:D}$0'
     ? '' : 'GIVE/GIVEB应立即触发或占位符错误';
 });
-test('检测数据库命令不立即重开命令列表', makeDoc('[@main]\n#IF\nCHECKI\n'), 2, 6, true, (items) => {
+test('检测命令不立即重开命令列表', makeDoc('[@main]\n#IF\nCHECKI\n'), 2, 6, true, (items) => {
   const check = items.find((i) => i.label === 'CHECKITEM');
   return !check?.command ? '' : 'CHECKITEM不应立即重开命令列表';
 });
@@ -711,100 +711,6 @@ try {
     console.log('FAIL 颜色面板聚焦命令: ' + e.message);
   } finally {
     vscodeMock.window.activeTextEditor = undefined;
-  }
-
-  // 命令选择后的数据库触发需等待片段插入, 避免立即重开命令列表
-  try {
-    let triggerCount = 0;
-    vscodeMock.commands.executeCommand = async (command, ...args) => {
-      if (command === 'editor.action.triggerSuggest') triggerCount++;
-      return commandHandlers.get(command)?.(...args);
-    };
-    commandHandlers.get('m2script.triggerDbSuggest')();
-    const immediateCount = triggerCount;
-    await new Promise((resolve) => setTimeout(resolve, 70));
-    const ok = immediateCount === 0 && triggerCount === 1;
-    console.log(`${ok ? 'PASS' : 'FAIL'} 数据库触发等待片段插入: 立即=${immediateCount} 延迟=${triggerCount}`);
-    if (!ok) fail++;
-  } catch (e) {
-    fail++;
-    console.log('FAIL 数据库触发等待片段插入: ' + e.message);
-  } finally {
-    vscodeMock.commands.executeCommand = async (command, ...args) => commandHandlers.get(command)?.(...args);
-  }
-
-  // 命令片段占位符选区及手动中文名称均主动触发; 普通命令参数不误触发
-  try {
-    let triggerCount = 0;
-    vscodeMock.commands.executeCommand = async (command, ...args) => {
-      if (command === 'm2script.triggerDbSuggest') triggerCount++;
-      return commandHandlers.get(command)?.(...args);
-    };
-    const fireChange = async (text) => {
-      const changeDoc = makeDoc(text);
-      const end = new Position(0, text.length);
-      const active = text === 'GIVE A' ? new Position(0, text.length - 1) : end;
-      const editor = {
-        document: changeDoc,
-        selection: { active, end, isEmpty: false },
-      };
-      vscodeMock.window.activeTextEditor = editor;
-      for (const fn of selectionChangeHandlers) await fn({ textEditor: editor });
-      await new Promise((resolve) => setTimeout(resolve, 70));
-    };
-    await fireChange('MOV S0');
-    await fireChange('CHECKITEM ');
-    await fireChange('GIVE 金币');
-    await fireChange('ADDSKILL 刺');
-    const ok = triggerCount === 2;
-    console.log(`${ok ? 'PASS' : 'FAIL'} 占位符与手动名称自动触发: 建议=${triggerCount} 次(回车选择不重复)`);
-    if (!ok) fail++;
-  } catch (e) {
-    fail++;
-    console.log('FAIL 占位符与手动名称自动触发: ' + e.message);
-  } finally {
-    vscodeMock.window.activeTextEditor = undefined;
-    vscodeMock.commands.executeCommand = async (command, ...args) => commandHandlers.get(command)?.(...args);
-  }
-
-  // GIVE 等命令首参的 DB 补全: mock 中 findFiles 返回空, DB 加载静默失败不炸、返回空
-  try {
-    const ProviderWithCtx = require('../out/providers/completion').M2CompletionProvider;
-    const p2 = new ProviderWithCtx({ subscriptions: [] });
-    const giveDoc = makeDoc('[@main]\n#ACT\nGIVE \nADDSKILL \n');
-    const r1 = await p2.provideCompletionItems(giveDoc, new Position(2, 5));
-    const r2 = await p2.provideCompletionItems(giveDoc, new Position(3, 9));
-    const ok = !r1 && !r2;
-    console.log(`${ok ? 'PASS' : 'FAIL'} DB缺失时首参补全静默: GIVE=${r1 ? r1.length : 'null'} ADDSKILL=${r2 ? r2.length : 'null'}`);
-    if (!ok) fail++;
-  } catch (e) {
-    fail++;
-    console.log('FAIL DB缺失时首参补全静默: ' + e.message);
-  }
-
-  // 首次 DB 缺失后文件变为可用: 不应永久缓存 null, 真实 DB 三类名称应可补全
-  try {
-    const root = path.join(__dirname, '..');
-    const dbPath = path.join(root, 'example', 'DB', 'GameLoad.DB');
-    vscodeMock.workspace.findFiles = async () => [{ fsPath: dbPath, scheme: 'file' }];
-    vscodeMock.workspace.fs.readFile = async () => require('fs').readFileSync(dbPath);
-    const ProviderWithCtx = require('../out/providers/completion').M2CompletionProvider;
-    const p3 = new ProviderWithCtx({ extensionPath: root, subscriptions: [] });
-    const dbDoc = makeDoc('[@main]\n#ACT\nGIVE 金\nADDSKILL 刺\nMOBNPC 铜\n');
-    const itemResults = await p3.provideCompletionItems(dbDoc, new Position(2, 6));
-    const skillResults = await p3.provideCompletionItems(dbDoc, new Position(3, 10));
-    const monsterResults = await p3.provideCompletionItems(dbDoc, new Position(4, 8));
-    const ok = !!itemResults?.some((i) => i.label === '金币' && i.detail === 'GameLoad.DB 物品库')
-      && !!skillResults?.some((i) => i.label === '刺杀剑术' && i.detail === 'GameLoad.DB 技能库')
-      && !!monsterResults?.some((i) => i.label === '铜人' && i.detail === 'GameLoad.DB 怪物库');
-    console.log(`${ok ? 'PASS' : 'FAIL'} DB缺失后自动重试与真实补全: 物品=${itemResults?.length || 0} 技能=${skillResults?.length || 0} 怪物=${monsterResults?.length || 0}`);
-    if (!ok) fail++;
-  } catch (e) {
-    fail++;
-    console.log('FAIL DB缺失后自动重试与真实补全: ' + e.message);
-  } finally {
-    vscodeMock.workspace.findFiles = async () => [];
-    vscodeMock.workspace.fs.readFile = async () => new Uint8Array();
   }
 
   try {

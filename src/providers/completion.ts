@@ -3,31 +3,6 @@ import {
   actionCommands, checkCommands, sysVariables, uiComponents, pcUiComponents, triggers, varTypes, sendMsgTypes,
   Cmd, PcUiComp, getSectionAt, getDocumentLabels, getDocumentNamedVariables, cmdDocMarkdown, pcUiDocMarkdown, signatureToSnippet,
 } from './data';
-import { getDbNames } from '../db/gameLoadDb';
-import type { NameKind } from '../db/dbQueries';
-
-/** 第一个参数为数据库名称的命令 (来源: data/commands.json / checkCommands.json 签名) */
-const DB_NAME_COMMANDS = new Map<string, NameKind>([
-  // 物品名 (StdItems.Name)
-  ['GIVE', 'item'], ['GIVEB', 'item'], ['TAKE', 'item'], ['TAKEW', 'item'],
-  ['TAKEDUREITEM', 'item'], ['CLEARARROW', 'item'], ['DROPITEMDOWN', 'item'], ['CHECKITEM', 'item'],
-  // 怪物名 (Monster.Name)
-  ['MOBNPC', 'monster'], ['RECALLMOB', 'monster'], ['OPENITEMBOX', 'monster'],
-  ['LOLMOB', 'monster'], ['SETBONENAME', 'monster'], ['AUTORIDEPET', 'monster'],
-  // 技能名 (Magic.MagName)
-  ['ADDSKILL', 'skill'], ['DELSKILL', 'skill'], ['CHECKSKILL', 'skill'],
-  ['CHANGESKILLEXP', 'skill'], ['SKILLLEVEL', 'skill'],
-]);
-
-const DB_KIND_LABEL: Record<NameKind, string> = { item: '物品库', monster: '怪物库', skill: '技能库' };
-
-export function parseDbNameFirstArg(before: string): { kind: NameKind; typed: string } | undefined {
-  const m = before.match(/^\s*!?([A-Za-z][A-Za-z0-9_]*)\s+(\S*)$/);
-  if (!m) return undefined;
-  const kind = DB_NAME_COMMANDS.get(m[1].toUpperCase());
-  return kind ? { kind, typed: m[2] } : undefined;
-}
-
 /** 按已输入字符过滤: 前缀优先, 退化为包含, 都没有则返回全部(不区分大小写) */
 function filterByPrefix<T>(items: readonly T[], typed: string, name: (t: T) => string): T[] {
   if (!typed) return items.slice();
@@ -44,7 +19,6 @@ function commandItem(c: Cmd): vscode.CompletionItem {
   item.documentation = cmdDocMarkdown(c);
   const name = c.name.toUpperCase();
   const snippet = signatureToSnippet(c.signature, c.name);
-  if (DB_NAME_COMMANDS.has(name)) snippet.value = snippet.value.replace(/\$\{1:[^}]*\}/, '${1:}');
   item.insertText = snippet;
   // 检测命令排在执行命令前(同字母时)
   item.sortText = (c.kind === 'check' ? '0' : '1') + c.name.toUpperCase();
@@ -356,24 +330,6 @@ export class M2CompletionProvider implements vscode.CompletionItemProvider {
           item.range = rangeFrom(typed.length);
           return item;
         });
-    }
-
-    // 8. GIVE/TAKE/ADDSKILL 等命令的第一个参数: 从 GameLoad.DB 补全物品/怪物/技能名
-    const dbArg = parseDbNameFirstArg(before);
-    if (dbArg && this.context) {
-      const { kind, typed } = dbArg;
-      // DB 未加载完成时先触发加载, 本次无结果; DB 不存在时静默不补全
-      const names = await getDbNames(this.context, kind);
-      if (!names) return undefined;
-      const kindEnum = kind === 'item'
-        ? vscode.CompletionItemKind.Value
-        : kind === 'monster' ? vscode.CompletionItemKind.Class : vscode.CompletionItemKind.Method;
-      return filterByPrefix(names, typed, (x) => x).map((name) => {
-        const item = new vscode.CompletionItem(name, kindEnum);
-        item.detail = `GameLoad.DB ${DB_KIND_LABEL[kind]}`;
-        item.range = rangeFrom(typed.length);
-        return item;
-      });
     }
 
     // 9. 行首命令补全: 按段落上下文过滤

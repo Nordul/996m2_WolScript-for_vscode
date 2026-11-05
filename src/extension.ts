@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { M2CompletionProvider, parseDbNameFirstArg } from './providers/completion';
+import { M2CompletionProvider } from './providers/completion';
 import { M2HoverProvider } from './providers/hover';
 import { M2DefinitionProvider } from './providers/definition';
 import { M2FoldingProvider } from './providers/folding';
@@ -17,8 +17,6 @@ import { MonGenPanel } from './mapeditor/monGenPanel';
 import { MerchantPanel } from './mapeditor/merchantPanel';
 import { DropPanel } from './mapeditor/dropPanel';
 import { DropEntryProvider } from './views/dropEntry';
-import { DbViewerPanel } from './views/dbViewerPanel';
-import { DbEntryProvider } from './views/dbEntry';
 import { ColorPickerProvider } from './views/colorPickerPanel';
 
 /** 内容嗅探: 普通 txt 若含 996 脚本特征则切换语言 */
@@ -65,7 +63,6 @@ export function activate(context: vscode.ExtensionContext) {
   const panel = new VarPanelProvider(scanner);
   const diagnostics = new M2Diagnostics();
   context.subscriptions.push(diagnostics);
-  let skipNextDbSelection = false;
 
   const selector: vscode.DocumentSelector = [
     { language: 'm2script', scheme: 'file' },
@@ -87,7 +84,6 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.registerWebviewViewProvider('m2script.varPanel', panel),
     vscode.window.registerWebviewViewProvider('m2script.dropEntry', new DropEntryProvider()),
     vscode.window.registerWebviewViewProvider('m2script.colorPicker', new ColorPickerProvider(context)),
-    vscode.window.registerWebviewViewProvider('m2script.dbEntry', new DbEntryProvider()),
     vscode.debug.registerDebugConfigurationProvider('m2script', new M2DebugConfigProvider()),
     vscode.debug.registerDebugAdapterDescriptorFactory('m2script', new M2DebugAdapterFactory()),
     vscode.commands.registerCommand('m2script.refreshVars', () => panel.refresh()),
@@ -97,12 +93,6 @@ export function activate(context: vscode.ExtensionContext) {
         editor.selection = new vscode.Selection(line, character, line, character);
       }
       await vscode.commands.executeCommand('m2script.colorPicker.focus');
-    }),
-    vscode.commands.registerCommand('m2script.triggerDbSuggest', () => {
-      setTimeout(() => {
-        skipNextDbSelection = true;
-        void vscode.commands.executeCommand('editor.action.triggerSuggest');
-      }, 50);
     }),
     vscode.commands.registerCommand('m2script.simRandomStr', (listRaw: string) => RandomStrPanel.show(context, listRaw)),
     vscode.commands.registerCommand('m2script.openMapManager', () => {
@@ -120,7 +110,6 @@ export function activate(context: vscode.ExtensionContext) {
       const fsPath = editor && editor.document.uri.scheme === 'file' ? editor.document.uri.fsPath : undefined;
       DropPanel.show(context, fsPath && isMonItemFile(fsPath) ? fsPath : undefined);
     }),
-    vscode.commands.registerCommand('m2script.openDbViewer', () => DbViewerPanel.show(context)),
     vscode.commands.registerCommand('m2script.openMerchantManager', () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor || editor.document.uri.scheme !== 'file' || !isMerchantFile(editor.document.uri.fsPath)) {
@@ -161,30 +150,6 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidChangeTextEditorSelection((e) => {
       const navigation = consumeColorNavigation(e.textEditor);
       if (navigation) void vscode.commands.executeCommand('m2script.openColorPicker', navigation.line, navigation.character);
-    }),
-  );
-
-  // 命令片段占位符及手动输入的数据库名称均主动唤醒建议(含中文/数字/符号)
-  let dbNameSuggestTimer: ReturnType<typeof setTimeout> | undefined;
-  context.subscriptions.push(
-    { dispose: () => { if (dbNameSuggestTimer) clearTimeout(dbNameSuggestTimer); } },
-    vscode.window.onDidChangeTextEditorSelection((e) => {
-      const editor = e.textEditor;
-      const doc = editor.document;
-      if (doc.languageId !== 'm2script' || doc.uri.scheme !== 'file') return;
-      if (skipNextDbSelection) {
-        skipNextDbSelection = false;
-        return;
-      }
-      if (dbNameSuggestTimer) clearTimeout(dbNameSuggestTimer);
-      dbNameSuggestTimer = setTimeout(() => {
-        dbNameSuggestTimer = undefined;
-        if (vscode.window.activeTextEditor !== editor) return;
-        const position = editor.selection.end;
-        const before = doc.lineAt(position.line).text.slice(0, position.character);
-        if (!parseDbNameFirstArg(before)) return;
-        void vscode.commands.executeCommand('m2script.triggerDbSuggest');
-      }, 50);
     }),
   );
 
