@@ -25,16 +25,37 @@ const TARGET_CATS = {
 // 手工补充/修正: 检测命令(在 #IF 中使用)
 const MANUAL_CHECK = [
   'TRUE', 'FALSE', 'RANDOM', 'CHECK', 'EQUAL', 'LARGE', 'SMALL', 'BETWEEN',
-  'CHECKVAR', 'CHECKVALIDPARAM', 'CHECKCUSTOMVALUE', 'ISNULL', 'LEVEL', 'GENDER',
+  'CHECKVAR', 'CHECKVALIDPARAM', 'CHECKCUSTOMVALUE', 'ISNULL', 'LEVEL', 'GENDER', 'CHECKLEVEL',
 ];
 // 检测命令前缀特征(CANCEL 除外)
 const CHECK_PREFIX = /^(CHECK|IS|HAS|HAVE|CAN(?!CEL))/i;
-// 手工补充: 常用但可能解析不到的执行命令
+// 手工补充: 文档示例中存在但表格/标题解析不到的命令
 const MANUAL_ACTION = [
   { name: 'PARAM1', signature: 'PARAM1 值', desc: '配合其他命令传递参数(第1位)' },
   { name: 'PARAM2', signature: 'PARAM2 值', desc: '配合其他命令传递参数(第2位)' },
   { name: 'PARAM3', signature: 'PARAM3 值', desc: '配合其他命令传递参数(第3位)' },
   { name: 'PARAM4', signature: 'PARAM4 值', desc: '配合其他命令传递参数(第4位)' },
+  { name: 'PARAM5', signature: 'PARAM5 值', desc: '配合其他命令传递参数(第5位)', docUrl: DOC_LINK(725) },
+  { name: 'AddSuiteAbil', signature: 'AddSuiteAbil A B', desc: '调用套装数据库属性：A=套装编号(1-255)，B=属性值(0-99，可省略默认0)；不可叠加，以最后一次调用为准', docUrl: DOC_LINK(979) },
+  { name: 'DelBtn', signature: 'DelBtn A', desc: '删除自定义UI按钮：A=添加按钮时使用的按钮编号(暂支持1-10)', docUrl: DOC_LINK(1024) },
+  { name: 'SETPLAYCFG', signature: 'SETPLAYCFG A', desc: '设置玩家界面显示参数，如SETPLAYCFG F10NAME控制自定义F10界面的角色名显示', docUrl: 'https://woool.996m2.com/thread-1547-1-1.html' },
+  { name: 'SetMiniMapCfg', signature: 'SetMiniMapCfg A B', desc: '设置小地图配置：A=配置项，B=配置值；官方注明纯PC端不支持', docUrl: 'https://woool.996m2.com/thread-1455-1-1.html' },
+  { name: 'BindWeChat', signature: 'BindWeChat A', desc: '发送微信验证操作：A=1绑定微信、2解绑微信、3获取验证码', docUrl: DOC_LINK(1424) },
+  { name: 'ChangeEatItemDura', signature: 'ChangeEatItemDura A B', desc: '在物品触发脚本中修改当前触发物品持久：A=操作符(+、-、=)，B=数值', docUrl: DOC_LINK(797) },
+  { name: 'ChangeHumName', signature: 'ChangeHumName A', desc: '在线修改玩家角色名，A=新角色名', docUrl: DOC_LINK(739) },
+  { name: 'QueryHumNameExist', signature: 'QueryHumNameExist A', desc: '查询是否存在指定玩家名，结果通过QFunction相关标签返回', docUrl: DOC_LINK(739) },
+  { name: 'TongFile', signature: 'TongFile A B', desc: '通区创建或删除文本：A=0创建、1删除，B=文件名称', docUrl: DOC_LINK(1018) },
+  { name: 'UpDateTongFile', signature: 'UpDateTongFile A B', desc: '通区同步文本：A=目标文件名，B=同步来源文件名(留空默认同名)', docUrl: DOC_LINK(1018) },
+  { name: 'ChangeTongFile', signature: 'ChangeTongFile A B C D', desc: '修改通区文本：A=文件名，B=内容，C=行号，D=0追加、1插入、2替换、3删除、4清空', docUrl: DOC_LINK(1018) },
+  { name: 'ReleasePneuma', signature: 'ReleasePneuma', desc: '释放或收回元神，无参数', docUrl: DOC_LINK(1204) },
+  { name: 'DelPneuma', signature: 'DelPneuma', desc: '删除元神，无参数', docUrl: DOC_LINK(1204) },
+  { name: 'SetOffTimer', signature: 'SetOffTimer A', desc: '停止指定定时器：A=定时器索引(0-24)', docUrl: DOC_LINK(1388) },
+  { name: 'PaymentPoint', signature: 'PaymentPoint A B', desc: '调整玩家点卡时间：A=操作符(+、-、=)，B=数值', docUrl: DOC_LINK(988) },
+  { name: 'SelectBagItems', signature: 'SelectBagItems A B', desc: '设置背包物品批量勾选：A=操作符(+、-、=)，B=物品ID列表，可附加勾选图片素材编号；省略参数表示取消勾选状态', docUrl: DOC_LINK(917) },
+  { name: 'BonusPoint', signature: 'BonusPoint A B C', desc: '调整人物属性点：A=属性类型(DC/MC/SC/HP/MP/AC/MAC/HIT/SPD)，B=+或-，C=点数', docUrl: DOC_LINK(1408) },
+  { name: 'Marry', signature: 'Marry', desc: '结婚相关操作，支持requestmarry、responsemarry等子参数', docUrl: DOC_LINK(1517) },
+  { name: 'Unmarry', signature: 'Unmarry', desc: '离婚相关操作，支持requestunmarry、responseunmarry等子参数', docUrl: DOC_LINK(1517) },
+  { name: 'CHECKLEVEL', signature: 'CHECKLEVEL A', desc: '检测玩家当前等级是否达到指定等级', kind: 'check', docUrl: DOC_LINK(1517) },
 ];
 // 参数名噪音(检测页参数表被误当成命令): 仅在无参数签名时剔除
 const PARAM_NOISE = new Set([
@@ -86,6 +107,33 @@ function stripHtml(s) {
     .replace(//g, '<$')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function fetchMenu() {
+  return new Promise((resolve, reject) => {
+    const body = 'item_id=17';
+    const req = http.request({
+      host: 'cshelp.996m2.com',
+      path: '/server/index.php?s=/api/item/info',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': Buffer.byteLength(body) },
+      timeout: 20000,
+    }, (res) => {
+      const chunks = [];
+      res.on('data', (c) => chunks.push(c));
+      res.on('end', () => {
+        try {
+          const text = Buffer.concat(chunks).toString('utf8');
+          const data = JSON.parse(text);
+          if (data.error_code !== 0 || !data.data?.menu) return reject(new Error(data.error_message || '目录格式错误'));
+          resolve(text);
+        } catch (e) { reject(e); }
+      });
+    });
+    req.on('error', reject);
+    req.on('timeout', () => req.destroy(new Error('timeout')));
+    req.end(body);
+  });
 }
 
 // 收集目标分类下的所有页面
@@ -240,14 +288,19 @@ function parseUiComponents(md, pageId, title) {
 }
 
 async function main() {
+  const refresh = process.argv.includes('--refresh');
   fs.mkdirSync(PAGES_DIR, { recursive: true });
+  if (refresh) {
+    fs.writeFileSync(path.join(RAW, 'menu.json'), await fetchMenu(), 'utf8');
+    console.log('在线目录已刷新');
+  }
   const pages = collectPages();
   console.log(`目标页面数: ${pages.length}`);
 
   // 抓取(带缓存)
   for (const p of pages) {
     const cache = path.join(PAGES_DIR, `${p.pageId}.md`);
-    if (fs.existsSync(cache)) continue;
+    if (!refresh && fs.existsSync(cache)) continue;
     try {
       const data = await fetchPage(p.pageId);
       fs.writeFileSync(cache, data.page_content, 'utf8');
@@ -360,10 +413,36 @@ async function main() {
   // 手工补充
   for (const a of MANUAL_ACTION) {
     const key = a.name.toUpperCase();
-    if (!commands.has(key)) commands.set(key, { ...a, kind: 'action', docUrl: DOC_LINK(962) });
+    if (!commands.has(key)) commands.set(key, { ...a, kind: a.kind || 'action', docUrl: a.docUrl || DOC_LINK(962) });
   }
 
   finalizeKind();
+
+  const mergeExisting = (file, map, preserveKind = false) => {
+    const filePath = path.join(OUT_DIR, file);
+    if (!fs.existsSync(filePath)) return;
+    const keys = new Map([...map.keys()].map((key) => [key.toUpperCase(), key]));
+    for (const old of JSON.parse(fs.readFileSync(filePath, 'utf8'))) {
+      const upper = old.name.toUpperCase();
+      const key = keys.get(upper);
+      if (!key) {
+        map.set(old.name, old);
+        keys.set(upper, old.name);
+        continue;
+      }
+      const current = map.get(key);
+      if (preserveKind && old.kind) current.kind = old.kind;
+      if (current.signature && old.signature
+          && current.signature.trim().toUpperCase() === upper
+          && old.signature.trim().toUpperCase() !== upper) current.signature = old.signature;
+      if (old.desc && (!current.desc || current.desc.length < old.desc.length * 0.5)) current.desc = old.desc;
+    }
+  };
+  mergeExisting('commands.json', commands, true);
+  mergeExisting('checkCommands.json', commands, true);
+  mergeExisting('sysVariables.json', sysVars);
+  mergeExisting('uiComponents.json', uiComps);
+  mergeExisting('triggers.json', triggers);
 
   // 拆分 check / action
   const checkCommands = [];

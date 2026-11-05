@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import {
-  actionCommands, checkCommands, sysVariables, uiComponents, triggers, varTypes, sendMsgTypes,
-  Cmd, getSectionAt, getDocumentLabels, getDocumentNamedVariables, cmdDocMarkdown, signatureToSnippet,
+  actionCommands, checkCommands, sysVariables, uiComponents, pcUiComponents, triggers, varTypes, sendMsgTypes,
+  Cmd, PcUiComp, getSectionAt, getDocumentLabels, getDocumentNamedVariables, cmdDocMarkdown, pcUiDocMarkdown, signatureToSnippet,
 } from './data';
 import { getDbNames } from '../db/gameLoadDb';
 import type { NameKind } from '../db/dbQueries';
@@ -106,6 +106,14 @@ function uiCompItem(c: typeof uiComponents[number]): vscode.CompletionItem {
   return item;
 }
 
+function pcUiItem(c: PcUiComp): vscode.CompletionItem {
+  const item = new vscode.CompletionItem(c.name, vscode.CompletionItemKind.Class);
+  item.insertText = new vscode.SnippetString(c.snippet);
+  item.detail = `PC界面 - ${c.desc}`;
+  item.documentation = pcUiDocMarkdown(c);
+  return item;
+}
+
 export class M2CompletionProvider implements vscode.CompletionItemProvider {
   constructor(private readonly context?: vscode.ExtensionContext) {}
 
@@ -117,6 +125,17 @@ export class M2CompletionProvider implements vscode.CompletionItemProvider {
     const before = lineText.slice(0, position.character);
     // 已输入字符的替换范围: 让 VSCode 过滤/插入与已输入部分精确对齐
     const rangeFrom = (len: number) => new vscode.Range(position.line, position.character - len, position.line, position.character);
+
+    const pcLegacyMatch = before.match(/<@{0,2}!([A-Za-z]*)$/i);
+    if (pcLegacyMatch) {
+      const typed = pcLegacyMatch[1];
+      return filterByPrefix(pcUiComponents.filter((c) => c.style === 'legacy' || c.style === 'spic'), typed, (c) => c.name)
+        .map((c) => {
+          const item = pcUiItem(c);
+          item.range = rangeFrom(typed.length);
+          return item;
+        });
+    }
 
     // 1. `<`/`<<`/`<$xxx`/`<组件名前缀` 之后: 系统变量 / UI 组件
     const ltMatch = before.match(/<{1,2}(\$?[A-Za-z0-9_]*)$/);
@@ -179,6 +198,11 @@ export class M2CompletionProvider implements vscode.CompletionItemProvider {
       bindMoney.sortText = '02';
       bindMoney.range = rangeSwallow(String(bindMoney.insertText.value));
       items.push(bindMoney);
+      for (const c of filterByPrefix(pcUiComponents, typed, (x) => x.name)) {
+        const item = pcUiItem(c);
+        item.range = rangeSwallow(String((item.insertText as vscode.SnippetString).value));
+        items.push(item);
+      }
       for (const c of filterByPrefix(uiComponents, typed, (x) => x.name)) {
         const item = uiCompItem(c);
         item.range = rangeSwallow(String((item.insertText as vscode.SnippetString).value));
@@ -209,6 +233,20 @@ export class M2CompletionProvider implements vscode.CompletionItemProvider {
         items.push(item);
       }
       return items.length ? items : undefined;
+    }
+
+    if (/<offx=\|[^>]*$/i.test(before)) {
+      const last = before.slice(before.lastIndexOf('|') + 1);
+      if (last.includes('=')) return undefined;
+      const comp = pcUiComponents.find((c) => c.name === 'offx')!;
+      return filterByPrefix(comp.params.filter((p) => p.name !== 'offx'), last, (p) => p.name).map((p) => {
+        const item = new vscode.CompletionItem(p.name, vscode.CompletionItemKind.Property);
+        item.insertText = new vscode.SnippetString(`${p.name}=\${1:}`);
+        item.detail = 'offx 参数';
+        item.documentation = p.desc;
+        item.range = rangeFrom(last.length);
+        return item;
+      });
     }
 
     // 2. UI 组件内部: 补全参数名 (光标处于参数值内则不提示)

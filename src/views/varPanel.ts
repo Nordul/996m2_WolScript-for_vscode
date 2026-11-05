@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { VarScanner, ScanResult } from '../scanner/varScanner';
 import { varTypes } from '../providers/data';
+import { workspaceFolderUri, workspaceUri } from '../workspaceUri';
 
 export class VarPanelProvider implements vscode.WebviewViewProvider {
   private view: vscode.WebviewView | undefined;
@@ -23,7 +24,7 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
           await this.refresh();
           break;
         case 'reveal': {
-          const uri = vscode.Uri.file(msg.absPath);
+          const uri = workspaceUri(msg.absPath, workspaceFolderUri(msg.absPath));
           const doc = await vscode.workspace.openTextDocument(uri);
           const editor = await vscode.window.showTextDocument(doc, { preview: true });
           const pos = new vscode.Position(Math.max(0, msg.line), 0);

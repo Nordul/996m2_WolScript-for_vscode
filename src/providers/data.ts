@@ -6,12 +6,22 @@ import uiComponentsData from '../data/uiComponents.json';
 import triggersData from '../data/triggers.json';
 import varTypesData from '../data/varTypes.json';
 import sendMsgTypesData from '../data/sendMsgTypes.json';
+import pcUiComponentsData from '../data/pcUiComponents.json';
 
 export interface Cmd { name: string; signature: string; desc: string; kind: string; docUrl: string; }
 export interface SysVar { name: string; form?: string; desc: string; docUrl: string; }
 export interface UiComp { name: string; params: { name: string; desc: string }[]; desc: string; docUrl: string; }
 export interface Trigger { name: string; desc: string; docUrl: string; }
 export interface VarType { prefix: string; min: number; max: number; valueType: string; scope: string; persist: string; desc: string; writable: boolean; }
+export interface PcUiComp {
+  name: string;
+  style: 'color' | 'offx' | 'legacy' | 'spic';
+  signature: string;
+  desc: string;
+  params: { name: string; desc: string }[];
+  snippet: string;
+  docUrl: string;
+}
 
 export const actionCommands = commandsData as Cmd[];
 export const checkCommands = checkCommandsData as Cmd[];
@@ -20,6 +30,7 @@ export const uiComponents = uiComponentsData as UiComp[];
 export const triggers = triggersData as Trigger[];
 export const varTypes = (varTypesData as { varTypes: VarType[] }).varTypes;
 export const sendMsgTypes = sendMsgTypesData as { n: number; desc: string }[];
+export const pcUiComponents = pcUiComponentsData as PcUiComp[];
 
 export const allCommands: Cmd[] = [...actionCommands, ...checkCommands];
 
@@ -34,6 +45,10 @@ export function lookupSysVar(name: string): SysVar | undefined { return sysVarMa
 const uiCompMap = new Map<string, UiComp>();
 for (const c of uiComponents) uiCompMap.set(c.name.toUpperCase(), c);
 export function lookupUiComp(name: string): UiComp | undefined { return uiCompMap.get(name.toUpperCase()); }
+
+const pcUiCompMap = new Map<string, PcUiComp>();
+for (const c of pcUiComponents) pcUiCompMap.set(c.name.toUpperCase(), c);
+export function lookupPcUiComp(name: string): PcUiComp | undefined { return pcUiCompMap.get(name.toUpperCase()); }
 
 const triggerMap = new Map<string, Trigger>();
 for (const t of triggers) triggerMap.set(t.name.toUpperCase(), t);
@@ -85,6 +100,19 @@ export function cmdDocMarkdown(c: Cmd): vscode.MarkdownString {
   const md = new vscode.MarkdownString(undefined, true);
   md.appendCodeblock(c.signature || c.name, 'plaintext');
   if (c.desc) md.appendMarkdown(`${c.desc}\n\n`);
+  md.appendMarkdown(`[官方文档](${c.docUrl})`);
+  return md;
+}
+
+export function pcUiDocMarkdown(c: PcUiComp): vscode.MarkdownString {
+  const md = new vscode.MarkdownString(undefined, true);
+  md.appendCodeblock(c.signature, 'plaintext');
+  md.appendMarkdown(`**PC界面组件 \`${c.name}\`** — ${c.desc}\n\n`);
+  if (c.params.length) {
+    md.appendMarkdown('| 参数 | 说明 |\n|---|---|\n');
+    for (const p of c.params) md.appendMarkdown(`| ${p.name} | ${p.desc} |\n`);
+    md.appendMarkdown('\n');
+  }
   md.appendMarkdown(`[官方文档](${c.docUrl})`);
   return md;
 }

@@ -504,6 +504,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/976"
   },
   {
+    "name": "CHECKLEVEL",
+    "signature": "CHECKLEVEL A",
+    "desc": "检测玩家当前等级是否达到指定等级",
+    "kind": "check",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1517"
+  },
+  {
     "name": "CHECKLEVELEX",
     "signature": "CHECKLEVELEX",
     "desc": "A B | A=判断符 = B=数值 | 检查人物的等级是否等于指定级别",
@@ -548,14 +555,14 @@
   {
     "name": "CHECKMAPMONNAMECOUNT",
     "signature": "CHECKMAPMONNAMECOUNT A B C D E F",
-    "desc": "A B C D E F | A=地图代码 B=坐标X,范围小于1时，则检测全地图 C=坐标Y,范围小于1时，则检测全地图 D=范围 E=怪物名字 F=数量,当这个值为负数时 则检测是否小于当前正值 | 检查指定地图、是否存在指定名字指定数量条件的怪物,，包括宝宝",
+    "desc": "A B C D E F G | A=地图代码 B=坐标X,范围小于1时，则检测全地图 C=坐标Y,范围小于1时，则检测全地图 D=范围 E=怪物名字 F=检测符 > < = G=数量,当这个值为负数时 则检测是否小于当前正值 | 检查指定地图、是否存在指定名字指定数量条件的怪物,，包括宝宝",
     "kind": "check",
     "docUrl": "http://cshelp.996m2.com/web/#/17/976"
   },
   {
     "name": "CHECKMAPMONNAMECOUNTEX",
     "signature": "CHECKMAPMONNAMECOUNTEX A B C D E F G",
-    "desc": "A B C D E F | A=地图代码 B=坐标X,范围小于1时，则检测全地图 C=坐标Y,范围小于1时，则检测全地图 D=范围 E=怪物名字 F=数量,当这个值为负数时 则检测是否小于当前正值 | 检查指定地图、是否存在指定名字指定数量条件的怪物，不包括宝宝",
+    "desc": "A B C D E F G | A=地图代码 B=坐标X,范围小于1时，则检测全地图 C=坐标Y,范围小于1时，则检测全地图 D=范围 E=怪物名字 F=检测符 > < = G=数量,当这个值为负数时 则检测是否小于当前正值 | 检查指定地图、是否存在指定名字指定数量条件的怪物，不包括宝宝",
     "kind": "check",
     "docUrl": "http://cshelp.996m2.com/web/#/17/976"
   },
@@ -1316,11 +1323,11 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/976"
   },
   {
-    "name": "POS",
-    "signature": "POS",
-    "desc": "检测包含",
+    "name": "Pos",
+    "signature": "Pos",
+    "desc": "Pos A B C",
     "kind": "check",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/976"
+    "docUrl": "http://cshelp.996m2.com/web/#/17/996"
   },
   {
     "name": "POSEHAVEMASTER",

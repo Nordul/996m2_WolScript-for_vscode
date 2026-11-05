@@ -1505,6 +1505,11 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/964"
   },
   {
+    "name": "THUMPRATE2",
+    "desc": "  返回双倍暴击概率",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/964"
+  },
+  {
     "name": "TIME",
     "form": "TIME.A",
     "desc": "A=参数类型 取值： HOUR 表示当前时 MIN 表示当前分 SEC 表示当前秒 返回当前的时分秒",

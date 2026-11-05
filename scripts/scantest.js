@@ -42,6 +42,12 @@ Module._load = function (request, ...args) {
 };
 
 (async () => {
+  const remotePath = path.join(root, 'QuestDiary', '远程打开.txt');
+  vscodeMock.workspace.textDocuments = [{
+    languageId: 'm2script',
+    uri: { fsPath: remotePath, scheme: 'vscode-remote', authority: 'ssh-remote+test' },
+    getText: () => 'MOV S99 远程变量\n',
+  }];
   const { VarScanner } = require('../out/scanner/varScanner');
   const scanner = new VarScanner();
   let lastP = null, nullGot = false;
@@ -56,5 +62,7 @@ Module._load = function (request, ...args) {
   const csvRefs = [result.groups.S?.S77, result.groups.P?.P88, result.groups.MARK?.['[66]'], result.groups.CUSTOM?.CsvPlayer];
   const csvOk = includeGlob === '**/*.{txt,csv}' && csvRefs.every((refs) => refs?.some((r) => r.absPath === csvVirtual));
   console.log(`${csvOk ? 'PASS' : 'FAIL'} CSV变量扫描: glob=${includeGlob} S77/P88/[66]/CsvPlayer`);
-  process.exit(result.fileCount > 0 && nullGot && csvOk ? 0 : 1);
+  const remoteOk = result.groups.S?.S99?.some((r) => r.absPath === remotePath);
+  console.log(`${remoteOk ? 'PASS' : 'FAIL'} SSH远程已打开文档变量扫描: S99`);
+  process.exit(result.fileCount > 0 && nullGot && csvOk && remoteOk ? 0 : 1);
 })().catch((e) => { console.error('FAIL 异常:', e); process.exit(1); });

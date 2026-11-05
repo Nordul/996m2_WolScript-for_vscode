@@ -3,6 +3,7 @@ import {
   ScanResult, scanText, mergeGroups, sortGroups, isEngineScriptPath, decodeScript,
   IGNORE_GLOB, hasHiddenSegment,
 } from './scanCore';
+import { isWorkspaceScheme } from '../workspaceUri';
 
 export { ScanResult, VarRef, isEngineScriptPath, decodeScript } from './scanCore';
 
@@ -49,7 +50,7 @@ export class VarScanner {
 
     // 1. 已打开的 m2script 文档(含未保存内容)
     for (const doc of vscode.workspace.textDocuments) {
-      if (doc.languageId !== 'm2script' || doc.uri.scheme !== 'file') continue;
+      if (doc.languageId !== 'm2script' || !isWorkspaceScheme(doc.uri.scheme)) continue;
       const rel = folders ? vscode.workspace.asRelativePath(doc.uri) : doc.uri.fsPath;
       mergeGroups(groups, scanText(doc.getText(), rel, doc.uri.fsPath));
       openScanned.add(doc.uri.fsPath);

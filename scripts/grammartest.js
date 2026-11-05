@@ -44,6 +44,11 @@ const lines = [
   '\\<测试说明/@测试说明\\>',
   // 带参变量形态: 方括号/点/圆括号参数整体着系统变量色
   'SENDMSG 5 玩家:<$HUMANINFO[$USERNAME].$X> 行会:<$GUILDINFO(行会名).CHIEF> 排行:<$RANKLIST.A.B.C> 自定义:<$CUSTOMVALUE(3)>',
+  '<@!XYBTN 3,80,3,81,3,82,335,-8/@exit>',
+  '<offx=|9|y=|16|fontsize=|12|font=|2|xy=|1|><color=■cccc99 魔域宝库</off>',
+  '<@@!EDIT 1,300,158,180,18,20,0,请输入,NAME=1>',
+  '<@@!XYITMC 3,60,0,0>',
+  '<@@!XYPIC 3,60,0,0>',
 ];
 
 async function main() {
@@ -110,6 +115,15 @@ async function main() {
     [33, '<$GUILDINFO(行会名).CHIEF>', 'support.variable.system'],
     [33, '<$RANKLIST.A.B.C>', 'support.variable.system'],
     [33, '<$CUSTOMVALUE(', 'support.variable.system'],
+    [34, 'XYBTN', 'entity.name.tag.component'],
+    [34, '@exit', 'entity.name.type.label'],
+    [35, 'offx', 'entity.name.tag.component'],
+    [35, 'fontsize', 'entity.other.attribute-name'],
+    [35, 'color', 'entity.name.tag.component'],
+    [35, 'off', 'entity.name.tag.component'],
+    [36, 'EDIT', 'entity.name.tag.component'],
+    [37, 'XYITMC', 'entity.name.tag.component'],
+    [38, 'XYPIC', 'entity.name.tag.component'],
   ];
 
   let fail = 0;

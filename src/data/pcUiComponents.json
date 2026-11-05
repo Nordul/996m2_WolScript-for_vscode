@@ -1,0 +1,310 @@
+[
+  {
+    "name": "Color",
+    "style": "color",
+    "signature": "<Color=颜色 文字内容>",
+    "desc": "PC端自定义文字颜色，支持英文颜色名和256色",
+    "params": [
+      { "name": "颜色", "desc": "英文颜色名或0-255颜色编号" },
+      { "name": "文字内容", "desc": "需要显示的文字" }
+    ],
+    "snippet": "Color=${1:green} ${2:文字}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1139"
+  },
+  {
+    "name": "offx",
+    "style": "offx",
+    "signature": "<offx=|X|y=Y|fontsize=字号|font=字体|xy=1>内容<|off>",
+    "desc": "PC端富文本位置、字体及绝对坐标控制",
+    "params": [
+      { "name": "offx", "desc": "当前内容的X偏移值" },
+      { "name": "y", "desc": "当前内容的Y偏移值" },
+      { "name": "fontsize", "desc": "文字字号大小" },
+      { "name": "font", "desc": "文字字体样式：0系统默认、1隶书、2微软雅黑等" },
+      { "name": "xy", "desc": "xy=1时使用绝对坐标" },
+      { "name": "ax", "desc": "整体横向锚点，建议配合绝对坐标使用" },
+      { "name": "ay", "desc": "整体纵向锚点，建议配合绝对坐标使用" }
+    ],
+    "snippet": "offx=|${1:0}|y=|${2:0}|fontsize=|${3:12}|font=|${4:2}|xy=|${5:1}>${6:文字}<|off>$0",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1139"
+  },
+  {
+    "name": "BTN",
+    "style": "legacy",
+    "signature": "<@@!BTN 图包,正常图,图包,悬停图,图包,点击图,X,Y,提示文字/@标签>",
+    "desc": "PC端自定义按钮，可设置正常、悬停和点击素材",
+    "params": [
+      { "name": "参数1/3/5", "desc": "正常、悬停、点击图像所在的素材文件编号" },
+      { "name": "参数2/4/6", "desc": "正常、悬停、点击图像在对应素材文件中的位置" },
+      { "name": "参数7/8", "desc": "图像在界面内的X/Y偏移坐标" },
+      { "name": "提示文字", "desc": "鼠标悬停提示，可省略" },
+      { "name": "@标签", "desc": "点击后触发的当前文件脚本标签" }
+    ],
+    "snippet": "@@!BTN ${1:3},${2:59},${3:3},${4:60},${5:3},${6:61},${7:0},${8:0},${9:/@标签}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1145"
+  },
+  {
+    "name": "XYBTN",
+    "style": "legacy",
+    "signature": "<@@!XYBTN 图包,正常图,图包,悬停图,图包,点击图,X,Y,提示文字/@标签>",
+    "desc": "PC端绝对坐标自定义按钮，参数与BTN相同",
+    "params": [
+      { "name": "参数1/3/5", "desc": "正常、悬停、点击图像所在的素材文件编号" },
+      { "name": "参数2/4/6", "desc": "正常、悬停、点击图像在对应素材文件中的位置" },
+      { "name": "参数7/8", "desc": "图像的绝对X/Y坐标" },
+      { "name": "提示文字", "desc": "鼠标悬停提示，可省略" },
+      { "name": "@标签", "desc": "点击后触发的当前文件脚本标签" }
+    ],
+    "snippet": "@@!XYBTN ${1:3},${2:59},${3:3},${4:60},${5:3},${6:61},${7:0},${8:0},${9:/@标签}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1145"
+  },
+  {
+    "name": "PIC",
+    "style": "legacy",
+    "signature": "<@@!PIC 物品名,隐藏名字,X,Y>",
+    "desc": "通过物品名字显示物品外观，可选择是否附带物品名",
+    "params": [
+      { "name": "物品名", "desc": "需要显示外观的物品名称" },
+      { "name": "隐藏名字", "desc": "0显示物品名，1隐藏物品名" },
+      { "name": "X/Y", "desc": "物品外观在页面内的X/Y坐标" }
+    ],
+    "snippet": "@@!PIC ${1:物品名},${2:0},${3:0},${4:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1141"
+  },
+  {
+    "name": "PIC2",
+    "style": "legacy",
+    "signature": "<@@!PIC2 图包编号,图片位置>",
+    "desc": "显示指定素材文件内的图片",
+    "params": [
+      { "name": "图包编号", "desc": "图像所在的客户端素材文件编号" },
+      { "name": "图片位置", "desc": "图片在素材文件中的位置" }
+    ],
+    "snippet": "@@!PIC2 ${1:3},${2:60}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1141"
+  },
+  {
+    "name": "ITM",
+    "style": "legacy",
+    "signature": "<@@!ITM 图包编号,图片位置,X,Y,显示模式,缩放比例>",
+    "desc": "按坐标显示指定素材图片，支持显示模式和缩放",
+    "params": [
+      { "name": "图包编号", "desc": "图像所在的客户端素材文件编号" },
+      { "name": "图片位置", "desc": "图片在素材文件中的位置" },
+      { "name": "X/Y", "desc": "图像在界面内的X/Y偏移坐标" },
+      { "name": "显示模式", "desc": "图片显示模式0-6，可省略" },
+      { "name": "缩放比例", "desc": "1为正常大小，可省略" }
+    ],
+    "snippet": "@@!ITM ${1:3},${2:60},${3:0},${4:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1143"
+  },
+  {
+    "name": "XYITM",
+    "style": "legacy",
+    "signature": "<@@!XYITM 图包编号,图片位置,X,Y,显示模式,缩放比例>",
+    "desc": "按绝对坐标显示指定素材图片，参数与ITM相同",
+    "params": [
+      { "name": "图包编号", "desc": "图像所在的客户端素材文件编号" },
+      { "name": "图片位置", "desc": "图片在素材文件中的位置" },
+      { "name": "X/Y", "desc": "图像的绝对X/Y坐标" },
+      { "name": "显示模式", "desc": "图片显示模式0-6，可省略" },
+      { "name": "缩放比例", "desc": "1为正常大小，可省略" }
+    ],
+    "snippet": "@@!XYITM ${1:3},${2:60},${3:0},${4:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1143"
+  },
+  {
+    "name": "SPIC",
+    "style": "spic",
+    "signature": "<!SPIC 图包,图片位置,张数,间隔,X,Y,MODE,Num>",
+    "desc": "在NPC界面播放序列帧动画",
+    "params": [
+      { "name": "图包/图片位置", "desc": "序列帧所在图包及起始图片位置" },
+      { "name": "张数/间隔", "desc": "播放图片张数及每帧间隔毫秒数" },
+      { "name": "X/Y", "desc": "播放位置坐标" },
+      { "name": "MODE", "desc": "绘制模式0-6" },
+      { "name": "Num", "desc": "播放次数，0为无限次" }
+    ],
+    "snippet": "!SPIC ${1:3},${2:60},${3:1},${4:100},${5:0},${6:0},${7:0},${8:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1144"
+  },
+  {
+    "name": "XYSPIC",
+    "style": "legacy",
+    "signature": "<@@!XYSPIC 图包,图片位置,张数,间隔,X,Y,MODE,Num>",
+    "desc": "按绝对坐标在NPC界面播放序列帧动画",
+    "params": [
+      { "name": "图包/图片位置", "desc": "序列帧所在图包及起始图片位置" },
+      { "name": "张数/间隔", "desc": "播放图片张数及每帧间隔毫秒数" },
+      { "name": "X/Y", "desc": "播放位置绝对坐标" },
+      { "name": "MODE", "desc": "绘制模式0-6" },
+      { "name": "Num", "desc": "播放次数，0为无限次" }
+    ],
+    "snippet": "@@!XYSPIC ${1:3},${2:60},${3:1},${4:100},${5:0},${6:0},${7:0},${8:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1144"
+  },
+  {
+    "name": "ITEMGETWND",
+    "style": "legacy",
+    "signature": "<@@!ITEMGETWND 框编号,图包,素材,X,Y,空框描述/@标签>",
+    "desc": "PC端NPC物品放取框，返回放入/拿出操作及物品信息",
+    "params": [
+      { "name": "框编号", "desc": "物品框编号1-29" },
+      { "name": "图包/素材", "desc": "物品框图包号和素材编号" },
+      { "name": "X/Y", "desc": "物品框坐标" },
+      { "name": "空框描述", "desc": "物品框为空时显示的文字" },
+      { "name": "@标签", "desc": "物品放入或拿出时触发的脚本标签" }
+    ],
+    "snippet": "@@!ITEMGETWND ${1:1},${2:3},${3:78},${4:0},${5:0},${6:请放入物品}/@${7:物品框触发}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1142"
+  },
+  {
+    "name": "XYITEMGETWND",
+    "style": "legacy",
+    "signature": "<@@!XYITEMGETWND 框编号,图包,素材,X,Y,空框描述/@标签>",
+    "desc": "PC端绝对坐标NPC物品放取框",
+    "params": [
+      { "name": "框编号", "desc": "物品框编号1-29" },
+      { "name": "图包/素材", "desc": "物品框图包号和素材编号" },
+      { "name": "X/Y", "desc": "物品框绝对坐标" },
+      { "name": "空框描述", "desc": "物品框为空时显示的文字" },
+      { "name": "@标签", "desc": "物品放入或拿出时触发的脚本标签" }
+    ],
+    "snippet": "@@!XYITEMGETWND ${1:1},${2:3},${3:78},${4:0},${5:0},${6:请放入物品}/@${7:物品框触发}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1142"
+  },
+  {
+    "name": "GOODSHOW",
+    "style": "legacy",
+    "signature": "<@@!GOODSHOW 物品唯一ID,隐藏名字,X,Y,显示元神物品>",
+    "desc": "显示指定序列号装备，支持包裹和已穿戴物品",
+    "params": [
+      { "name": "物品唯一ID", "desc": "需要显示的物品MakeIndex" },
+      { "name": "隐藏名字", "desc": "1隐藏物品名，0显示物品名" },
+      { "name": "X/Y", "desc": "显示位置偏移坐标" },
+      { "name": "显示元神物品", "desc": "是否显示元神物品" }
+    ],
+    "snippet": "@@!GOODSHOW ${1:物品唯一ID},${2:0},${3:0},${4:0},${5:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/868"
+  },
+  {
+    "name": "XYGOODSHOW",
+    "style": "legacy",
+    "signature": "<@@!XYGOODSHOW 物品唯一ID,隐藏名字,X,Y,显示元神物品>",
+    "desc": "按绝对坐标显示指定序列号装备",
+    "params": [
+      { "name": "物品唯一ID", "desc": "需要显示的物品MakeIndex" },
+      { "name": "隐藏名字", "desc": "1隐藏物品名，0显示物品名" },
+      { "name": "X/Y", "desc": "显示位置绝对坐标" },
+      { "name": "显示元神物品", "desc": "是否显示元神物品" }
+    ],
+    "snippet": "@@!XYGOODSHOW ${1:物品唯一ID},${2:0},${3:0},${4:0},${5:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/868"
+  },
+  {
+    "name": "JDT",
+    "style": "legacy",
+    "signature": "<@@!JDT 图包,图包号,X,Y,当前值,总量,长度/起始值,混合模式,样式>",
+    "desc": "PC端进度条，支持横条、竖条和圆形样式",
+    "params": [
+      { "name": "图包/图包号", "desc": "进度条素材所在图包及图片编号" },
+      { "name": "X/Y", "desc": "进度条坐标" },
+      { "name": "当前值/总量", "desc": "当前进度及总进度" },
+      { "name": "长度/起始值", "desc": "横条为长度、竖条为宽度、圆形为初始角度" },
+      { "name": "混合模式", "desc": "图片绘制通道" },
+      { "name": "样式", "desc": "0-1横条、2-3竖条、4-5圆形" }
+    ],
+    "snippet": "@@!JDT ${1:3},${2:1683},${3:0},${4:0},${5:50},${6:100},${7:176},${8:0},${9:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/9504"
+  },
+  {
+    "name": "XYJDT",
+    "style": "legacy",
+    "signature": "<@@!XYJDT 图包,图包号,X,Y,当前值,总量,长度/起始值,混合模式,样式>",
+    "desc": "PC端绝对坐标进度条，参数与JDT相同",
+    "params": [
+      { "name": "图包/图包号", "desc": "进度条素材所在图包及图片编号" },
+      { "name": "X/Y", "desc": "进度条绝对坐标" },
+      { "name": "当前值/总量", "desc": "当前进度及总进度" },
+      { "name": "长度/起始值", "desc": "横条为长度、竖条为宽度、圆形为初始角度" },
+      { "name": "混合模式", "desc": "图片绘制通道" },
+      { "name": "样式", "desc": "0-1横条、2-3竖条、4-5圆形" }
+    ],
+    "snippet": "@@!XYJDT ${1:3},${2:1683},${3:0},${4:0},${5:50},${6:100},${7:176},${8:0},${9:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/9504"
+  },
+  {
+    "name": "EDIT",
+    "style": "legacy",
+    "signature": "<@@!EDIT 编号,X,Y,宽,高,最大字符数,数字限制,默认文字,TIPS>",
+    "desc": "PC端输入框，输入内容保存到$NPCINPUT(编号)",
+    "params": [
+      { "name": "编号", "desc": "输入框编号0-19" },
+      { "name": "X/Y/宽/高", "desc": "输入框位置和尺寸" },
+      { "name": "最大字符数", "desc": "允许输入的最大字符数" },
+      { "name": "数字限制", "desc": "1只能输入数字，0支持文字" },
+      { "name": "默认文字/TIPS", "desc": "默认显示文字和提示内容" }
+    ],
+    "snippet": "@@!EDIT ${1:0},${2:0},${3:0},${4:180},${5:18},${6:20},${7:0},${8:请输入},${9:TIPS}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1136"
+  },
+  {
+    "name": "RADIO",
+    "style": "legacy",
+    "signature": "<@@!RADIO 编号,X,Y,默认勾选,文字,TIPS/@标签>",
+    "desc": "PC端复选框组件",
+    "params": [
+      { "name": "编号", "desc": "复选框编号0-19" },
+      { "name": "X/Y", "desc": "复选框坐标" },
+      { "name": "默认勾选", "desc": "0不勾选，1勾选" },
+      { "name": "文字/TIPS", "desc": "显示文字和提示内容" },
+      { "name": "@标签", "desc": "点击复选框触发的脚本标签" }
+    ],
+    "snippet": "@@!RADIO ${1:0},${2:0},${3:0},${4:0},${5:文字},${6:TIPS}/@${7:复选框单击}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1137"
+  },
+  {
+    "name": "MENUBTN",
+    "style": "legacy",
+    "signature": "<@@!MENUBTN 编号,X,Y,默认项,选项列表,TIPS/@标签>",
+    "desc": "PC端下拉框，选择内容保存到$NPCCOMBOX(编号)",
+    "params": [
+      { "name": "编号", "desc": "下拉框编号0-19" },
+      { "name": "X/Y", "desc": "下拉框坐标" },
+      { "name": "默认项", "desc": "默认选中项，从0开始" },
+      { "name": "选项列表", "desc": "多个选项使用|分隔" },
+      { "name": "TIPS", "desc": "提示内容" },
+      { "name": "@标签", "desc": "选择后触发的脚本标签" }
+    ],
+    "snippet": "@@!MENUBTN ${1:0},${2:0},${3:0},${4:0},${5:选项一|选项二},${6:TIPS}/@${7:下拉框选择}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1138"
+  },
+  {
+    "name": "XYITMC",
+    "style": "legacy",
+    "signature": "<@@!XYITMC 图包编号,图片位置,X,Y,显示模式,缩放比例>",
+    "desc": "PC端XYITM扩展图片组件，按绝对坐标显示素材图片",
+    "params": [
+      { "name": "图包编号", "desc": "图像所在的客户端素材文件编号" },
+      { "name": "图片位置", "desc": "图片在素材文件中的位置" },
+      { "name": "X/Y", "desc": "图像的绝对X/Y坐标" },
+      { "name": "显示模式", "desc": "图片显示模式0-6，可省略" },
+      { "name": "缩放比例", "desc": "1为正常大小，可省略" }
+    ],
+    "snippet": "@@!XYITMC ${1:3},${2:60},${3:0},${4:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1143"
+  },
+  {
+    "name": "XYPIC",
+    "style": "legacy",
+    "signature": "<@@!XYPIC 图包编号,图片位置,X,Y>",
+    "desc": "PC端绝对坐标图片组件，显示指定素材图片",
+    "params": [
+      { "name": "图包编号", "desc": "图像所在的客户端素材文件编号" },
+      { "name": "图片位置", "desc": "图片在素材文件中的位置" },
+      { "name": "X/Y", "desc": "图像的绝对X/Y坐标" }
+    ],
+    "snippet": "@@!XYPIC ${1:3},${2:60},${3:0},${4:0}$0>",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1141"
+  }
+]
