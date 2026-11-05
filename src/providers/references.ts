@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { IGNORE_GLOB, decodeScript, hasHiddenSegment, isEngineScriptPath } from '../scanner/scanCore';
+import { isWorkspaceScheme } from '../workspaceUri';
 
 const REF_RE = /@([A-Za-z0-9_\-一-鿿]+)/g;
 const DEF_RE = /^\s*\[(@[A-Za-z0-9_\-一-鿿]+)\]/;
@@ -66,7 +67,7 @@ export async function findLabelReferences(document: vscode.TextDocument, name: s
   const currentPath = pathKey(document.uri.fsPath);
   const openDocs = new Map<string, vscode.TextDocument>();
   for (const doc of vscode.workspace.textDocuments) {
-    if (doc.uri.scheme === 'file') openDocs.set(pathKey(doc.uri.fsPath), doc);
+    if (isWorkspaceScheme(doc.uri.scheme)) openDocs.set(pathKey(doc.uri.fsPath), doc);
   }
 
   for (const uri of files) {

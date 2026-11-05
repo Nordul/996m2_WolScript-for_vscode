@@ -49,11 +49,16 @@ class ThemeColor {
 class Hover {
   constructor(contents, range) { this.contents = contents; this.range = range; }
 }
+class Diagnostic {
+  constructor(range, message, severity) { this.range = range; this.message = message; this.severity = severity; }
+}
 const selectionChangeHandlers = [];
 const commandHandlers = new Map();
+let definitionSelector;
 const vscodeMock = {
   Position, Range, Selection, SnippetString, MarkdownString, CompletionItem, FoldingRange, Location, CodeLens, Hover,
-  Color, ColorInformation, ColorPresentation, DocumentLink, ThemeColor,
+  Color, ColorInformation, ColorPresentation, DocumentLink, ThemeColor, Diagnostic,
+  DiagnosticSeverity: { Error: 0, Warning: 1 },
   FoldingRangeKind: { Region: 3 },
   CompletionItemKind: {
     Function: 2, Variable: 4, Class: 5, Property: 9, Keyword: 13, Snippet: 14,
@@ -62,19 +67,20 @@ const vscodeMock = {
   TextEditorRevealType: { InCenter: 1 },
   ProgressLocation: { SourceControl: 1, Window: 10, Notification: 15 },
   Uri: {
-    file: (f) => ({ fsPath: f, scheme: 'file' }),
+    file: (f) => ({ fsPath: f, scheme: 'file', authority: '', with(change) { return { ...this, ...change }; } }),
     parse: (value) => ({ scheme: value.split(':')[0], value, toString: () => value }),
   },
   languages: {
     registerCompletionItemProvider: () => ({ dispose() {} }),
     registerHoverProvider: () => ({ dispose() {} }),
-    registerDefinitionProvider: () => ({ dispose() {} }),
+    registerDefinitionProvider: (selector) => { definitionSelector = selector; return { dispose() {} }; },
     registerDocumentHighlightProvider: () => ({ dispose() {} }),
     registerFoldingRangeProvider: () => ({ dispose() {} }),
     registerColorProvider: () => ({ dispose() {} }),
     registerDocumentLinkProvider: () => ({ dispose() {} }),
     registerReferenceProvider: () => ({ dispose() {} }),
     registerCodeLensProvider: () => ({ dispose() {} }),
+    createDiagnosticCollection: () => ({ set() {}, delete() {}, dispose() {} }),
     setTextDocumentLanguage: async () => undefined,
   },
   window: {
@@ -99,6 +105,8 @@ const vscodeMock = {
     onDidSaveTextDocument: () => ({ dispose() {} }),
     onDidCloseTextDocument: () => ({ dispose() {} }),
     onDidChangeWorkspaceFolders: () => ({ dispose() {} }),
+    onDidChangeConfiguration: () => ({ dispose() {} }),
+    getConfiguration: () => ({ get: (key, defaultValue) => defaultValue }),
     onDidChangeTextDocument: (fn) => { documentChangeHandler = fn; return { dispose() {} }; },
   },
   commands: {
@@ -210,6 +218,25 @@ test('#ACT段命令补全', doc, 4, 0, true, (items) => {
   const hasCheck = items.some((i) => i.label === 'CHECKITEM');
   return !hasAction ? '缺MOV' : (hasCheck ? '不应含CHECKITEM' : '');
 });
+test('新增执行命令补全', makeDoc('[@main]\n#ACT\nRELOADS\n'), 2, 7, true, (items) => {
+  return items.some((i) => i.label === 'RELOADSABUKW') ? '' : '缺RELOADSABUKW';
+});
+test('补录执行命令补全', makeDoc('[@main]\n#ACT\nADDSU\n'), 2, 5, true, (items) => {
+  return items.some((i) => i.label === 'AddSuiteAbil') ? '' : '缺AddSuiteAbil';
+});
+test('DelBtn命令补全', makeDoc('[@main]\n#ACT\nDELB\n'), 2, 4, true, (items) => {
+  const item = items.find((i) => i.label === 'DelBtn');
+  return item && String(item.insertText?.value) === 'DelBtn ${1:A}$0' ? '' : '缺DelBtn或参数补全错误';
+});
+test('SETPLAYCFG与SetMiniMapCfg补全', makeDoc('[@main]\n#ACT\nSET\n'), 2, 3, true, (items) => {
+  const play = items.find((i) => i.label === 'SETPLAYCFG');
+  const mini = items.find((i) => i.label === 'SetMiniMapCfg');
+  return play && mini && String(play.insertText?.value) === 'SETPLAYCFG ${1:A}$0'
+    && String(mini.insertText?.value) === 'SetMiniMapCfg ${1:A} ${2:B}$0' ? '' : '缺SETPLAYCFG或SetMiniMapCfg';
+});
+test('补录检测命令补全', makeDoc('[@main]\n#IF\nCHECKLE\n'), 2, 7, true, (items) => {
+  return items.some((i) => i.label === 'CHECKLEVEL') ? '' : '缺CHECKLEVEL';
+});
 test('数据库命令不立即重开命令列表', makeDoc('[@main]\n#ACT\nGI\n'), 2, 2, true, (items) => {
   const give = items.find((i) => i.label === 'GIVE');
   const giveb = items.find((i) => i.label === 'GIVEB');
@@ -268,6 +295,27 @@ test('MO 命令前缀过滤', doc2, 9, 2, true, (items) => {
 test('<RT 组件前缀过滤', doc2, 10, 12, true, (items) => {
   if (!items.some((i) => i.label === 'RText')) return '缺RText';
   return items.some((i) => i.label === 'Button') ? 'Button不应出现' : '';
+});
+test('PC XYBTN补全与参数片段', makeDoc('[@main]\n#SAY\n<@!XYB\n'), 2, 6, true, (items) => {
+  const item = items.find((i) => i.label === 'XYBTN');
+  return item && String(item.insertText?.value).startsWith('@@!XYBTN ')
+    && String(item.insertText?.value).includes('${9:/@标签}') ? '' : '缺XYBTN或参数片段错误';
+});
+test('PC XYITMC与XYPIC补全', makeDoc('[@main]\n#SAY\n<@@!XY\n'), 2, 6, true, (items) => {
+  const itmc = items.find((i) => i.label === 'XYITMC');
+  const pic = items.find((i) => i.label === 'XYPIC');
+  return itmc && pic && String(itmc.insertText?.value).startsWith('@@!XYITMC ')
+    && String(pic.insertText?.value).startsWith('@@!XYPIC ') ? '' : '缺XYITMC或XYPIC';
+});
+test('PC offx参数补全', makeDoc('[@main]\n#SAY\n<offx=|9|\n'), 2, 9, true, (items) => {
+  const names = ['y', 'fontsize', 'font', 'xy', 'ax', 'ay'];
+  const missing = names.filter((name) => !items.some((i) => i.label === name));
+  const y = items.find((i) => i.label === 'y');
+  return missing.length ? `缺参数:${missing.join(',')}` : (String(y.insertText?.value) === 'y=${1:}' ? '' : 'y参数片段错误');
+});
+test('PC Color补全', makeDoc('[@main]\n#SAY\n<Col\n'), 2, 4, true, (items) => {
+  const item = items.find((i) => i.label === 'Color');
+  return item && String(item.insertText?.value) === 'Color=${1:green} ${2:文字}$0>' ? '' : '缺Color或片段错误';
 });
 test('@ma 标签前缀过滤', doc2, 11, 9, true, (items) => {
   const bad = items.filter((i) => !String(i.label).toLowerCase().includes('ma'));
@@ -429,14 +477,20 @@ try {
 
 // 颜色 Ctrl+点击链接
 try {
-  const { M2ColorLinkProvider } = require('../out/providers/color');
-  const links = new M2ColorLinkProvider().provideDocumentLinks(makeDoc('color=224\nbgcolor=#0xffffa500\ncolor=cccc99'));
-  const args = links.map((link) => JSON.parse(decodeURIComponent(link.target.value.split('?')[1])));
-  const ok = links.length === 3
-    && links.every((link) => link.target.value.startsWith('command:m2script.openColorPicker?') && link.tooltip === '打开颜色选择')
-    && JSON.stringify(args) === JSON.stringify([[0, 0], [1, 8], [2, 0]])
-    && links[0].range.end.character === 9 && links[1].range.end.character === 19 && links[2].range.end.character === 12;
-  console.log(`${ok ? 'PASS' : 'FAIL'} 颜色Ctrl+点击链接: ${links.length} 处`);
+  const { M2ColorDefinitionProvider, consumeColorNavigation } = require('../out/providers/color');
+  const provider = new M2ColorDefinitionProvider();
+  const doc = makeDoc('color=224\nbgcolor=#0xffffa500\ncolor=cccc99');
+  const links = [
+    provider.provideDefinition(doc, new Position(0, 2)),
+    provider.provideDefinition(doc, new Position(1, 12)),
+    provider.provideDefinition(doc, new Position(2, 2)),
+  ];
+  const navigation = consumeColorNavigation({ document: doc, selection: { active: new Position(2, 0) } });
+  const consumedAgain = consumeColorNavigation({ document: doc, selection: { active: new Position(2, 0) } });
+  const noLink = provider.provideDefinition(doc, new Position(0, 20));
+  const ok = links.every((group) => group.length === 1 && group[0].uri === doc.uri && !group[0].targetUri)
+    && navigation?.line === 2 && navigation.character === 0 && consumedAgain === undefined && noLink.length === 0;
+  console.log(`${ok ? 'PASS' : 'FAIL'} 颜色Ctrl+点击定位并打开面板`);
   if (!ok) fail++;
 } catch (e) {
   fail++;
@@ -563,6 +617,31 @@ try {
   console.log('FAIL 全部CSV宏与命令悬停: ' + e.message);
 }
 
+// PC界面组件悬停文档
+try {
+  const { M2HoverProvider } = require('../out/providers/hover');
+  const provider = new M2HoverProvider();
+  const hoverAt = (text, token) => {
+    const doc = makeDoc(text);
+    return provider.provideHover(doc, new Position(0, text.indexOf(token) + 1))?.contents.value || '';
+  };
+  const btn = hoverAt('<@!XYBTN 3,80,3,81,3,82,335,-8/@exit>', 'XYBTN');
+  const offx = hoverAt('<offx=|9|y=|16|fontsize=|12|font=|2|xy=|1|>文字<|off>', 'offx');
+  const color = hoverAt('<Color=green 文字>', 'Color');
+  const edit = hoverAt('<@@!EDIT 1,300,158,180,18,20,0,请输入,NAME=1>', 'EDIT');
+  const itmc = hoverAt('<@@!XYITMC 3,60,0,0>', 'XYITMC');
+  const pic = hoverAt('<@@!XYPIC 3,60,0,0>', 'XYPIC');
+  const ok = btn.includes('绝对坐标自定义按钮') && btn.includes('/17/1145')
+    && offx.includes('fontsize') && offx.includes('字体样式') && offx.includes('/17/1139')
+    && color.includes('自定义文字颜色') && edit.includes('$NPCINPUT') && edit.includes('/17/1136')
+    && itmc.includes('XYITM扩展图片组件') && pic.includes('绝对坐标图片组件');
+  console.log(`${ok ? 'PASS' : 'FAIL'} PC界面组件悬停文档`);
+  if (!ok) fail++;
+} catch (e) {
+  fail++;
+  console.log('FAIL PC界面组件悬停: ' + e.message);
+}
+
 // [@标签] 折叠范围
 try {
   const { M2FoldingProvider } = require('../out/providers/folding');
@@ -602,7 +681,11 @@ try {
   const ext = require('../out/extension');
   const ctx = { subscriptions: [] };
   ext.activate(ctx);
-  console.log('PASS activate: subscriptions=' + ctx.subscriptions.length);
+  const remoteSelectorOk = Array.isArray(definitionSelector)
+    && definitionSelector.some((item) => item.scheme === 'file')
+    && definitionSelector.some((item) => item.scheme === 'vscode-remote');
+  console.log(`${remoteSelectorOk ? 'PASS' : 'FAIL'} activate: subscriptions=${ctx.subscriptions.length} SSH选择器=${remoteSelectorOk}`);
+  if (!remoteSelectorOk) fail++;
 } catch (e) {
   fail++;
   console.log('FAIL activate: ' + e.stack.split('\n').slice(0, 3).join(' | '));
@@ -834,6 +917,44 @@ try {
     console.log(`${ok8 ? 'PASS' : 'FAIL'} 跨文件反查标签调用: Shift+F12=${Array.isArray(reverseRefs) ? reverseRefs.length : reverseRefs} Ctrl+点击=${Array.isArray(reverseDefs) ? reverseDefs.length : reverseDefs}`);
     if (!ok8) fail++;
 
+    // SSH 远程文档: 保留 vscode-remote scheme/authority, 远程未保存文档参与跳转与反查
+    const authority = 'ssh-remote+test';
+    const remoteCallDoc = makeDoc('[@main]\n#ACT\n#CALL [\\游戏功能\\临时属性\\变量属性.txt] @变量属性\n');
+    remoteCallDoc.uri = { fsPath: crossDoc.uri.fsPath, scheme: 'vscode-remote', authority };
+    const remoteCallLine = remoteCallDoc.lineAt(2).text;
+    const remoteCallResult = await dp.provideDefinition(remoteCallDoc, new Position(2, remoteCallLine.indexOf('@变量属性') + 2));
+    const remoteCallOk = !!remoteCallResult && !Array.isArray(remoteCallResult)
+      && remoteCallResult.uri.scheme === 'vscode-remote' && remoteCallResult.uri.authority === authority
+      && remoteCallResult.uri.fsPath === variableTarget && remoteCallResult.range.line === 0;
+    console.log(`${remoteCallOk ? 'PASS' : 'FAIL'} SSH远程#CALL跳转保留URI`);
+    if (!remoteCallOk) fail++;
+
+    const remoteTarget = makeDoc('[@远程未保存]\n#ACT\nBREAK\n');
+    remoteTarget.uri = { fsPath: secondTarget, scheme: 'vscode-remote', authority };
+    const remoteSearch = makeDoc('[@main]\n#ACT\nGOTO @远程未保存\n');
+    remoteSearch.uri = { fsPath: crossDoc.uri.fsPath, scheme: 'vscode-remote', authority };
+    let remoteReads = 0;
+    vscodeMock.workspace.textDocuments = [remoteTarget];
+    vscodeMock.workspace.findFiles = async () => [remoteTarget.uri];
+    vscodeMock.workspace.fs.readFile = async () => { remoteReads++; throw new Error('远程已打开文档不应读取磁盘旧内容'); };
+    const remoteLine = remoteSearch.lineAt(2).text;
+    const remoteLabelResult = await dp.provideDefinition(remoteSearch, new Position(2, remoteLine.indexOf('@') + 2));
+    const remoteLabelOk = !!remoteLabelResult && !Array.isArray(remoteLabelResult)
+      && remoteLabelResult.uri === remoteTarget.uri && remoteLabelResult.range.line === 0 && remoteReads === 0;
+    console.log(`${remoteLabelOk ? 'PASS' : 'FAIL'} SSH远程未保存文档标签跳转`);
+    if (!remoteLabelOk) fail++;
+
+    const remoteCaller = makeDoc('[@main]\n#ACT\nGOTO @远程未保存\n#CALL [\\游戏功能\\第二定义.txt] @远程未保存\n');
+    remoteCaller.uri = { fsPath: callerTarget, scheme: 'vscode-remote', authority };
+    vscodeMock.workspace.textDocuments = [remoteCaller];
+    vscodeMock.workspace.findFiles = async () => [remoteCaller.uri];
+    const remoteRefs = await new M2ReferenceProvider().provideReferences(remoteTarget, new Position(0, 2));
+    const remoteRefsOk = Array.isArray(remoteRefs) && remoteRefs.length === 2
+      && remoteRefs.every((item) => item.uri === remoteCaller.uri) && remoteReads === 0;
+    console.log(`${remoteRefsOk ? 'PASS' : 'FAIL'} SSH远程标签反向引用: ${Array.isArray(remoteRefs) ? remoteRefs.length : remoteRefs}`);
+    if (!remoteRefsOk) fail++;
+
+    vscodeMock.workspace.textDocuments = [];
     vscodeMock.workspace.findFiles = async () => [];
     fsx.rmSync(tmp, { recursive: true, force: true });
   } catch (e) {

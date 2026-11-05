@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { IGNORE_GLOB, decodeScript, hasHiddenSegment, isEngineScriptPath } from '../scanner/scanCore';
 import { findLabelReferences } from './references';
+import { isWorkspaceScheme, workspaceUri } from '../workspaceUri';
 
 // 命令参数中的脚本/数据文件路径: ..\QuestDiary\数据文件\权限账号.txt / QuestDiary\xxx.txt 等
 const PATH_TOKEN_RE = /[^\s;[\]<>|()]*[\\/][^\s;[\]<>|()]*?\.(?:txt|csv)\b/gi;
@@ -125,7 +126,7 @@ async function crossFileLabelDefinitions(document: vscode.TextDocument, label: s
   const currentPath = pathKey(document.uri.fsPath);
   const openDocs = new Map<string, vscode.TextDocument>();
   for (const doc of vscode.workspace.textDocuments) {
-    if (doc.uri.scheme === 'file') openDocs.set(pathKey(doc.uri.fsPath), doc);
+    if (isWorkspaceScheme(doc.uri.scheme)) openDocs.set(pathKey(doc.uri.fsPath), doc);
   }
 
   const locations: vscode.Location[] = [];
@@ -182,7 +183,7 @@ export class M2DefinitionProvider implements vscode.DefinitionProvider {
       const target = path.join(root, rel);
       let doc: vscode.TextDocument;
       try {
-        doc = await vscode.workspace.openTextDocument(vscode.Uri.file(target));
+        doc = await vscode.workspace.openTextDocument(workspaceUri(target, document.uri));
       } catch {
         return undefined;
       }
@@ -198,7 +199,7 @@ export class M2DefinitionProvider implements vscode.DefinitionProvider {
       const target = path.join(root, `cfg_${ref.name}.csv`);
       let doc: vscode.TextDocument;
       try {
-        doc = await vscode.workspace.openTextDocument(vscode.Uri.file(target));
+        doc = await vscode.workspace.openTextDocument(workspaceUri(target, document.uri));
       } catch {
         return undefined;
       }
@@ -212,7 +213,7 @@ export class M2DefinitionProvider implements vscode.DefinitionProvider {
       const start = m.index!, end = start + m[0].length;
       if (position.character < start || position.character > end) continue;
       const target = resolveScriptPath(document.uri.fsPath, m[0]);
-      if (target) return new vscode.Location(vscode.Uri.file(target), new vscode.Position(0, 0));
+      if (target) return new vscode.Location(workspaceUri(target, document.uri), new vscode.Position(0, 0));
       return undefined;
     }
 

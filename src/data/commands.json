@@ -147,6 +147,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/1030"
   },
   {
+    "name": "AddSuiteAbil",
+    "signature": "AddSuiteAbil A B",
+    "desc": "调用套装数据库属性：A=套装编号(1-255)，B=属性值(0-99，可省略默认0)；不可叠加，以最后一次调用为准",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/979",
+    "kind": "action"
+  },
+  {
     "name": "ADDTASK",
     "signature": "ADDTASK A",
     "desc": "使用方法及介绍查阅说明书 | 添加任务",
@@ -336,6 +343,20 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
   {
+    "name": "BindWeChat",
+    "signature": "BindWeChat A",
+    "desc": "发送微信验证操作：A=1绑定微信、2解绑微信、3获取验证码",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1424",
+    "kind": "action"
+  },
+  {
+    "name": "BonusPoint",
+    "signature": "BonusPoint A B C",
+    "desc": "调整人物属性点：A=属性类型(DC/MC/SC/HP/MP/AC/MAC/HIT/SPD)，B=+或-，C=点数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1408",
+    "kind": "action"
+  },
+  {
     "name": "BREAK",
     "signature": "BREAK",
     "desc": "中断或继续下去",
@@ -420,6 +441,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
   {
+    "name": "ChangeEatItemDura",
+    "signature": "ChangeEatItemDura A B",
+    "desc": "在物品触发脚本中修改当前触发物品持久：A=操作符(+、-、=)，B=数值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/797",
+    "kind": "action"
+  },
+  {
     "name": "CHANGEEXP",
     "signature": "CHANGEEXP A B",
     "desc": "A=操作符 + - = B=数值 | 调整当前玩家的经验值",
@@ -460,6 +488,13 @@
     "desc": "ChangeHumBuff 参数一 参数二 参数三 参数四 参数五 参数六 参数七 参数八",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/1040"
+  },
+  {
+    "name": "ChangeHumName",
+    "signature": "ChangeHumName A",
+    "desc": "在线修改玩家角色名，A=新角色名",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/739",
+    "kind": "action"
   },
   {
     "name": "CHANGEJOB",
@@ -516,6 +551,13 @@
     "desc": "A=技能名字 B=操作符 + - = C=数值 | 请到说明书中搜索 | 调整指定技能经验",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+  },
+  {
+    "name": "ChangeTongFile",
+    "signature": "ChangeTongFile A B C D",
+    "desc": "修改通区文本：A=文件名，B=内容，C=行号，D=0追加、1插入、2替换、3删除、4清空",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1018",
+    "kind": "action"
   },
   {
     "name": "CHATCOLOR",
@@ -686,13 +728,6 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
   {
-    "name": "COMPARETEXT",
-    "signature": "COMPARETEXT",
-    "desc": "A B C | A 字符 B 字符 C 0/1 | 检测A字符是否与B字符相同",
-    "kind": "action",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/976"
-  },
-  {
     "name": "content",
     "signature": "content = \" A \"",
     "desc": "文字描述内容 | content = \" 您看见的是文字内容 \"",
@@ -847,6 +882,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
   {
+    "name": "DelBtn",
+    "signature": "DelBtn A",
+    "desc": "删除自定义UI按钮：A=添加按钮时使用的按钮编号(暂支持1-10)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1024",
+    "kind": "action"
+  },
+  {
     "name": "DelBuff",
     "signature": "DelBuff",
     "desc": "Buff系统",
@@ -971,6 +1013,13 @@
     "desc": "A=地图编号 B=坐标x C=坐标y | 请到说明书中搜索 | 删除指定的NPC",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+  },
+  {
+    "name": "DelPneuma",
+    "signature": "DelPneuma",
+    "desc": "删除元神，无参数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1204",
+    "kind": "action"
   },
   {
     "name": "DELPNEUMAITEM",
@@ -1419,6 +1468,20 @@
     "desc": "A=经验数值 | 请到说明书中搜索 | 单独给人物增加经验",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+  },
+  {
+    "name": "GETGJCSV",
+    "signature": "GETGJCSV A B C D E F",
+    "desc": "A=csv文件路径 B=字符串 C=开始行号~结束行号 D=查找列 E=0或1(0=从上往下 1=从下往上) F=存入变量名 | 取字符串在csv表格中的行号",
+    "kind": "action",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
+  },
+  {
+    "name": "GETHLCSV",
+    "signature": "GETHLCSV A B C",
+    "desc": "A=csv文件路径 B=0或1(0=行数 1=列数) C=存入变量名 | 获取当前表格最大行数或最大列数",
+    "kind": "action",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
   },
   {
     "name": "GetMonRate",
@@ -1897,6 +1960,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
   {
+    "name": "Marry",
+    "signature": "Marry",
+    "desc": "结婚相关操作，支持requestmarry、responsemarry等子参数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1517",
+    "kind": "action"
+  },
+  {
     "name": "MASTER",
     "signature": "MASTER",
     "desc": "无参数 | 拜师",
@@ -2107,6 +2177,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/704"
   },
   {
+    "name": "NEWDQCSV",
+    "signature": "NEWDQCSV A B C D",
+    "desc": "A=csv文件路径 B=行数 C=列数 D=存入变量 | 读取表内指定行列的内容，行列默认从0开始",
+    "kind": "action",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
+  },
+  {
     "name": "NewName",
     "signature": "NewName",
     "desc": "新名字",
@@ -2117,27 +2194,6 @@
     "name": "NEWREADCSV",
     "signature": "NEWREADCSV A",
     "desc": "A=csv文件路径 | 加载csv表格；文件名以cfg_开头时以常量形式存放内存(建议放在QM的[@GlobalVar]执行)，配合<$cfg_xxx(行_列)>等变量读取",
-    "kind": "action",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
-  },
-  {
-    "name": "NEWDQCSV",
-    "signature": "NEWDQCSV A B C D",
-    "desc": "A=csv文件路径 B=行数 C=列数 D=存入变量 | 读取表内指定行列的内容，行列默认从0开始",
-    "kind": "action",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
-  },
-  {
-    "name": "GETHLCSV",
-    "signature": "GETHLCSV A B C",
-    "desc": "A=csv文件路径 B=0或1(0=行数 1=列数) C=存入变量名 | 获取当前表格最大行数或最大列数",
-    "kind": "action",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
-  },
-  {
-    "name": "GETGJCSV",
-    "signature": "GETGJCSV A B C D E F",
-    "desc": "A=csv文件路径 B=字符串 C=开始行号~结束行号 D=查找列 E=0或1(0=从上往下 1=从下往上) F=存入变量名 | 取字符串在csv表格中的行号",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/1029"
   },
@@ -2408,6 +2464,20 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/724"
   },
   {
+    "name": "PARAM5",
+    "signature": "PARAM5 值",
+    "desc": "配合其他命令传递参数(第5位)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/725",
+    "kind": "action"
+  },
+  {
+    "name": "PaymentPoint",
+    "signature": "PaymentPoint A B",
+    "desc": "调整玩家点卡时间：A=操作符(+、-、=)，B=数值",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/988",
+    "kind": "action"
+  },
+  {
     "name": "PERCENT",
     "signature": "PERCENT A B",
     "desc": "请到说明书中搜索 | 百分比",
@@ -2478,20 +2548,6 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/913"
   },
   {
-    "name": "Pos",
-    "signature": "Pos",
-    "desc": "Pos A B C",
-    "kind": "action",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/996"
-  },
-  {
-    "name": "POSINLIST",
-    "signature": "POSINLIST",
-    "desc": "A B C | A=字符支持变量 B=文件路径 C=变量(可忽略) | //检测某文本中是否包含另外一段字符 //检测B文本中是否包含A内容，如果存在则返回内容至C变量",
-    "kind": "action",
-    "docUrl": "http://cshelp.996m2.com/web/#/17/976"
-  },
-  {
     "name": "POSTGIFTTYPE",
     "signature": "POSTGIFTTYPE",
     "desc": "盒子接入礼包说明",
@@ -2518,6 +2574,13 @@
     "desc": "游戏充值接入",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/969"
+  },
+  {
+    "name": "QueryHumNameExist",
+    "signature": "QueryHumNameExist A",
+    "desc": "查询是否存在指定玩家名，结果通过QFunction相关标签返回",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/739",
+    "kind": "action"
   },
   {
     "name": "QUERYMSG",
@@ -2695,9 +2758,23 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
   {
+    "name": "ReleasePneuma",
+    "signature": "ReleasePneuma",
+    "desc": "释放或收回元神，无参数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1204",
+    "kind": "action"
+  },
+  {
     "name": "RELIVEPET",
     "signature": "RELIVEPET A",
     "desc": "A=指定的灵兽石ID，可忽略此参数，如果忽略则表示复活刚才提交的物品框上的灵兽石 | 请到说明书中搜索 | 复活指定的灵兽",
+    "kind": "action",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+  },
+  {
+    "name": "RELOADSABUKW",
+    "signature": "RELOADSABUKW",
+    "desc": "无参数 | 重新加载沙城配置SabukW.txt",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
@@ -2847,6 +2924,13 @@
     "desc": "A=模式 B=震级(1~3) C=次数 D=地图ID(模式等于4时) | 参数A: 0或者不填=自己 1=在线所有人 2=屏幕范围内所有人 3=当前地图所有人 4=指定地图所有人 | 屏幕震动",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+  },
+  {
+    "name": "SelectBagItems",
+    "signature": "SelectBagItems A B",
+    "desc": "设置背包物品批量勾选：A=操作符(+、-、=)，B=物品ID列表，可附加勾选图片素材编号；省略参数表示取消勾选状态",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/917",
+    "kind": "action"
   },
   {
     "name": "SendCenterMsg",
@@ -3087,6 +3171,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
   {
+    "name": "SetMiniMapCfg",
+    "signature": "SetMiniMapCfg A B",
+    "desc": "设置小地图配置：A=配置项，B=配置值；官方注明纯PC端不支持",
+    "docUrl": "https://woool.996m2.com/thread-1455-1-1.html",
+    "kind": "action"
+  },
+  {
     "name": "SetNewParam",
     "signature": "SetNewParam",
     "desc": "QFunction",
@@ -3129,6 +3220,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
   {
+    "name": "SetOffTimer",
+    "signature": "SetOffTimer A",
+    "desc": "停止指定定时器：A=定时器索引(0-24)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1388",
+    "kind": "action"
+  },
+  {
     "name": "SETONTIMER",
     "signature": "SETONTIMER A B C",
     "desc": "开启定时器",
@@ -3162,6 +3260,13 @@
     "desc": "A=变量 | 更改灵兽名字",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+  },
+  {
+    "name": "SETPLAYCFG",
+    "signature": "SETPLAYCFG A",
+    "desc": "设置玩家界面显示参数，如SETPLAYCFG F10NAME控制自定义F10界面的角色名显示",
+    "docUrl": "https://woool.996m2.com/thread-1547-1-1.html",
+    "kind": "action"
   },
   {
     "name": "SetPlayInfo",
@@ -3333,8 +3438,8 @@
   },
   {
     "name": "SKILLPOWERPERMILL",
-    "signature": "SKILLPOWERPERMILL A B C",
-    "desc": "A //技能名称或者技能ID B //操作符号 C //数值 | 请到说明书中搜索 | 调整玩家所学的技能威力千分比",
+    "signature": "SKILLPOWERPERMILL A B C D",
+    "desc": "A：技能名称或者技能ID B：操作符号 C：数值 D：类型 | 参数D: 0:千分比 1:百分比 2:固定值。 不填默认为千分比 | 调整玩家所学的技能威力千分比",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
@@ -3591,6 +3696,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/914"
   },
   {
+    "name": "TongFile",
+    "signature": "TongFile A B",
+    "desc": "通区创建或删除文本：A=0创建、1删除，B=文件名称",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1018",
+    "kind": "action"
+  },
+  {
     "name": "TOPLIST",
     "signature": "TOPLIST A",
     "desc": "A=排行榜类型 | 打开排行榜",
@@ -3605,6 +3717,13 @@
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
   },
   {
+    "name": "Unmarry",
+    "signature": "Unmarry",
+    "desc": "离婚相关操作，支持requestunmarry、responseunmarry等子参数",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1517",
+    "kind": "action"
+  },
+  {
     "name": "UNMASTER",
     "signature": "UNMASTER",
     "desc": "无参数 | 出师",
@@ -3617,6 +3736,13 @@
     "desc": "使用方法及介绍查阅说明书 | 更新任务步骤",
     "kind": "action",
     "docUrl": "http://cshelp.996m2.com/web/#/17/962"
+  },
+  {
+    "name": "UpDateTongFile",
+    "signature": "UpDateTongFile A B",
+    "desc": "通区同步文本：A=目标文件名，B=同步来源文件名(留空默认同名)",
+    "docUrl": "http://cshelp.996m2.com/web/#/17/1018",
+    "kind": "action"
   },
   {
     "name": "UPDATETONGVAR",

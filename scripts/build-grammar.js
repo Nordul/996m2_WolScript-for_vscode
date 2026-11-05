@@ -6,6 +6,10 @@ const ROOT = path.join(__dirname, '..');
 const commands = require('../src/data/commands.json');
 const checkCommands = require('../src/data/checkCommands.json');
 const uiComponents = require('../src/data/uiComponents.json');
+const pcUiComponents = require('../src/data/pcUiComponents.json');
+const pcLegacyNames = pcUiComponents.filter((c) => c.style === 'legacy' || c.style === 'spic')
+  .map((c) => c.name).sort((a, b) => b.length - a.length);
+const PC_LEGACY_ALT = pcLegacyNames.join('|');
 
 // 全部命令名(去重、长的在前避免前缀吞并), 行首大小写不敏感匹配
 const names = [...new Set([...commands, ...checkCommands].map((c) => c.name))]
@@ -36,6 +40,10 @@ const grammar = {
     { include: '#comments' },
     { include: '#sections' },
     { include: '#callCmd' },
+    { include: '#pcLegacy' },
+    { include: '#pcOffx' },
+    { include: '#pcColor' },
+    { include: '#pcOffClose' },
     { include: '#sayLink' },
     { include: '#escape' },
     { include: '#uiComponent' },
@@ -89,6 +97,76 @@ const grammar = {
     labelRef: {
       name: 'entity.name.type.label.m2script',
       match: '@[A-Za-z0-9_\\-一-鿿]+',
+    },
+    pcLegacy: {
+      begin: `(<)(@{0,2}!)((?i:${PC_LEGACY_ALT}))\\b`,
+      beginCaptures: {
+        1: { name: 'punctuation.definition.tag.begin.m2script' },
+        2: { name: 'keyword.operator.m2script' },
+        3: { name: 'entity.name.tag.component.m2script' },
+      },
+      end: '>',
+      endCaptures: { 0: { name: 'punctuation.definition.tag.end.m2script' } },
+      name: 'meta.tag.pc-component.m2script',
+      patterns: [
+        { include: '#sysVarCall' },
+        { include: '#cfgRef' },
+        { include: '#sysVarEx' },
+        { include: '#sysVar' },
+        { include: '#strCall' },
+        { include: '#typedVar' },
+        { include: '#labelRef' },
+        { include: '#numbers' },
+        { name: 'punctuation.separator.argument.m2script', match: ',' },
+      ],
+    },
+    pcOffx: {
+      begin: '(<)((?i:offx))(=)',
+      beginCaptures: {
+        1: { name: 'punctuation.definition.tag.begin.m2script' },
+        2: { name: 'entity.name.tag.component.m2script' },
+        3: { name: 'keyword.operator.assignment.m2script' },
+      },
+      end: '>',
+      endCaptures: { 0: { name: 'punctuation.definition.tag.end.m2script' } },
+      name: 'meta.tag.pc-offx.m2script',
+      patterns: [
+        { include: '#sysVarCall' },
+        { include: '#sysVar' },
+        { include: '#numbers' },
+        { name: 'punctuation.separator.attribute.m2script', match: '\\|' },
+        {
+          match: '([A-Za-z_][A-Za-z0-9_]*)(=)',
+          captures: {
+            1: { name: 'entity.other.attribute-name.m2script' },
+            2: { name: 'keyword.operator.assignment.m2script' },
+          },
+        },
+      ],
+    },
+    pcColor: {
+      begin: '(<)((?i:color))(=)',
+      beginCaptures: {
+        1: { name: 'punctuation.definition.tag.begin.m2script' },
+        2: { name: 'entity.name.tag.component.m2script' },
+        3: { name: 'keyword.operator.assignment.m2script' },
+      },
+      end: '(?=<[|/]off>)|>',
+      endCaptures: { 0: { name: 'punctuation.definition.tag.end.m2script' } },
+      name: 'meta.tag.pc-color.m2script',
+      patterns: [
+        { include: '#sysVarCall' },
+        { include: '#sysVar' },
+        { include: '#numbers' },
+      ],
+    },
+    pcOffClose: {
+      match: '(<[|/])((?i:off))(>)',
+      captures: {
+        1: { name: 'punctuation.definition.tag.begin.m2script' },
+        2: { name: 'entity.name.tag.component.m2script' },
+        3: { name: 'punctuation.definition.tag.end.m2script' },
+      },
     },
     // SAY/RichText 链接: \<文字/@标签\> (单行匹配, 必须含 /@ 且同行以 \> 闭合;
     // 不能用跨行 begin/end, 否则字符串中的换行符 \ 后跟 < 会被误判成链接起点吞掉后续内容)

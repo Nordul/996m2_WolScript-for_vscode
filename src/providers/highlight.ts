@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
 import { findWordMatches, WORD_PATTERN_SOURCE } from './highlightCore';
+import { isWorkspaceScheme } from '../workspaceUri';
 
 function isScriptEditor(editor: vscode.TextEditor): boolean {
-  return editor.document.languageId === 'm2script' && editor.document.uri.scheme === 'file';
+  return editor.document.languageId === 'm2script' && isWorkspaceScheme(editor.document.uri.scheme);
 }
 
 function wordAt(document: vscode.TextDocument, position: vscode.Position): string | undefined {

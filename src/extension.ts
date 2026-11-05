@@ -3,9 +3,10 @@ import { M2CompletionProvider, parseDbNameFirstArg } from './providers/completio
 import { M2HoverProvider } from './providers/hover';
 import { M2DefinitionProvider } from './providers/definition';
 import { M2FoldingProvider } from './providers/folding';
-import { M2ColorProvider, M2ColorLinkProvider } from './providers/color';
+import { M2ColorProvider, M2ColorDefinitionProvider, consumeColorNavigation } from './providers/color';
 import { M2ReferenceProvider, M2LabelCodeLensProvider } from './providers/references';
 import { M2DocumentHighlightProvider, M2CrossFileHighlighter } from './providers/highlight';
+import { M2Diagnostics } from './providers/diagnostics';
 import { RandomStrCodeLensProvider } from './providers/randomStrLens';
 import { RandomStrPanel } from './views/randomStrPanel';
 import { VarScanner, isEngineScriptPath } from './scanner/varScanner';
@@ -62,9 +63,14 @@ async function sniffDocument(doc: vscode.TextDocument) {
 export function activate(context: vscode.ExtensionContext) {
   const scanner = new VarScanner();
   const panel = new VarPanelProvider(scanner);
+  const diagnostics = new M2Diagnostics();
+  context.subscriptions.push(diagnostics);
   let skipNextDbSelection = false;
 
-  const selector: vscode.DocumentSelector = { language: 'm2script', scheme: 'file' };
+  const selector: vscode.DocumentSelector = [
+    { language: 'm2script', scheme: 'file' },
+    { language: 'm2script', scheme: 'vscode-remote' },
+  ];
   // 字母也作为触发字符: 即使用户关闭了 quickSuggestions, 输入命令字母也能弹出补全
   const letterTriggers = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   context.subscriptions.push(
@@ -77,7 +83,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerCodeLensProvider(selector, new RandomStrCodeLensProvider()),
     vscode.languages.registerFoldingRangeProvider(selector, new M2FoldingProvider()),
     vscode.languages.registerColorProvider(selector, new M2ColorProvider()),
-    vscode.languages.registerDocumentLinkProvider(selector, new M2ColorLinkProvider()),
+    vscode.languages.registerDefinitionProvider(selector, new M2ColorDefinitionProvider()),
     vscode.window.registerWebviewViewProvider('m2script.varPanel', panel),
     vscode.window.registerWebviewViewProvider('m2script.dropEntry', new DropEntryProvider()),
     vscode.window.registerWebviewViewProvider('m2script.colorPicker', new ColorPickerProvider(context)),
@@ -127,6 +133,7 @@ export function activate(context: vscode.ExtensionContext) {
       const editor = vscode.window.activeTextEditor;
       if (editor) {
         await vscode.languages.setTextDocumentLanguage(editor.document, 'm2script');
+        diagnostics.update(editor.document);
         await promptReopenAsGbk(editor.document, true);
       }
     }),
@@ -134,10 +141,27 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(new M2CrossFileHighlighter());
 
-  // 内容嗅探: 已打开 + 新打开的 txt
-  for (const doc of vscode.workspace.textDocuments) void sniffDocument(doc);
+  // 内容嗅探与静态检查: 已打开 + 新打开 + 编辑中的脚本
+  const sniffAndLint = async (doc: vscode.TextDocument) => {
+    await sniffDocument(doc);
+    diagnostics.update(doc);
+  };
+  for (const doc of vscode.workspace.textDocuments) void sniffAndLint(doc);
   context.subscriptions.push(
-    vscode.workspace.onDidOpenTextDocument((doc) => void sniffDocument(doc)),
+    vscode.workspace.onDidOpenTextDocument((doc) => void sniffAndLint(doc)),
+    vscode.workspace.onDidChangeTextDocument((e) => diagnostics.schedule(e.document)),
+    vscode.workspace.onDidCloseTextDocument((doc) => diagnostics.clear(doc)),
+    vscode.workspace.onDidChangeConfiguration((e) => {
+      if (!e.affectsConfiguration('m2script.diagnostics.fullwidthPunctuation')) return;
+      for (const doc of vscode.workspace.textDocuments) diagnostics.update(doc);
+    }),
+  );
+
+  context.subscriptions.push(
+    vscode.window.onDidChangeTextEditorSelection((e) => {
+      const navigation = consumeColorNavigation(e.textEditor);
+      if (navigation) void vscode.commands.executeCommand('m2script.openColorPicker', navigation.line, navigation.character);
+    }),
   );
 
   // 命令片段占位符及手动输入的数据库名称均主动唤醒建议(含中文/数字/符号)

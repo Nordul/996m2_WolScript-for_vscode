@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import {
-  lookupCommand, lookupSysVar, lookupUiComp, lookupVarType, lookupTrigger,
-  cmdDocMarkdown,
+  lookupCommand, lookupSysVar, lookupUiComp, lookupPcUiComp, lookupVarType, lookupTrigger,
+  cmdDocMarkdown, pcUiDocMarkdown,
 } from './data';
 
 export class M2HoverProvider implements vscode.HoverProvider {
@@ -58,6 +58,26 @@ export class M2HoverProvider implements vscode.HoverProvider {
           return new vscode.Hover(md, new vscode.Range(position.line, start, position.line, end));
         }
         return undefined;
+      }
+    }
+
+    const pcLegacyRe = /<@{0,2}!([A-Za-z][A-Za-z0-9]*)/g;
+    for (const m of line.matchAll(pcLegacyRe)) {
+      const start = m.index! + m[0].length - m[1].length, end = start + m[1].length;
+      if (ch >= start && ch <= end) {
+        const comp = lookupPcUiComp(m[1]);
+        if (!comp) return undefined;
+        return new vscode.Hover(pcUiDocMarkdown(comp), new vscode.Range(position.line, start, position.line, end));
+      }
+    }
+
+    const pcTextRe = /<([A-Za-z][A-Za-z0-9]*)(?==)/g;
+    for (const m of line.matchAll(pcTextRe)) {
+      const start = m.index! + 1, end = start + m[1].length;
+      if (ch >= start && ch <= end) {
+        const comp = lookupPcUiComp(m[1]);
+        if (!comp) continue;
+        return new vscode.Hover(pcUiDocMarkdown(comp), new vscode.Range(position.line, start, position.line, end));
       }
     }
 

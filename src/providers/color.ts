@@ -99,27 +99,34 @@ export class M2ColorProvider implements vscode.DocumentColorProvider {
   }
 }
 
-export class M2ColorLinkProvider implements vscode.DocumentLinkProvider {
-  provideDocumentLinks(document: vscode.TextDocument): vscode.DocumentLink[] {
-    const links: vscode.DocumentLink[] = [];
-    for (let i = 0; i < document.lineCount; i++) {
-      const line = document.lineAt(i).text;
-      const addLinks = (re: RegExp) => {
-        for (const m of line.matchAll(re)) {
-          const start = m.index!;
-          const args = encodeURIComponent(JSON.stringify([i, start]));
-          const link = new vscode.DocumentLink(
-            new vscode.Range(i, start, i, start + m[0].length),
-            vscode.Uri.parse(`command:m2script.openColorPicker?${args}`),
-          );
-          link.tooltip = '打开颜色选择';
-          links.push(link);
-        }
-      };
-      addLinks(PALETTE_RE);
-      addLinks(HEXA_RE);
-      addLinks(BARE_COLOR_RE);
+let pendingColorNavigation: { uri: string; line: number; start: number; end: number; at: number } | undefined;
+
+export function consumeColorNavigation(editor: vscode.TextEditor): { line: number; character: number } | undefined {
+  const pending = pendingColorNavigation;
+  pendingColorNavigation = undefined;
+  if (!pending || Date.now() - pending.at > 1000 || editor.document.uri.toString() !== pending.uri) return undefined;
+  const active = editor.selection.active;
+  if (active.line !== pending.line || active.character < pending.start || active.character > pending.end) return undefined;
+  return { line: pending.line, character: pending.start };
+}
+
+export class M2ColorDefinitionProvider implements vscode.DefinitionProvider {
+  provideDefinition(document: vscode.TextDocument, position: vscode.Position): vscode.Location[] {
+    const line = document.lineAt(position.line).text;
+    for (const re of [PALETTE_RE, HEXA_RE, BARE_COLOR_RE]) {
+      for (const m of line.matchAll(re)) {
+        const start = m.index!, end = start + m[0].length;
+        if (position.character < start || position.character > end) continue;
+        pendingColorNavigation = {
+          uri: document.uri.toString(),
+          line: position.line,
+          start,
+          end,
+          at: Date.now(),
+        };
+        return [new vscode.Location(document.uri, position)];
+      }
     }
-    return links;
+    return [];
   }
 }
