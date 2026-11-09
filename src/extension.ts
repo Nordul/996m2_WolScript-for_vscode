@@ -9,7 +9,7 @@ import { M2DocumentHighlightProvider, M2CrossFileHighlighter } from './providers
 import { M2Diagnostics } from './providers/diagnostics';
 import { RandomStrCodeLensProvider } from './providers/randomStrLens';
 import { RandomStrPanel } from './views/randomStrPanel';
-import { VarScanner, isEngineScriptPath } from './scanner/varScanner';
+import { VarScanner } from './scanner/varScanner';
 import { VarPanelProvider } from './views/varPanel';
 import { M2DebugConfigProvider, M2DebugAdapterFactory } from './debug/configProvider';
 import { MapManagerPanel, isMapConfigFile, isMonGenFile, isMonItemFile, isMerchantFile } from './mapeditor/mapManagerPanel';
@@ -30,6 +30,7 @@ function looksMisdecoded(doc: vscode.TextDocument): boolean {
 }
 
 let encodingPromptShown = false;
+let activeScanner: VarScanner | undefined;
 
 /** 检测到乱码时引导用户以 GBK 重新打开 (每会话最多提醒一次, auto 时直接弹编码选择) */
 async function promptReopenAsGbk(doc: vscode.TextDocument, auto: boolean) {
@@ -60,7 +61,9 @@ async function sniffDocument(doc: vscode.TextDocument) {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  const scanner = new VarScanner();
+  activeScanner = new VarScanner(context);
+  const scanner = activeScanner;
+  context.subscriptions.push(scanner);
   const panel = new VarPanelProvider(scanner);
   const diagnostics = new M2Diagnostics();
   const labelNavigator = new LabelNavigatorProvider();
@@ -177,30 +180,13 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidChangeActiveTextEditor(updateMapFileContext),
   );
 
-  // 变量扫描: 激活时全量一次(首次带进度提示), 之后保存/关闭时防抖重扫
-  void vscode.window.withProgress(
-    { location: vscode.ProgressLocation.Notification, title: 'M2Script: 首次扫描已占用变量', cancellable: false },
-    (progress) => {
-      let prev = 0;
-      const disp = scanner.onDidProgress((p) => {
-        if (!p || !p.total) return;
-        const pct = p.done / p.total * 100;
-        progress.report({ message: p.done + '/' + p.total + ' 个文件', increment: pct - prev });
-        prev = pct;
-      });
-      return scanner.scanWorkspace().catch((e) => {
-        console.error('[M2Script] 首次变量扫描失败:', e);
-      }).finally(() => disp.dispose());
-    },
-  );
-  context.subscriptions.push(
-    vscode.workspace.onDidSaveTextDocument((doc) => {
-      if (doc.languageId === 'm2script' || isEngineScriptPath(doc.uri.fsPath)) scanner.scheduleScan();
-    }),
-    vscode.workspace.onDidCloseTextDocument(() => scanner.scheduleScan(1500)),
-    vscode.workspace.onDidChangeWorkspaceFolders(() => scanner.scheduleScan(100)),
-  );
+  // 变量索引: 先恢复上次缓存, 再后台校验变化文件; 单文件事件由 VarScanner 自行处理
+  void scanner.initialize().catch((e) => {
+    console.error('[M2Script] 变量索引初始化失败:', e);
+  });
 }
 
-export function deactivate() {}
+export function deactivate() {
+  return activeScanner?.flush();
+}
 

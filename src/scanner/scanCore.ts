@@ -11,6 +11,7 @@ export interface VarRef {
 export interface ScanResult {
   scannedAt: number;
   fileCount: number;
+  fromCache?: boolean;
   /** group(变量类型前缀/MARK/CUSTOM) -> 变量名 -> 引用列表 */
   groups: Record<string, Record<string, VarRef[]>>;
 }

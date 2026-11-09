@@ -38,7 +38,7 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
 
   async refresh(): Promise<void> {
     try {
-      await this.scanner.scanWorkspace();
+      await this.scanner.scanWorkspace(true);
     } catch (e) {
       if (this.view) this.view.webview.postMessage({ type: 'scanError', message: String(e) });
     }
@@ -144,13 +144,13 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
       <span style="opacity:.5">⌕</span>
       <input id="q" type="text" placeholder="搜索变量, 如 S0 / A15">
     </div>
-    <button class="icon-btn" id="refresh" title="重新扫描">⟳</button>
+    <button class="icon-btn" id="refresh" title="重新建立索引">⟳</button>
   </div>
   <div class="progress" id="prog"><i id="progBar"></i></div>
   <div class="stats" id="stats">尚未扫描</div>
   <div class="tabs" id="tabs"></div>
   <div id="list"></div>
-  <div class="empty" id="empty" style="display:none">未发现已占用变量<br><span style="font-size:11px">打开或保存脚本文件后自动扫描</span></div>
+  <div class="empty" id="empty" style="display:none">未发现已占用变量<br><span style="font-size:11px">编辑或保存脚本文件后自动更新索引</span></div>
 
 <script nonce="${nonce}">
   const vscode = acquireVsCodeApi();
@@ -183,7 +183,7 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
     progEl.classList.add('on');
     const pct = p.total ? Math.round(p.done / p.total * 100) : 0;
     progBar.style.width = pct + '%';
-    statsEl.textContent = '正在扫描脚本文件 ' + p.done + '/' + p.total + (p.total ? ' (' + pct + '%)' : '...');
+    statsEl.textContent = '正在后台校验 ' + p.done + '/' + p.total + (p.total ? ' (' + pct + '%)' : '...');
   }
 
   function fmtTime(ts) {
@@ -206,7 +206,7 @@ export class VarPanelProvider implements vscode.WebviewViewProvider {
     });
     let totalVars = 0;
     for (const g of groupNames) totalVars += Object.keys(groups[g]).length;
-    statsEl.textContent = '已扫描 ' + r.fileCount + ' 个脚本文件 · 占用 ' + totalVars + ' 个变量 · ' + fmtTime(r.scannedAt);
+    statsEl.textContent = (r.fromCache ? '缓存索引 · 后台校验中 · ' : '已索引 ') + r.fileCount + ' 个脚本文件 · 占用 ' + totalVars + ' 个变量 · ' + fmtTime(r.scannedAt);
 
     // tabs
     const tabDefs = [{ p: 'ALL', label: '全部' }].concat(
