@@ -52,19 +52,26 @@ class Hover {
 class Diagnostic {
   constructor(range, message, severity) { this.range = range; this.message = message; this.severity = severity; }
 }
+class TreeItem {
+  constructor(label, collapsibleState) { this.label = label; this.collapsibleState = collapsibleState; }
+}
+class ThemeIcon {
+  constructor(id) { this.id = id; }
+}
 const selectionChangeHandlers = [];
 const commandHandlers = new Map();
 let definitionSelector;
 const vscodeMock = {
   Position, Range, Selection, SnippetString, MarkdownString, CompletionItem, FoldingRange, Location, CodeLens, Hover,
-  Color, ColorInformation, ColorPresentation, DocumentLink, ThemeColor, Diagnostic,
+  Color, ColorInformation, ColorPresentation, DocumentLink, ThemeColor, Diagnostic, TreeItem, ThemeIcon,
+  TreeItemCollapsibleState: { None: 0 },
   DiagnosticSeverity: { Error: 0, Warning: 1 },
   FoldingRangeKind: { Region: 3 },
   CompletionItemKind: {
     Function: 2, Variable: 4, Class: 5, Property: 9, Keyword: 13, Snippet: 14,
     Reference: 17, Operator: 11, Event: 22, EnumMember: 19,
   },
-  TextEditorRevealType: { InCenter: 1 },
+  TextEditorRevealType: { InCenter: 1, InCenterIfOutsideViewport: 2 },
   ProgressLocation: { SourceControl: 1, Window: 10, Notification: 15 },
   Uri: {
     file: (f) => ({ fsPath: f, scheme: 'file', authority: '', with(change) { return { ...this, ...change }; } }),
@@ -85,6 +92,7 @@ const vscodeMock = {
   },
   window: {
     registerWebviewViewProvider: () => ({ dispose() {} }),
+    createTreeView: () => ({ dispose() {} }),
     showTextDocument: async () => ({ selection: null, revealRange() {} }),
     activeTextEditor: undefined,
     visibleTextEditors: [],
@@ -695,6 +703,53 @@ try {
 (async () => {
   // 先跑完上面入队的补全测试 (provider 已是 async)
   for (const p of testQueue) await p;
+
+  try {
+    const { LabelNavigatorProvider, LabelSearchProvider } = require('../out/views/labelNavigator');
+    const oldEditor = vscodeMock.window.activeTextEditor;
+    vscodeMock.window.activeTextEditor = { document: makeDoc('[@main]\n#ACT\n[@技能修炼]\n[@技能强化]') };
+    const navigator = new LabelNavigatorProvider();
+    const view = {};
+    navigator.attachView(view);
+    let messageHandler;
+    const search = new LabelSearchProvider(navigator);
+    search.resolveWebviewView({ webview: { onDidReceiveMessage: (fn) => { messageHandler = fn; } } });
+    messageHandler({ type: 'search', query: '技能 强化' });
+    const filtered = navigator.getChildren();
+    messageHandler({ type: 'search', query: '不存在' });
+    const empty = navigator.getChildren();
+    const ok = filtered.length === 1 && filtered[0].label === '@技能强化'
+      && empty.length === 0 && view.message.includes('没有匹配') && view.description.includes('0/3');
+    console.log(`${ok ? 'PASS' : 'FAIL'} 标签搜索框消息与列表过滤联动`);
+    if (!ok) fail++;
+    navigator.dispose();
+    vscodeMock.window.activeTextEditor = oldEditor;
+  } catch (e) {
+    fail++;
+    console.log('FAIL 标签搜索面板: ' + e.message);
+  }
+
+  try {
+    const navDoc = makeDoc('[@main]\n#ACT\n  [@测试标签]\nBREAK');
+    const navEditor = { document: navDoc, selection: null, revealed: null, revealRange(range, type) { this.revealed = { range, type }; } };
+    const oldOpen = vscodeMock.workspace.openTextDocument;
+    const oldShow = vscodeMock.window.showTextDocument;
+    vscodeMock.workspace.openTextDocument = async () => navDoc;
+    vscodeMock.window.showTextDocument = async () => navEditor;
+    try {
+      await commandHandlers.get('m2script.goToLabel')(navDoc.uri, { name: '测试标签', line: 2, start: 2, end: 9 });
+      const ok = navEditor.selection.start.line === 2 && navEditor.selection.start.character === 2
+        && navEditor.selection.end.character === 9 && navEditor.revealed.type === 2;
+      console.log(`${ok ? 'PASS' : 'FAIL'} 当前文件标签点击跳转与选中`);
+      if (!ok) fail++;
+    } finally {
+      vscodeMock.workspace.openTextDocument = oldOpen;
+      vscodeMock.window.showTextDocument = oldShow;
+    }
+  } catch (e) {
+    fail++;
+    console.log('FAIL 当前文件标签跳转: ' + e.message);
+  }
 
   try {
     let focused = false;

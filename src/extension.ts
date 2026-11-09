@@ -18,6 +18,7 @@ import { MerchantPanel } from './mapeditor/merchantPanel';
 import { DropPanel } from './mapeditor/dropPanel';
 import { DropEntryProvider } from './views/dropEntry';
 import { ColorPickerProvider } from './views/colorPickerPanel';
+import { LabelNavigatorProvider, LabelSearchProvider, goToLabel } from './views/labelNavigator';
 
 /** 内容嗅探: 普通 txt 若含 996 脚本特征则切换语言 */
 const SCRIPT_FEATURE_RE = /^\s*(\[@[^\]]+\]|#(IF|ACT|SAY|ELSEACT|ELSESAY)\b)/im;
@@ -62,7 +63,17 @@ export function activate(context: vscode.ExtensionContext) {
   const scanner = new VarScanner();
   const panel = new VarPanelProvider(scanner);
   const diagnostics = new M2Diagnostics();
-  context.subscriptions.push(diagnostics);
+  const labelNavigator = new LabelNavigatorProvider();
+  const labelView = vscode.window.createTreeView('m2script.labelNavigator', { treeDataProvider: labelNavigator });
+  labelNavigator.attachView(labelView);
+  context.subscriptions.push(
+    diagnostics,
+    labelNavigator,
+    labelView,
+    vscode.window.registerWebviewViewProvider('m2script.labelSearch', new LabelSearchProvider(labelNavigator)),
+    vscode.commands.registerCommand('m2script.refreshLabels', () => labelNavigator.refresh()),
+    vscode.commands.registerCommand('m2script.goToLabel', goToLabel),
+  );
 
   const selector: vscode.DocumentSelector = [
     { language: 'm2script', scheme: 'file' },

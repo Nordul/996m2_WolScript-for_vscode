@@ -2,7 +2,7 @@
   "name": "m2script-tools",
   "displayName": "996传世脚本 (996WolScript)",
   "description": "996WolScript 传世引擎脚本语言支持：语法高亮、上下文感知代码补全、已占用变量查询",
-  "version": "0.2.42",
+  "version": "0.2.45",
   "publisher": "m2script",
   "license": "GPL-3.0-only",
   "icon": "resources/icon.png",
@@ -28,7 +28,7 @@
     "vscode:prepublish": "npm run compile",
     "crawl": "node scripts/crawl-docs.js && node scripts/build-grammar.js",
     "build:grammar": "node scripts/build-grammar.js",
-    "selftest": "node scripts/selftest.js && node scripts/grammartest.js && node scripts/interpretertest.js && node scripts/highlighttest.js && node scripts/diagnosticstest.js"
+    "selftest": "node scripts/selftest.js && node scripts/grammartest.js && node scripts/interpretertest.js && node scripts/highlighttest.js && node scripts/diagnosticstest.js && node scripts/labelnavigatortest.js"
   },
   "contributes": {
     "configuration": {
@@ -155,6 +155,11 @@
         "command": "m2script.openMerchantManager",
         "title": "996脚本: 打开NPC管理",
         "icon": "$(person)"
+      },
+      {
+        "command": "m2script.refreshLabels",
+        "title": "996脚本: 刷新当前文件标签",
+        "icon": "$(refresh)"
       }
     ],
     "viewsContainers": {
@@ -163,10 +168,26 @@
           "id": "m2script",
           "title": "996脚本",
           "icon": "resources/icon.svg"
+        },
+        {
+          "id": "m2scriptLabels",
+          "title": "标签导航",
+          "icon": "resources/labelNavigator.svg"
         }
       ]
     },
     "views": {
+      "m2scriptLabels": [
+        {
+          "type": "webview",
+          "id": "m2script.labelSearch",
+          "name": "搜索标签"
+        },
+        {
+          "id": "m2script.labelNavigator",
+          "name": "当前文件标签"
+        }
+      ],
       "m2script": [
         {
           "type": "webview",
@@ -190,6 +211,11 @@
         {
           "command": "m2script.refreshVars",
           "when": "view == m2script.varPanel",
+          "group": "navigation"
+        },
+        {
+          "command": "m2script.refreshLabels",
+          "when": "view == m2script.labelNavigator",
           "group": "navigation"
         }
       ],
