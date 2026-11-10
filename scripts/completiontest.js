@@ -92,6 +92,7 @@ const vscodeMock = {
   },
   window: {
     registerWebviewViewProvider: () => ({ dispose() {} }),
+    registerCustomEditorProvider: () => ({ dispose() {} }),
     createTreeView: () => ({ dispose() {} }),
     showTextDocument: async () => ({ selection: null, revealRange() {} }),
     activeTextEditor: undefined,

@@ -20,10 +20,10 @@ const PARAM_CATALOG = mapParamsData as { groups: string[]; params: MapParamDef[]
 
 const MAPINFO_RE = /^mapinfo\.txt$/i;
 const MINIMAP_RE = /^minimap\.txt$/i;
-const MONGEN_RE = /^mongen\.txt$/i;
-const MERCHANT_RE = /^merchant\.txt$/i;
+const MONGEN_RE = /^mongen\.(?:txt|xls)$/i;
+const MERCHANT_RE = /^merchant\.(?:txt|xls)$/i;
 
-/** 判断文件是否为可可视化管理的配置文件 (MapInfo.txt / MiniMap.txt / MonGen.txt) */
+/** 判断文件是否为可可视化管理的配置文件 (MapInfo.txt / MiniMap.txt / MonGen.txt / MonGen.xls) */
 export function isMapConfigFile(fsPath: string): boolean {
   const base = path.basename(fsPath);
   return MAPINFO_RE.test(base) || MINIMAP_RE.test(base) || MONGEN_RE.test(base);
@@ -33,7 +33,7 @@ export function isMonGenFile(fsPath: string): boolean {
   return MONGEN_RE.test(path.basename(fsPath));
 }
 
-/** 判断是否为 Merchant.txt（交易NPC配置文件） */
+/** 判断是否为 Merchant 配置文件（Merchant.txt / Merchant.xls，交易NPC配置） */
 export function isMerchantFile(fsPath: string): boolean {
   return MERCHANT_RE.test(path.basename(fsPath));
 }

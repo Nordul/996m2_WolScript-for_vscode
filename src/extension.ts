@@ -14,7 +14,9 @@ import { VarPanelProvider } from './views/varPanel';
 import { M2DebugConfigProvider, M2DebugAdapterFactory } from './debug/configProvider';
 import { MapManagerPanel, isMapConfigFile, isMonGenFile, isMonItemFile, isMerchantFile } from './mapeditor/mapManagerPanel';
 import { MonGenPanel } from './mapeditor/monGenPanel';
+import { MonGenCustomEditorProvider } from './mapeditor/monGenCustomEditor';
 import { MerchantPanel } from './mapeditor/merchantPanel';
+import { MerchantCustomEditorProvider } from './mapeditor/merchantCustomEditor';
 import { DropPanel } from './mapeditor/dropPanel';
 import { DropEntryProvider } from './views/dropEntry';
 import { ColorPickerProvider } from './views/colorPickerPanel';
@@ -98,6 +100,14 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.registerWebviewViewProvider('m2script.varPanel', panel),
     vscode.window.registerWebviewViewProvider('m2script.dropEntry', new DropEntryProvider()),
     vscode.window.registerWebviewViewProvider('m2script.colorPicker', new ColorPickerProvider(context)),
+    vscode.window.registerCustomEditorProvider('m2script.monGenXls', new MonGenCustomEditorProvider(context), {
+      webviewOptions: { retainContextWhenHidden: true },
+      supportsMultipleEditorsPerDocument: false,
+    }),
+    vscode.window.registerCustomEditorProvider('m2script.merchantXls', new MerchantCustomEditorProvider(context), {
+      webviewOptions: { retainContextWhenHidden: true },
+      supportsMultipleEditorsPerDocument: false,
+    }),
     vscode.debug.registerDebugConfigurationProvider('m2script', new M2DebugConfigProvider()),
     vscode.debug.registerDebugAdapterDescriptorFactory('m2script', new M2DebugAdapterFactory()),
     vscode.commands.registerCommand('m2script.refreshVars', () => panel.refresh()),
@@ -127,7 +137,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand('m2script.openMerchantManager', () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor || editor.document.uri.scheme !== 'file' || !isMerchantFile(editor.document.uri.fsPath)) {
-        void vscode.window.showInformationMessage('请先打开 Merchant.txt 文件');
+        void vscode.window.showInformationMessage('请先打开 Merchant.txt 或 Merchant.xls 文件');
         return;
       }
       MerchantPanel.show(context, editor.document.uri);

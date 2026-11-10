@@ -2,7 +2,7 @@
   "name": "m2script-tools",
   "displayName": "996传世脚本 (996WolScript)",
   "description": "996WolScript 传世引擎脚本语言支持：语法高亮、上下文感知代码补全、已占用变量查询",
-  "version": "0.2.46",
+  "version": "0.2.72",
   "publisher": "m2script",
   "license": "GPL-3.0-only",
   "icon": "resources/icon.png",
@@ -162,6 +162,40 @@
         "icon": "$(refresh)"
       }
     ],
+    "customEditors": [
+      {
+        "viewType": "m2script.monGenXls",
+        "displayName": "996 刷怪管理器",
+        "selector": [
+          {
+            "filenamePattern": "**/mongen.xls"
+          },
+          {
+            "filenamePattern": "**/MonGen.xls"
+          },
+          {
+            "filenamePattern": "**/MONGEN.xls"
+          }
+        ],
+        "priority": "default"
+      },
+      {
+        "viewType": "m2script.merchantXls",
+        "displayName": "996 NPC管理器",
+        "selector": [
+          {
+            "filenamePattern": "**/merchant.xls"
+          },
+          {
+            "filenamePattern": "**/Merchant.xls"
+          },
+          {
+            "filenamePattern": "**/MERCHANT.xls"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {
@@ -247,11 +281,13 @@
     "@types/node": "^26.6.2",
     "@types/vscode": "^1.85.0",
     "@vscode/vsce": "^4.0.0",
+    "jsdom": "^31.0.0",
     "typescript": "^5.9.3",
     "vscode-oniguruma": "^2.0.1",
     "vscode-textmate": "^9.3.2"
   },
   "dependencies": {
-    "iconv-lite": "^0.6.3"
+    "iconv-lite": "^0.6.3",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
 }
