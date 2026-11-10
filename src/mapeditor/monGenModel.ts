@@ -5,7 +5,7 @@
  * 地图 X Y 怪物名 范围 数量 间隔(分) 集中刷新0-100 死了才刷 重命名 等级 封号1 封号2 封号3
  * 刷新触发标签 是否走动 墓碑类型 墓碑素材 小地图图标 tips标识 墓碑文字显示 小地图文字显示 墓碑刷新方式
  *
- * `;`/`；` 开头为注释。无法解析的行/注释/空行原样保留，保证 round-trip 不丢内容。
+ * `;`/`；`/`//` 开头为注释。无法解析的行/注释/空行原样保留，保证 round-trip 不丢内容。
  * 行内单独的 `;` 字段是引擎的空列占位符：显示时视为空，序列化时中间空列写回 `;` 保持列位。
  * 序列化统一为单个空格分隔；行尾空字段丢弃。
  */
@@ -62,7 +62,7 @@ export function parseMonGen(text: string): MonGenModel {
   const items: MonGenItem[] = [];
   for (const line of text.split(/\r\n|\r|\n/)) {
     const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith(';') || trimmed.startsWith('；')) {
+    if (!trimmed || trimmed.startsWith(';') || trimmed.startsWith('；') || trimmed.startsWith('//')) {
       items.push({ type: 'raw', text: line });
       continue;
     }
@@ -82,7 +82,7 @@ export function parseMonGen(text: string): MonGenModel {
 export function monGenNeedsAlignment(text: string): boolean {
   for (const line of text.split(/\r\n|\r|\n/)) {
     const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith(';') || trimmed.startsWith('；')) continue;
+    if (!trimmed || trimmed.startsWith(';') || trimmed.startsWith('；') || trimmed.startsWith('//')) continue;
     if (trimmed.includes('\t') || /\s{2,}/.test(trimmed)) return true;
   }
   return false;
