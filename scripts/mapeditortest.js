@@ -55,7 +55,6 @@ const mmText1 = serializeMiniMap(mm);
 ok(mmText1 === serializeMiniMap(parseMiniMap(mmText1)), 'MiniMap 序列化幂等');
 ok(mmText1.includes('; 小地图') && mmText1.includes('坏行'), 'MiniMap 注释/坏行保留');
 
-
 async function testMapContextMenu() {
   console.log('右键复制/粘贴地图 (jsdom 模拟):');
   const nodePath = require('path');
@@ -72,29 +71,70 @@ async function testMapContextMenu() {
   const mmText = '0 100\r\nF001 00161\r\nF002 00161\r\n';
   const makeUri = (fsPath) => ({ fsPath, path: fsPath.split(nodePath.sep).join('/'), scheme: 'file' });
   const posted = [];
+  let messageHandler;
+  let disposeCb = () => {};
   const fakePanel = {
     webview: {
       html: '',
-      onDidReceiveMessage: () => {},
+      onDidReceiveMessage: (handler) => { messageHandler = handler; },
       postMessage: (m) => { posted.push(m); return Promise.resolve(true); },
     },
-    onDidDispose: () => {},
+    onDidDispose: (cb) => { disposeCb = cb; },
   };
+  // 文件系统 mock：store 模拟磁盘（含 mtime），未命中时回退内置 GBK 夹具
+  // FileSystemWatcher mock：写入 mapClipboard.json 时触发 change/create 事件，模拟跨窗口文件监听
+  const watchers = [];
+  const fireClipboardWatchers = (existed) => {
+    for (const w of watchers) {
+      for (const cb of (existed ? w.changeHandlers : w.createHandlers)) cb(w.uri);
+    }
+  };
+  const fsMock = {
+    store: new Map(),
+    createDirectory: async () => {},
+    writeFile: async (uri, bytes) => {
+      const key = uri.fsPath.toLowerCase();
+      const existed = fsMock.store.has(key);
+      fsMock.store.set(key, { bytes, mtime: Date.now() });
+      if (nodePath.basename(key) === 'mapclipboard.json') fireClipboardWatchers(existed);
+    },
+    readFile: async (uri) => {
+      const e = fsMock.store.get(uri.fsPath.toLowerCase());
+      if (e) return e.bytes;
+      const b = nodePath.basename(uri.fsPath).toLowerCase();
+      if (b === 'mapinfo.txt') return iconv.encode(miText, 'gbk');
+      if (b === 'minimap.txt') return iconv.encode(mmText, 'gbk');
+      throw new Error('not found');
+    },
+    stat: async (uri) => {
+      const e = fsMock.store.get(uri.fsPath.toLowerCase());
+      if (!e) throw new Error('not found');
+      return { mtime: e.mtime, size: e.bytes.length, type: 1 };
+    },
+  };
+  class FakeRelativePattern {
+    constructor(base, pattern) { this.base = base; this.pattern = pattern; }
+  }
   const fakeVscode = {
     Uri: { file: makeUri, joinPath: (u, ...p) => makeUri(nodePath.join(u.fsPath, ...p)) },
+    RelativePattern: FakeRelativePattern,
     FileType: { File: 1, Directory: 2 },
     ViewColumn: { Active: 1 },
     window: { createWebviewPanel: () => fakePanel },
     workspace: {
       textDocuments: [],
-      fs: {
-        readFile: async (uri) => {
-          const b = nodePath.basename(uri.fsPath).toLowerCase();
-          if (b === 'mapinfo.txt') return iconv.encode(miText, 'gbk');
-          if (b === 'minimap.txt') return iconv.encode(mmText, 'gbk');
-          throw new Error('not found');
-        },
-        writeFile: async () => {},
+      fs: fsMock,
+      createFileSystemWatcher: (pattern) => {
+        const w = {
+          pattern,
+          changeHandlers: [],
+          createHandlers: [],
+          onDidChange: (cb) => { w.changeHandlers.push(cb); return { dispose: () => {} }; },
+          onDidCreate: (cb) => { w.createHandlers.push(cb); return { dispose: () => {} }; },
+          dispose: () => { const i = watchers.indexOf(w); if (i >= 0) watchers.splice(i, 1); },
+        };
+        watchers.push(w);
+        return w;
       },
     },
   };
@@ -102,11 +142,14 @@ async function testMapContextMenu() {
   Module._load = function (request, ...args) { if (request === 'vscode') return fakeVscode; return origLoad.call(this, request, ...args); };
   let MapManagerPanel;
   try { MapManagerPanel = require('../out/mapeditor/mapManagerPanel').MapManagerPanel; } finally { Module._load = origLoad; }
-  const waitFor = async (predicate) => {
-    for (let i = 0; i < 30; i++) { const v = predicate(); if (v) return v; await new Promise((r) => setTimeout(r, 5)); }
+  const waitFor = async (predicate, tries = 60) => {
+    for (let i = 0; i < tries; i++) { const v = predicate(); if (v) return v; await new Promise((r) => setTimeout(r, 50)); }
     throw new Error('等待面板消息超时');
   };
-  MapManagerPanel.show({ extensionPath: root, subscriptions: [] }, makeUri(nodePath.join(root, 'MapInfo.txt')));
+  MapManagerPanel.show({
+    extensionPath: root, subscriptions: [],
+    globalStorageUri: makeUri(nodePath.join(root, 'globalStorage')),
+  }, makeUri(nodePath.join(root, 'MapInfo.txt')));
   const load = await waitFor(() => posted.find((m) => m.type === 'load'));
 
   const state = {};
@@ -125,6 +168,14 @@ async function testMapContextMenu() {
     ok(items().length === 3, '渲染 3 张地图');
     items()[2].dispatchEvent(new win.MouseEvent('click', { bubbles: true, cancelable: true }));
     ok(doc.querySelectorAll('#mapForm input').length >= 4 && doc.querySelectorAll('#mapForm .radio').length === 3 && doc.querySelectorAll('#mapForm .chip').length > 0, '选中地图后表单完整渲染（含映射方式与参数）');
+    win.eval('document.hasFocus = () => false');
+    const focusInput = doc.querySelector('#mapForm #fName');
+    focusInput.dispatchEvent(new win.MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+    ok(doc.activeElement === focusInput, 'iframe 未聚焦时 mousedown 立即显式聚焦输入框');
+    await new Promise((r) => setTimeout(r, 10));
+    ok(doc.activeElement === focusInput, '宿主聚焦后补一次聚焦不被重置');
+    win.eval('document.hasFocus = () => true');
+
     items()[2].dispatchEvent(new win.MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX: 20, clientY: 30 }));
     ok(doc.getElementById('ctxMenu').style.display === 'block' && doc.querySelectorAll('.ctx-item').length === 1, '未复制时菜单仅显示复制');
     Array.from(doc.querySelectorAll('.ctx-item')).find((d) => d.textContent.includes('复制地图')).click();
@@ -136,15 +187,41 @@ async function testMapContextMenu() {
     ok(win.eval('MAPINFO.items[4].entry.id') === 'F002' && win.eval('MAPINFO.items[4].entry.name') === '禁地副本', '粘贴保留原图地图号');
     ok(win.eval('MINIMAP.items.filter((i) => i.type === "row" && i.row.mapId === "F002").length') === 1, '同号共享小地图行且不重复');
     ok(win.eval('selected') === 4, '粘贴后自动选中新地图');
+    ok(Boolean(win.eval('window.__posted.find((m) => m.type === "copyMap" && m.map.entry.id === "F002")')), '复制上报宿主写入共享文件');
+
+    // 跨窗口：宿主接收 webview 的复制消息写入共享文件，随后刷新面板应读到（模拟另一窗口打开面板）
+    messageHandler({ type: 'copyMap', map: win.eval('copiedMap') });
+    const loadsBefore = posted.filter((m) => m.type === 'load').length;
+    messageHandler({ type: 'refresh' });
+    const load2 = await waitFor(() => posted.filter((m) => m.type === 'load').length > loadsBefore ? posted.filter((m) => m.type === 'load').pop() : null);
+    ok(load2.copiedMap && load2.copiedMap.entry.id === 'F002' && load2.copiedMap.miniMapId === '00161', '共享文件剪贴板随 load 下发（跨窗口）');
+
     doc.dispatchEvent(new win.KeyboardEvent('keydown', { key: 's', ctrlKey: true, bubbles: true, cancelable: true }));
     ok(Boolean(win.eval('window.__posted.find((m) => m.type === "save")')), 'Ctrl+S 发送保存消息');
-    // Ctrl+Z 撤销粘贴
     const countBefore = win.eval('MAPINFO.items.length');
     doc.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'z', ctrlKey: true, bubbles: true, cancelable: true }));
     ok(win.eval('MAPINFO.items.length') === countBefore - 1 && win.eval('MAPINFO.items.filter((i) => i.type === "entry").map((i) => i.entry.id).join()').endsWith('F002'), 'Ctrl+Z 撤销粘贴的地图');
     doc.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'z', ctrlKey: true, shiftKey: true, bubbles: true, cancelable: true }));
     ok(win.eval('MAPINFO.items.length') === countBefore, 'Ctrl+Shift+Z 重做恢复');
-  } finally { win.close(); }
+
+    // 跨窗口实时同步：自己窗口的复制写入共享文件，不应触发重复推送（内容去重）
+    await new Promise((r) => setTimeout(r, 200));
+    ok(posted.filter((m) => m.type === 'copiedMap').length === 0, '本窗口复制不重复推送 copiedMap');
+
+    // 模拟其他窗口写入共享文件 → watcher 事件毫秒级自动推送
+    const clipPath = nodePath.join(root, 'globalStorage', 'mapClipboard.json');
+    const t0 = Date.now();
+    await fsMock.writeFile(makeUri(clipPath), Buffer.from(JSON.stringify({ entry: { id: 'F009', name: '远端窗口', kind: 'normal', params: [] }, miniMapId: '9' })));
+    const pushed = await waitFor(() => posted.find((m) => m.type === 'copiedMap' && m.map && m.map.entry && m.map.entry.id === 'F009'), 40);
+    ok(Boolean(pushed), '其他窗口写入后文件监听自动推送（80ms 防抖后）');
+    ok(Date.now() - t0 < 2000, '推送延迟毫秒级（不再依赖 2 秒轮询）');
+    win.postMessage(pushed, '*');
+    await new Promise((r) => setTimeout(r, 50));
+    ok(win.eval('copiedMap.entry.id') === 'F009', '推送更新面板粘贴内容');
+  } finally {
+    win.close();
+    disposeCb();
+  }
 }
 
 testMapContextMenu().then(() => {
