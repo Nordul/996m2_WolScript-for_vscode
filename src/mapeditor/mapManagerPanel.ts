@@ -111,8 +111,8 @@ export class MapManagerPanel {
   private async load(): Promise<void> {
     const mi = await readModelFile(this.mapInfoUri, parseMapInfo);
     const mm = await readModelFile(this.miniMapUri, parseMiniMap);
-    const clipRaw = await this.fetchClipboardRaw();
-    if (clipRaw !== undefined) this.lastPostedRaw = clipRaw;
+    const clip = await this.readBestClipboard();
+    this.lastPushedKey = JSON.stringify(clip);
     this.mapInfo = mi.model;
     this.miniMap = mm.model;
     this.miniMapExists = mm.exists;
@@ -124,7 +124,7 @@ export class MapManagerPanel {
       params: PARAM_CATALOG,
       mapInfoPath: this.mapInfoUri.fsPath,
       miniMapPath: this.miniMapUri.fsPath,
-      copiedMap: this.parseClipboard(clipRaw),
+      copiedMap: clip,
     });
   }
 
@@ -137,13 +137,15 @@ export class MapManagerPanel {
         await this.load();
         break;
       case 'copyMap': {
-        // 写入全局存储目录共享文件（所有窗口同路径），其他窗口经文件监听毫秒级收到
-        const raw = JSON.stringify(msg.map || null);
+        // 双通道：系统剪贴板（VSCode 会把远程窗口的 clipboard 穿透到本机，SSH↔本地可用）
+        // + 全局存储共享文件（同机各窗口，文件监听毫秒级到达）
+        const raw = JSON.stringify({ m2mapClipboard: 1, map: msg.map || null });
+        try { await vscode.env.clipboard.writeText(raw); } catch { /* 无剪贴板权限时仅文件通道 */ }
         try {
           await vscode.workspace.fs.createDirectory(this.context.globalStorageUri);
           await vscode.workspace.fs.writeFile(this.clipboardUri(), new TextEncoder().encode(raw));
-          this.lastPostedRaw = raw; // 本窗口 webview 已持有，自己触发的监听事件无需再推送
         } catch { /* 写失败时仅本窗口内存可用 */ }
+        this.lastPushedKey = JSON.stringify(msg.map && msg.map.entry ? msg.map : null); // 本窗口已持有，无需再推送
         break;
       }
       case 'save': {
@@ -168,21 +170,34 @@ export class MapManagerPanel {
     }
   }
 
+  /** 系统剪贴板通道：远程(SSH)窗口的 env.clipboard 实际读写的是用户本机剪贴板，由此实现跨环境同步 */
+  private async readSystemClipboardRaw(): Promise<string | undefined> {
+    try { return await vscode.env.clipboard.readText(); } catch { return undefined; }
+  }
+
   private parseClipboard(raw: string | undefined): { entry: { id?: string }; miniMapId?: string } | null {
-    if (raw === undefined) return null;
+    if (!raw) return null;
     try {
       const data = JSON.parse(raw);
-      return data && data.entry ? data : null;
+      if (data && data.m2mapClipboard === 1) return data.map && data.map.entry ? data.map : null;
+      return data && data.entry ? data : null; // 兼容旧版裸格式文件
     } catch {
       return null; // 可能读到写入中途的部分内容
     }
   }
 
-  /** 文件监听毫秒级推送 + 低频兜底轮询：其他窗口复制后本面板近即时收到 copiedMap */
+  /** 系统剪贴板优先（跨环境通道），被普通文本覆盖后回退共享文件（同机最近一次复制仍可粘贴） */
+  private async readBestClipboard(): Promise<{ entry: { id?: string }; miniMapId?: string } | null> {
+    const fromSys = this.parseClipboard(await this.readSystemClipboardRaw());
+    if (fromSys) return fromSys;
+    return this.parseClipboard(await this.fetchClipboardRaw());
+  }
+
+  /** 文件监听毫秒级推送 + 2 秒轮询（系统剪贴板无变化事件，SSH/其他窗口的复制经此到达本面板） */
   private clipWatcher: vscode.FileSystemWatcher | undefined;
   private clipTimer: ReturnType<typeof setInterval> | undefined;
   private clipDebounce: ReturnType<typeof setTimeout> | undefined;
-  private lastPostedRaw = '';
+  private lastPushedKey = 'null';
   private startClipboardWatch(): void {
     // 目录先建好，避免监听根目录不存在导致后续事件丢失
     void vscode.workspace.fs.createDirectory(this.context.globalStorageUri);
@@ -190,25 +205,17 @@ export class MapManagerPanel {
       new vscode.RelativePattern(this.context.globalStorageUri, 'mapClipboard.json'));
     this.clipWatcher.onDidChange(() => this.scheduleClipboardCheck());
     this.clipWatcher.onDidCreate(() => this.scheduleClipboardCheck());
-    // watcher 极端情况丢事件时兜底（无变化时仅一次小文件读）
-    this.clipTimer = setInterval(() => void this.checkClipboard(), 10000);
+    this.clipTimer = setInterval(() => void this.checkClipboard(), 2000);
   }
   private scheduleClipboardCheck(): void {
     if (this.clipDebounce) clearTimeout(this.clipDebounce);
     this.clipDebounce = setTimeout(() => void this.checkClipboard(), 80);
   }
-  private async checkClipboard(retry = true): Promise<void> {
-    const raw = await this.fetchClipboardRaw();
-    if (raw === undefined || raw === this.lastPostedRaw) return;
-    const map = this.parseClipboard(raw);
-    if (!map) {
-      if (retry) {
-        if (this.clipDebounce) clearTimeout(this.clipDebounce);
-        this.clipDebounce = setTimeout(() => void this.checkClipboard(false), 250);
-      }
-      return;
-    }
-    this.lastPostedRaw = raw;
+  private async checkClipboard(): Promise<void> {
+    const map = await this.readBestClipboard();
+    const key = JSON.stringify(map);
+    if (key === this.lastPushedKey) return;
+    this.lastPushedKey = key;
     this.panel.webview.postMessage({ type: 'copiedMap', map });
   }
 
