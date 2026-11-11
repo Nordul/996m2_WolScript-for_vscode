@@ -83,9 +83,15 @@ export class MapManagerPanel {
     anchorFile: vscode.Uri,
   ) {
     panel.iconPath = vscode.Uri.file(path.join(context.extensionPath, 'resources', 'icon.png'));
-    panel.onDidDispose(() => { MapManagerPanel.current = undefined; }, null, context.subscriptions);
+    panel.onDidDispose(() => {
+      if (this.clipTimer) clearInterval(this.clipTimer);
+      if (this.clipDebounce) clearTimeout(this.clipDebounce);
+      this.clipWatcher?.dispose();
+      MapManagerPanel.current = undefined;
+    }, null, context.subscriptions);
     panel.webview.onDidReceiveMessage((msg) => void this.onMessage(msg), null, context.subscriptions);
     panel.webview.html = this.renderHtml(panel.webview);
+    this.startClipboardWatch();
     this.setAnchor(anchorFile);
   }
 
@@ -105,6 +111,8 @@ export class MapManagerPanel {
   private async load(): Promise<void> {
     const mi = await readModelFile(this.mapInfoUri, parseMapInfo);
     const mm = await readModelFile(this.miniMapUri, parseMiniMap);
+    const clipRaw = await this.fetchClipboardRaw();
+    if (clipRaw !== undefined) this.lastPostedRaw = clipRaw;
     this.mapInfo = mi.model;
     this.miniMap = mm.model;
     this.miniMapExists = mm.exists;
@@ -116,10 +124,11 @@ export class MapManagerPanel {
       params: PARAM_CATALOG,
       mapInfoPath: this.mapInfoUri.fsPath,
       miniMapPath: this.miniMapUri.fsPath,
+      copiedMap: this.parseClipboard(clipRaw),
     });
   }
 
-  private async onMessage(msg: { type: string; mapInfo?: MapInfoModel; miniMap?: MiniMapModel }): Promise<void> {
+  private async onMessage(msg: { type: string; mapInfo?: MapInfoModel; miniMap?: MiniMapModel; map?: { entry: unknown; miniMapId?: string } | null }): Promise<void> {
     switch (msg.type) {
       case 'ready':
         await this.load();
@@ -127,6 +136,16 @@ export class MapManagerPanel {
       case 'refresh':
         await this.load();
         break;
+      case 'copyMap': {
+        // 写入全局存储目录共享文件（所有窗口同路径），其他窗口经文件监听毫秒级收到
+        const raw = JSON.stringify(msg.map || null);
+        try {
+          await vscode.workspace.fs.createDirectory(this.context.globalStorageUri);
+          await vscode.workspace.fs.writeFile(this.clipboardUri(), new TextEncoder().encode(raw));
+          this.lastPostedRaw = raw; // 本窗口 webview 已持有，自己触发的监听事件无需再推送
+        } catch { /* 写失败时仅本窗口内存可用 */ }
+        break;
+      }
       case 'save': {
         if (!msg.mapInfo || !msg.miniMap) return;
         const err = await this.save(msg.mapInfo, msg.miniMap);
@@ -134,6 +153,63 @@ export class MapManagerPanel {
         break;
       }
     }
+  }
+
+  /** 跨窗口共享的地图剪贴板文件（全局存储目录，所有窗口同路径） */
+  private clipboardUri(): vscode.Uri {
+    return vscode.Uri.joinPath(this.context.globalStorageUri, 'mapClipboard.json');
+  }
+
+  private async fetchClipboardRaw(): Promise<string | undefined> {
+    try {
+      return new TextDecoder().decode(await vscode.workspace.fs.readFile(this.clipboardUri()));
+    } catch {
+      return undefined; // 剪贴板文件不存在
+    }
+  }
+
+  private parseClipboard(raw: string | undefined): { entry: { id?: string }; miniMapId?: string } | null {
+    if (raw === undefined) return null;
+    try {
+      const data = JSON.parse(raw);
+      return data && data.entry ? data : null;
+    } catch {
+      return null; // 可能读到写入中途的部分内容
+    }
+  }
+
+  /** 文件监听毫秒级推送 + 低频兜底轮询：其他窗口复制后本面板近即时收到 copiedMap */
+  private clipWatcher: vscode.FileSystemWatcher | undefined;
+  private clipTimer: ReturnType<typeof setInterval> | undefined;
+  private clipDebounce: ReturnType<typeof setTimeout> | undefined;
+  private lastPostedRaw = '';
+  private startClipboardWatch(): void {
+    // 目录先建好，避免监听根目录不存在导致后续事件丢失
+    void vscode.workspace.fs.createDirectory(this.context.globalStorageUri);
+    this.clipWatcher = vscode.workspace.createFileSystemWatcher(
+      new vscode.RelativePattern(this.context.globalStorageUri, 'mapClipboard.json'));
+    this.clipWatcher.onDidChange(() => this.scheduleClipboardCheck());
+    this.clipWatcher.onDidCreate(() => this.scheduleClipboardCheck());
+    // watcher 极端情况丢事件时兜底（无变化时仅一次小文件读）
+    this.clipTimer = setInterval(() => void this.checkClipboard(), 10000);
+  }
+  private scheduleClipboardCheck(): void {
+    if (this.clipDebounce) clearTimeout(this.clipDebounce);
+    this.clipDebounce = setTimeout(() => void this.checkClipboard(), 80);
+  }
+  private async checkClipboard(retry = true): Promise<void> {
+    const raw = await this.fetchClipboardRaw();
+    if (raw === undefined || raw === this.lastPostedRaw) return;
+    const map = this.parseClipboard(raw);
+    if (!map) {
+      if (retry) {
+        if (this.clipDebounce) clearTimeout(this.clipDebounce);
+        this.clipDebounce = setTimeout(() => void this.checkClipboard(false), 250);
+      }
+      return;
+    }
+    this.lastPostedRaw = raw;
+    this.panel.webview.postMessage({ type: 'copiedMap', map });
   }
 
   /** 写盘。若文件已在编辑器打开且有未保存改动则拒绝，避免互相覆盖 */
@@ -704,10 +780,13 @@ window.addEventListener('message', (ev) => {
     CATALOG = msg.params;
     selected = -1;
     undoStack = []; redoStack = [];
+    copiedMap = msg.copiedMap && msg.copiedMap.entry ? msg.copiedMap : null;
     clearDirty();
     $('pathHint').textContent = msg.mapInfoPath;
     $('pathHint').title = msg.mapInfoPath + (msg.miniMapPath ? '\\n' + msg.miniMapPath : '');
     renderList(); renderForm(); renderMini();
+  } else if (msg.type === 'copiedMap') {
+    copiedMap = msg.map && msg.map.entry ? msg.map : null;
   } else if (msg.type === 'saveResult') {
     if (msg.ok) { clearDirty(); $('toast').textContent = '已保存'; $('toast').className = 'toast ok'; }
     else { $('toast').textContent = '保存失败：' + msg.error; $('toast').className = 'toast err'; }
@@ -716,11 +795,13 @@ window.addEventListener('message', (ev) => {
 
 makeResizable('split1', 'mapSidebar', 'mapSidebarW', 250, 160, 600);
 
-// VSCode Webview 首次点击仅聚焦 iframe，输入框拿不到键盘焦点：mousedown 时对目标输入框显式 focus 兜底
+// VSCode Webview 首次点击仅聚焦 iframe，输入框拿不到键盘焦点：
+// 未聚焦时 mousedown 双重显式 focus（立即一次 + 宿主聚焦后补一次），避免异步聚焦把焦点重置回 body
 document.addEventListener('mousedown', (ev) => {
   const t = ev.target;
-  if ((t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') && document.activeElement !== t) {
+  if ((t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') && !document.hasFocus()) {
     t.focus({ preventScroll: true });
+    setTimeout(() => t.focus({ preventScroll: true }), 0);
   }
 }, true);
 
@@ -752,6 +833,7 @@ function showMapMenu(ev, idx) {
   }
   add('复制地图 ' + item.entry.id, () => {
     copiedMap = { entry: JSON.parse(JSON.stringify(item.entry)), miniMapId: miniIdOf(item.entry.id) };
+    vscode.postMessage({ type: 'copyMap', map: copiedMap });
     $('toast').textContent = '已复制地图 ' + item.entry.id; $('toast').className = 'toast ok';
   });
   if (copiedMap) add('粘贴地图（复制自 ' + copiedMap.entry.id + '）', () => pasteMapAfter(idx));
