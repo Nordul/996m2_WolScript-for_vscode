@@ -115,11 +115,13 @@ async function testMapContextMenu() {
   class FakeRelativePattern {
     constructor(base, pattern) { this.base = base; this.pattern = pattern; }
   }
+  let sysClip = ''; // 模拟本机系统剪贴板（远程窗口的 env.clipboard 也读写这里）
   const fakeVscode = {
     Uri: { file: makeUri, joinPath: (u, ...p) => makeUri(nodePath.join(u.fsPath, ...p)) },
     RelativePattern: FakeRelativePattern,
     FileType: { File: 1, Directory: 2 },
     ViewColumn: { Active: 1 },
+    env: { clipboard: { readText: async () => sysClip, writeText: async (t) => { sysClip = t; } } },
     window: { createWebviewPanel: () => fakePanel },
     workspace: {
       textDocuments: [],
@@ -204,20 +206,35 @@ async function testMapContextMenu() {
     doc.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'z', ctrlKey: true, shiftKey: true, bubbles: true, cancelable: true }));
     ok(win.eval('MAPINFO.items.length') === countBefore, 'Ctrl+Shift+Z 重做恢复');
 
-    // 跨窗口实时同步：自己窗口的复制写入共享文件，不应触发重复推送（内容去重）
+    // 跨窗口实时同步：自己窗口的复制写入双通道（共享文件 + 系统剪贴板），不应触发重复推送
     await new Promise((r) => setTimeout(r, 200));
     ok(posted.filter((m) => m.type === 'copiedMap').length === 0, '本窗口复制不重复推送 copiedMap');
+    ok(sysClip.includes('"m2mapClipboard":1') && sysClip.includes('"id":"F002"'), '复制写入系统剪贴板通道（带标记）');
 
-    // 模拟其他窗口写入共享文件 → watcher 事件毫秒级自动推送
+    // 同机其他窗口复制（共享文件 + 系统剪贴板同写）：文件监听毫秒级推送
     const clipPath = nodePath.join(root, 'globalStorage', 'mapClipboard.json');
+    const remotePayload = (id, name) => JSON.stringify({ m2mapClipboard: 1, map: { entry: { id, name, kind: 'normal', params: [] }, miniMapId: '9' } });
     const t0 = Date.now();
-    await fsMock.writeFile(makeUri(clipPath), Buffer.from(JSON.stringify({ entry: { id: 'F009', name: '远端窗口', kind: 'normal', params: [] }, miniMapId: '9' })));
-    const pushed = await waitFor(() => posted.find((m) => m.type === 'copiedMap' && m.map && m.map.entry && m.map.entry.id === 'F009'), 40);
-    ok(Boolean(pushed), '其他窗口写入后文件监听自动推送（80ms 防抖后）');
-    ok(Date.now() - t0 < 2000, '推送延迟毫秒级（不再依赖 2 秒轮询）');
+    sysClip = remotePayload('F010', '同机窗口');
+    await fsMock.writeFile(makeUri(clipPath), Buffer.from(remotePayload('F010', '同机窗口')));
+    const pushed010 = await waitFor(() => posted.find((m) => m.type === 'copiedMap' && m.map && m.map.entry && m.map.entry.id === 'F010'), 40);
+    ok(Boolean(pushed010) && Date.now() - t0 < 1500, '同机跨窗口经文件监听毫秒级推送');
+    win.postMessage(pushed010, '*');
+    await new Promise((r) => setTimeout(r, 50));
+    ok(win.eval('copiedMap.entry.id') === 'F010', '推送更新面板粘贴内容');
+
+    // SSH 窗口复制：仅系统剪贴板更新（其共享文件在远程服务器上，本机文件不动），2 秒轮询推送
+    sysClip = remotePayload('F009', '远端窗口');
+    const pushed = await waitFor(() => posted.find((m) => m.type === 'copiedMap' && m.map && m.map.entry && m.map.entry.id === 'F009'), 120);
+    ok(Boolean(pushed), 'SSH 复制经系统剪贴板 2 秒内推送');
     win.postMessage(pushed, '*');
     await new Promise((r) => setTimeout(r, 50));
-    ok(win.eval('copiedMap.entry.id') === 'F009', '推送更新面板粘贴内容');
+    ok(win.eval('copiedMap.entry.id') === 'F009', 'SSH 复制可粘贴');
+
+    // 系统剪贴板被普通文本覆盖后，回退共享文件里同机最近一次复制
+    sysClip = '普通文本';
+    const reverted = await waitFor(() => posted.find((m) => m.type === 'copiedMap' && m.map && m.map.entry && m.map.entry.id === 'F010'), 120);
+    ok(Boolean(reverted), '剪贴板被覆盖后回退共享文件（同机复制仍可粘贴）');
   } finally {
     win.close();
     disposeCb();
