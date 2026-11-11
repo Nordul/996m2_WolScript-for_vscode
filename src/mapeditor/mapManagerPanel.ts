@@ -249,6 +249,14 @@ export class MapManagerPanel {
   .splitter { width: 5px; cursor: col-resize; flex-shrink: 0; }
   .splitter:hover, .splitter.active { background: var(--vscode-focusBorder); opacity: .5; }
   .splitter.active { opacity: .8; }
+  .ctx-menu {
+    position: fixed; z-index: 20; display: none; min-width: 150px;
+    background: var(--vscode-editorWidget-background, #2a2a2a);
+    border: 1px solid var(--vscode-panel-border, rgba(128,128,128,.35));
+    border-radius: 6px; padding: 4px; box-shadow: 0 4px 14px rgba(0,0,0,.35);
+  }
+  .ctx-item { padding: 5px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+  .ctx-item:hover { background: var(--vscode-list-hoverBackground); }
 
   .main { flex: 1; overflow-y: auto; padding: 16px 20px; }
   .empty-hint { opacity: .45; text-align: center; margin-top: 80px; font-size: 13px; }
@@ -335,6 +343,7 @@ export class MapManagerPanel {
       <div style="margin-top:14px;font-size:11px;opacity:.5">格式：地图编号 → 客户端 wpf 文件内 mmap 的对应编号；保存写入 MiniMap.txt</div>
     </div>
   </div>
+  <div class="ctx-menu" id="ctxMenu"></div>
 <script nonce="${nonce}">
 const vscode = acquireVsCodeApi();
 
@@ -384,6 +393,40 @@ function clearDirty() {
   dirty = false;
   $('toolbar').classList.remove('dirty');
 }
+let undoStack = [];
+let redoStack = [];
+let typingUndoArmed = true;
+function snapshot() { return JSON.stringify({ m: MAPINFO, n: MINIMAP }); }
+function pushUndo() {
+  undoStack.push(snapshot());
+  if (undoStack.length > 60) undoStack.shift();
+  redoStack = [];
+}
+function applySnapshot(s) {
+  const o = JSON.parse(s);
+  MAPINFO = o.m; MINIMAP = o.n;
+  selected = -1;
+  markDirty(); renderList(); renderForm(); renderMini();
+}
+function undoEdit() {
+  if (!undoStack.length) return;
+  redoStack.push(snapshot());
+  applySnapshot(undoStack.pop());
+  $('toast').textContent = '已撤销'; $('toast').className = 'toast ok';
+}
+function redoEdit() {
+  if (!redoStack.length) return;
+  undoStack.push(snapshot());
+  applySnapshot(redoStack.pop());
+  $('toast').textContent = '已重做'; $('toast').className = 'toast ok';
+}
+/** 输入框绑定"一次聚焦一次快照"的撤销粒度（capture 阶段先于 oninput 入栈） */
+function bindUndoInput(inp) {
+  inp.addEventListener('focus', () => { typingUndoArmed = true; });
+  inp.addEventListener('input', () => {
+    if (typingUndoArmed) { pushUndo(); typingUndoArmed = false; }
+  }, true);
+}
 
 function entries() {
   const out = [];
@@ -420,7 +463,9 @@ function renderList() {
       if (ev.target.classList.contains('del')) return;
       selected = idx; renderList(); renderForm();
     };
+    div.oncontextmenu = (ev) => showMapMenu(ev, idx);
     div.querySelector('.del').onclick = () => {
+      pushUndo();
       MAPINFO.items.splice(idx, 1);
       if (selected === idx) selected = -1;
       else if (selected > idx) selected--;
@@ -463,6 +508,7 @@ function renderForm() {
   const fMini = row1.querySelector('#fMini');
   const miniHint = row1.querySelector('#miniHint');
   fId.value = e.id; fName.value = e.name;
+  bindUndoInput(fId); bindUndoInput(fName); bindUndoInput(fMini);
   fMini.value = (findMiniRow(e.id) || {}).miniMapId || '';
   fId.oninput = () => {
     const oldId = e.id;
@@ -500,6 +546,7 @@ function renderForm() {
   main.appendChild(row2);
   const fSrc = row2.querySelector('#fSrc');
   fSrc.value = e.srcId || '';
+  bindUndoInput(fSrc);
   function syncKind() {
     row2.querySelectorAll('.radio').forEach((r) => {
       const on = r.dataset.k === e.kind;
@@ -515,6 +562,7 @@ function renderForm() {
   }
   row2.querySelectorAll('.radio').forEach((r) => {
     r.onclick = () => {
+      pushUndo();
       e.kind = r.dataset.k;
       if (e.kind !== 'normal' && !e.srcId) { e.srcId = ''; fSrc.value = ''; }
       markDirty(); syncKind(); renderList();
@@ -555,6 +603,7 @@ function renderForm() {
         inp.value = cur && cur.arg !== undefined ? cur.arg : '';
         inp.style.display = cur ? '' : 'none';
         inp.onclick = (ev) => ev.stopPropagation();
+        bindUndoInput(inp);
         inp.oninput = () => {
           const p = activeMap.get(key);
           if (p) { p.arg = inp.value; markDirty(); }
@@ -562,6 +611,7 @@ function renderForm() {
         chip.appendChild(inp);
       }
       chip.onclick = () => {
+        pushUndo();
         if (activeMap.has(key)) {
           const p = activeMap.get(key);
           e.params.splice(e.params.indexOf(p), 1);
@@ -593,7 +643,7 @@ function renderForm() {
       chip.className = 'chip on';
       chip.textContent = p.arg !== undefined ? p.name + '(' + p.arg + ')' : p.name;
       chip.title = '点击移除该参数';
-      chip.onclick = () => { e.params.splice(e.params.indexOf(p), 1); markDirty(); renderForm(); };
+      chip.onclick = () => { pushUndo(); e.params.splice(e.params.indexOf(p), 1); markDirty(); renderForm(); };
       chips.appendChild(chip);
     }
     g.appendChild(chips);
@@ -610,9 +660,10 @@ function renderMini() {
     tr.innerHTML = '<td><input></td><td><input></td><td><button class="btn danger" title="删除">×</button></td>';
     const [a, b] = tr.querySelectorAll('input');
     a.value = it.row.mapId; b.value = it.row.miniMapId;
+    bindUndoInput(a); bindUndoInput(b);
     a.oninput = () => { it.row.mapId = a.value; markDirty(); };
     b.oninput = () => { it.row.miniMapId = b.value; markDirty(); };
-    tr.querySelector('button').onclick = () => { MINIMAP.items.splice(idx, 1); markDirty(); renderMini(); };
+    tr.querySelector('button').onclick = () => { pushUndo(); MINIMAP.items.splice(idx, 1); markDirty(); renderMini(); };
     body.appendChild(tr);
   });
 }
@@ -627,12 +678,14 @@ document.querySelectorAll('.tab').forEach((t) => {
 });
 $('searchInput').oninput = (ev) => { filter = ev.target.value; renderList(); };
 $('addMapBtn').onclick = () => {
+  pushUndo();
   const entry = { kind: 'normal', id: 'NEW', name: '新地图', params: [] };
   MAPINFO.items.push({ type: 'entry', entry });
   selected = MAPINFO.items.length - 1;
   markDirty(); renderList(); renderForm();
 };
 $('addMiniBtn').onclick = () => {
+  pushUndo();
   MINIMAP.items.push({ type: 'row', row: { mapId: '', miniMapId: '' } });
   markDirty(); renderMini();
 };
@@ -650,6 +703,7 @@ window.addEventListener('message', (ev) => {
     MINIMAP = msg.miniMap;
     CATALOG = msg.params;
     selected = -1;
+    undoStack = []; redoStack = [];
     clearDirty();
     $('pathHint').textContent = msg.mapInfoPath;
     $('pathHint').title = msg.mapInfoPath + (msg.miniMapPath ? '\\n' + msg.miniMapPath : '');
@@ -661,6 +715,78 @@ window.addEventListener('message', (ev) => {
 });
 
 makeResizable('split1', 'mapSidebar', 'mapSidebarW', 250, 160, 600);
+
+// VSCode Webview 首次点击仅聚焦 iframe，输入框拿不到键盘焦点：mousedown 时对目标输入框显式 focus 兜底
+document.addEventListener('mousedown', (ev) => {
+  const t = ev.target;
+  if ((t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') && document.activeElement !== t) {
+    t.focus({ preventScroll: true });
+  }
+}, true);
+
+// 右键地图项：复制 / 粘贴地图
+let copiedMap = null;
+function miniIdOf(mapId) {
+  for (const it of MINIMAP.items) if (it.type === 'row' && it.row.mapId === mapId) return it.row.miniMapId;
+  return '';
+}
+function hideMapMenu() { $('ctxMenu').style.display = 'none'; }
+function showMapMenu(ev, idx) {
+  ev.preventDefault(); ev.stopPropagation();
+  const item = MAPINFO.items[idx];
+  if (!item || item.type !== 'entry') return;
+  const menu = $('ctxMenu');
+  menu.innerHTML = '';
+  const add = (label, fn) => {
+    const d = document.createElement('div');
+    d.className = 'ctx-item'; d.textContent = label;
+    d.onclick = () => { hideMapMenu(); fn(); };
+    menu.appendChild(d);
+  };
+  if (undoStack.length || redoStack.length) {
+    if (undoStack.length) add('撤销 (Ctrl+Z)', undoEdit);
+    if (redoStack.length) add('重做 (Ctrl+Shift+Z)', redoEdit);
+    const sep = document.createElement('div');
+    sep.className = 'ctx-sep';
+    menu.appendChild(sep);
+  }
+  add('复制地图 ' + item.entry.id, () => {
+    copiedMap = { entry: JSON.parse(JSON.stringify(item.entry)), miniMapId: miniIdOf(item.entry.id) };
+    $('toast').textContent = '已复制地图 ' + item.entry.id; $('toast').className = 'toast ok';
+  });
+  if (copiedMap) add('粘贴地图（复制自 ' + copiedMap.entry.id + '）', () => pasteMapAfter(idx));
+  menu.style.display = 'block';
+  const rect = menu.getBoundingClientRect();
+  menu.style.left = Math.max(4, Math.min(ev.clientX, window.innerWidth - rect.width - 6)) + 'px';
+  menu.style.top = Math.max(4, Math.min(ev.clientY, window.innerHeight - rect.height - 6)) + 'px';
+}
+function pasteMapAfter(idx) {
+  if (!copiedMap) return;
+  pushUndo();
+  const entry = JSON.parse(JSON.stringify(copiedMap.entry));
+  const at = idx + 1;
+  MAPINFO.items.splice(at, 0, { type: 'entry', entry });
+  if (copiedMap.miniMapId && !miniIdOf(entry.id)) {
+    MINIMAP.items.push({ type: 'row', row: { mapId: entry.id, miniMapId: copiedMap.miniMapId } });
+  }
+  selected = at;
+  markDirty(); renderList(); renderForm(); renderMini();
+  $('toast').textContent = '已粘贴（地图号与原图相同，可在表单中修改）'; $('toast').className = 'toast ok';
+}
+document.addEventListener('pointerdown', (ev) => {
+  if ($('ctxMenu').style.display === 'block' && !(ev.target.closest && ev.target.closest('#ctxMenu'))) hideMapMenu();
+}, true);
+document.addEventListener('keydown', (ev) => {
+  if ((ev.ctrlKey || ev.metaKey) && !ev.shiftKey && (ev.key === 'z' || ev.key === 'Z')) { ev.preventDefault(); undoEdit(); return; }
+  if ((ev.ctrlKey || ev.metaKey) && ((ev.key === 'y' || ev.key === 'Y') || (ev.shiftKey && (ev.key === 'z' || ev.key === 'Z')))) { ev.preventDefault(); redoEdit(); return; }
+  if ((ev.ctrlKey || ev.metaKey) && (ev.key === 's' || ev.key === 'S')) {
+    ev.preventDefault();
+    $('toast').textContent = '保存中…'; $('toast').className = 'toast';
+    vscode.postMessage({ type: 'save', mapInfo: MAPINFO, miniMap: MINIMAP });
+    return;
+  }
+  if (ev.key === 'Escape') hideMapMenu();
+});
 
 vscode.postMessage({ type: 'ready' });
 </script>
